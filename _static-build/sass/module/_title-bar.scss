@@ -1,0 +1,205 @@
+/*
+
+Title Bars
+----------
+
+*/
+
+.title-bar {
+    @extend .group;
+    display: block;
+    padding: $line;
+    background: $gray-dark url('../images/bg-polygons.svg') no-repeat 0 0;
+    color: $bg;
+    position: relative;
+    z-index: 10;
+    &:before {
+        content: '';
+        display: block;
+        height: 4px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: linear-gradient(to right, $gradient-1 0, $gradient-2 20%, $gradient-3 65%, $gradient-4 100%);
+        z-index: 10;
+    }
+    &__label {
+        @extend .title;
+        display: block;
+        opacity: 0.7;
+    }
+    &__title, &__subtitle {
+        display: inline-block;
+    }
+    &__title {
+        font-weight: 900;
+        margin-bottom: 0;
+        margin-right: 0.5em;
+        color: $title;
+    }
+    &__subtitle {
+        @extend .copy;
+        font-weight: 400;
+        font-style: italic;
+        margin-bottom: 0;
+    }
+    &__data {
+        padding-top: $line;
+    }
+    &__datum {
+        padding-bottom: $line/2;
+        &__prop {
+            font-style: italic;
+            opacity: 0.7;
+        }
+        &__value {
+            @extend .title;
+            font-size: $kilo;
+            color: $primary-light;
+        }
+    }
+    &__related {
+        &__item {
+            @extend a.wob;
+            @extend .title;
+            display: inline-block;
+            opacity: 0.7;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        &__item + &__item {
+            margin-left: 1.5em;
+        }
+    }
+}
+
+
+
+// use 'details' toggle on small glass to avoid clutter
+@media #{$max-m} {
+    .js .title-bar__data:not(.is-active) {
+        display: none;
+    }
+    .title-bar__data__toggle {
+        display: block;
+        margin: $line/2 0 0;
+        padding: 0;
+        border: none;
+        font-size: $milli;
+        line-height: $line;
+        color: transparentize($bg, 0.2);
+        font-style: italic;
+        background: none;
+        img {
+            display: inline-block;
+            vertical-align: middle;
+            width: 17px;
+            margin-right: $line/2;
+            transition: all 0.2s ease-out;
+        }
+        &.is-active img {
+            transform: rotate(135deg);
+        }
+    }
+}
+
+
+@media #{$min-m} {
+    .title-bar {
+        min-height: 188px;
+        padding: $line $line*2;
+        &__title {
+            font-size: $yotta;
+            margin-right: 0;
+            line-height: $line*2;
+        }
+        &__subtitle {
+            font-size: $peta;
+            line-height: $line*2;
+            margin-right: 0;
+        }
+        &--review {
+            .title-bar__title {
+                margin: $line 0.5em $line/4 0;
+            }
+            .title-bar__subtitle {
+                margin-bottom: $line/2;
+            }
+        }
+        &--article, &--main, &--search {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        &__data {
+            padding-bottom: $line/2;
+            margin-right: 0;
+            &__toggle {
+                display: none;
+            }
+        }
+        &__datum {
+            padding-bottom: $line*3/4;
+            padding-right: 0;
+            &--long {
+                padding-bottom: $line/2;
+            }
+            &:nth-child(3n+2) {
+                text-align: center;
+            }
+            &:nth-child(3n+3) {
+                text-align: right;
+            }
+        }
+
+        &__related {
+            margin-top: $line/2;
+        }
+    }
+
+}
+
+
+@media #{$min-l} {
+    .title-bar {
+        &--article, &--review {
+            padding-left: 0;
+            padding-right: 0;
+            background: url('../images/bg-polygon-garnish.svg') no-repeat 100% 0,
+                        url('../images/bg-polygons.svg') no-repeat 0 0,
+                        linear-gradient(to right, transparentize($gray-dark, 0.3) 0, $gray-dark 30%);
+        }
+        &--article, &--main, &--search {
+            text-align: center;
+            align-items: stretch;
+        }
+        &--main {
+            background: url('../images/bg-polygon-garnish.svg') no-repeat 100% 0,
+                        url('../images/bg-polygons.svg') no-repeat 0 0,
+                        $gray-dark;
+        }
+        &--review {
+            .title-bar__title, .title-bar__subtitle {
+                width: 35%;
+                float: left;
+                clear: left;
+                text-align: right;
+                padding-left: $line/2;
+                padding-right: $line*2;
+                margin-right: 0;
+            }
+            .title-bar__title {
+                margin-top: $line*3/4;
+            }
+            .title-bar__data {
+                overflow: hidden;
+                max-width: $page-width + $line*3;
+                padding: $line/2 $line 0 $line*2;
+            }
+        }
+    }
+}

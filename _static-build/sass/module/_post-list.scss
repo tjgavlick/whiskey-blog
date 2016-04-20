@@ -1,0 +1,95 @@
+/*
+
+Post Lists
+----------
+
+*/
+
+
+.post-list {
+    margin-left: 0;
+    list-style: none;
+    &__item {
+        margin-bottom: $line;
+    }
+    &__anchor {
+        display: block;
+        padding: $line*2 $line;
+        background: $primary-dark;
+        color: $bg;
+        position: relative;
+        overflow: hidden;
+    }
+    &__label, &__title, &__subtitle, &__description {
+        position: relative;
+        z-index: 2;
+    }
+    &__title, &__subtitle, &__description {
+        margin-bottom: 0;
+    }
+    &__label {
+        @extend .title;
+        display: block;
+        padding: $line/4 $line;
+        margin: -$line*2 (-$line) $line*3/2;
+        color: transparentize($bg, 0.3);
+        background: $gray-dark;
+        background: transparentize($gray-dark, 0.4);
+    }
+    &__title, &__subtitle {
+        text-shadow: 0 1px 1px rgba(0,0,0,0.4), 0 2px 3px rgba(0,0,0,0.2);
+    }
+    &__title {
+        font-size: $peta;
+        font-weight: 900;
+        color: #fff;
+    }
+    &__subtitle {
+        @extend .copy;
+        font-size: $mega;
+        font-style: italic;
+        font-weight: 400;
+    }
+    &__description {
+        margin-top: $line/2;
+        opacity: 0.8;
+    }
+    &__image {
+        position: absolute;
+        max-width: none;
+        min-width: 100%;
+        min-height: 100%;
+        left: 0;
+        top: 0;
+        opacity: 0.1;
+        .csstransforms & {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+
+@media #{$min-m} {
+    .post-list {
+        &__anchor {
+            padding-top: $line*1.5;
+            padding-bottom: $line*1.5;
+        }
+        &__label {
+            margin-top: -$line*1.5;
+            margin-bottom: $line;
+        }
+        &__title, &__subtitle {
+            display: inline-block;
+        }
+        &__title {
+            margin-right: 0.3em;
+            font-size: $exa;
+            line-height: 1.2;
+        }
+        &__description {
+            margin-top: $line;
+        }
+    }
+}

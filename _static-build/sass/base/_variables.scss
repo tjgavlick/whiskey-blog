@@ -1,0 +1,66 @@
+// font stacks
+$font-stack-body: "Lora", Georgia, serif;
+$font-stack-title: "Lato", "Tahoma", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// text sizing
+$line: 24px;
+$text: 16px;
+$micro: 12px;
+$milli: 14px;
+$kilo: 18px;
+$mega: 20px;
+$giga: 22px;
+$tera: 25px;
+$peta: 28px;
+$exa: 36px;
+$yotta: 50px;
+
+// page sizing
+$page-width: 720px;
+$reading-width: 680px;
+
+// common colors
+$bg: #fff;
+$photo-bg: #4a3a29;
+$gray-light: #828893;
+$gray-mid: #6c7e8d;
+$gray-dark: #1b1e23;
+
+$copy: #4a5462;
+$primary: #0f8f98;
+$primary-light: desaturate(lighten($primary, 25%), 40%);
+$primary-dark: darken($primary, 8%);
+$primary-darker: desaturate(darken($primary-dark, 15%), 50%);
+$accent: #2bc94a;
+$accent-dark: desaturate(darken($accent, 20%), 20%);
+$accent-darker: desaturate(darken($accent-dark, 15%), 20%);
+$title: #ffd3a6;
+
+$gradient-1: #e5edef;
+$gradient-2: desaturate(lighten(adjust-hue($primary, 8%), 15%), 25%);
+$gradient-3: $accent;
+$gradient-4: #38443e;
+
+// breakpoints
+$break-s: 470px;
+$break-m: 720px;
+$break-l: 960px;
+$break-w: 1280px;
+
+// breakpoint usage
+$min-s: "(min-width: " + $break-s + ")";
+$max-s: "(max-width: " + ($break-s - 1px) + ")";
+
+$min-m: "(min-width: " + $break-m + ")";
+$max-m: "(max-width: " + ($break-m - 1px) + ")";
+
+$min-l: "(min-width: " + $break-l + ")";
+$max-l: "(max-width: " + ($break-l - 1px) + ")";
+
+$min-w: "(min-width: " + $break-w + ")";
+$max-w: "(max-width: " + ($break-w - 1px) + ")";
+
+$hdpi: "only screen and (-webkit-min-device-pixel-ratio: 2)," +
+       "only screen and (min-device-pixel-ratio: 2)," +
+       "only screen and (min-resolution: 192dpi)," +
+       "only screen and (min-resolution: 2dppx)";

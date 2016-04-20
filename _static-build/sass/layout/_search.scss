@@ -1,0 +1,110 @@
+/*
+
+Search Pages
+------------
+
+*/
+
+
+.search-layout {
+    @extend .group;
+}
+.search-refine {
+    padding: $line;
+    // background: $primary-darker;
+    // background: url('../images/bg-polygons.svg') no-repeat 0 100%,
+    //             linear-gradient(to bottom, $primary-darker, $accent-darker);
+    // background-size: auto 400%, auto;
+    a {
+        @extend a.bow;
+    }
+    &__facet {
+        &__title {
+            margin-bottom: 0;
+        }
+        &__list {
+            list-style: none;
+            margin-left: 0;
+        }
+        &__item {
+            padding-left: $line/2;
+            text-indent: -$line/2;
+            &.is-current {
+                // color: $primary;
+                list-style: disc;
+            }
+        }
+    }
+    &__toggle {
+        @extend .title;
+        display: block;
+        width: 100%;
+        padding: $line/2 $line;
+        text-align: left;
+        color: $bg;
+        background: $primary-dark;
+        background: url('../images/bg-polygons.svg') no-repeat 0 100%,
+                    linear-gradient(to right, $primary-dark, $accent-dark);
+    }
+}
+
+.search-current-filters {
+    padding: $line;
+    line-height: $line*1.5;
+}
+
+
+@media #{$min-m} {
+    .search-refine {
+        padding: $line*2;
+        &__toggle {
+            padding-left: $line*2;
+        }
+    }
+    .search-current-filters {
+        padding: $line $line*2;
+        text-align: center;
+    }
+}
+
+
+@media #{$max-l} {
+    .search-refine:not(.is-active), .search-refine__title {
+        display: none;
+    }
+}
+
+
+@media #{$min-l} {
+    .search-layout {
+        max-width: $page-width*2;
+        padding: 0 $line*2;
+        margin: 0 auto;
+    }
+    .search-refine, .search-content {
+        width: 50%;
+        padding: 0;
+    }
+    .search-refine {
+        float: left;
+        padding-right: $line;
+    }
+    .search-content {
+        float: right;
+        padding-left: $line;
+    }
+
+    .search-refine {
+        &__toggle {
+            display: none;
+        }
+        &__title {
+            font-weight: 400;
+            opacity: 0.5;
+        }
+    }
+
+    .search-current-filters {
+        padding: $line*1.5 $line*2;
+    }
+}

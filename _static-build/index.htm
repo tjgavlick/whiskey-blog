@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+
+    <title>Tim drinks whiskies</title>
+
+    <link rel="stylesheet" href="style/public.css" />
+
+    <script>
+        /*! modernizr 3.3.1 (Custom Build) | MIT *
+         * http://modernizr.com/download/?-csstransforms-touchevents-setclasses !*/
+        !function(e,n,t){function o(e,n){return typeof e===n}function r(){var e,n,t,r,s,i,a;for(var f in C)if(C.hasOwnProperty(f)){if(e=[],n=C[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(r=o(n.fn,"function")?n.fn():n.fn,s=0;s<e.length;s++)i=e[s],a=i.split("."),1===a.length?Modernizr[a[0]]=r:(!Modernizr[a[0]]||Modernizr[a[0]]instanceof Boolean||(Modernizr[a[0]]=new Boolean(Modernizr[a[0]])),Modernizr[a[0]][a[1]]=r),g.push((r?"":"no-")+a.join("-"))}}function s(e){var n=_.className,t=Modernizr._config.classPrefix||"";if(S&&(n=n.baseVal),Modernizr._config.enableJSClass){var o=new RegExp("(^|\\s)"+t+"no-js(\\s|$)");n=n.replace(o,"$1"+t+"js$2")}Modernizr._config.enableClasses&&(n+=" "+t+e.join(" "+t),S?_.className.baseVal=n:_.className=n)}function i(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):S?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function a(){var e=n.body;return e||(e=i(S?"svg":"body"),e.fake=!0),e}function f(e,t,o,r){var s,f,l,u,c="modernizr",d=i("div"),p=a();if(parseInt(o,10))for(;o--;)l=i("div"),l.id=r?r[o]:c+(o+1),d.appendChild(l);return s=i("style"),s.type="text/css",s.id="s"+c,(p.fake?p:d).appendChild(s),p.appendChild(d),s.styleSheet?s.styleSheet.cssText=e:s.appendChild(n.createTextNode(e)),d.id=c,p.fake&&(p.style.background="",p.style.overflow="hidden",u=_.style.overflow,_.style.overflow="hidden",_.appendChild(p)),f=t(d,e),p.fake?(p.parentNode.removeChild(p),_.style.overflow=u,_.offsetHeight):d.parentNode.removeChild(d),!!f}function l(e,n){return!!~(""+e).indexOf(n)}function u(e,n){return function(){return e.apply(n,arguments)}}function c(e,n,t){var r;for(var s in e)if(e[s]in n)return t===!1?e[s]:(r=n[e[s]],o(r,"function")?u(r,t||n):r);return!1}function d(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function p(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function m(n,o){var r=n.length;if("CSS"in e&&"supports"in e.CSS){for(;r--;)if(e.CSS.supports(p(n[r]),o))return!0;return!1}if("CSSSupportsRule"in e){for(var s=[];r--;)s.push("("+p(n[r])+":"+o+")");return s=s.join(" or "),f("@supports ("+s+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function h(e,n,r,s){function a(){u&&(delete j.style,delete j.modElem)}if(s=o(s,"undefined")?!1:s,!o(r,"undefined")){var f=m(e,r);if(!o(f,"undefined"))return f}for(var u,c,p,h,v,y=["modernizr","tspan"];!j.style;)u=!0,j.modElem=i(y.shift()),j.style=j.modElem.style;for(p=e.length,c=0;p>c;c++)if(h=e[c],v=j.style[h],l(h,"-")&&(h=d(h)),j.style[h]!==t){if(s||o(r,"undefined"))return a(),"pfx"==n?h:!0;try{j.style[h]=r}catch(g){}if(j.style[h]!=v)return a(),"pfx"==n?h:!0}return a(),!1}function v(e,n,t,r,s){var i=e.charAt(0).toUpperCase()+e.slice(1),a=(e+" "+T.join(i+" ")+i).split(" ");return o(n,"string")||o(n,"undefined")?h(a,n,r,s):(a=(e+" "+P.join(i+" ")+i).split(" "),c(a,n,t))}function y(e,n,o){return v(e,t,t,n,o)}var g=[],C=[],w={_version:"3.3.1",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){C.push({name:e,fn:n,options:t})},addAsyncTest:function(e){C.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=w,Modernizr=new Modernizr;var _=n.documentElement,x=w._config.usePrefixes?" -webkit- -moz- -o- -ms- ".split(" "):["",""];w._prefixes=x;var S="svg"===_.nodeName.toLowerCase(),b=w.testStyles=f;Modernizr.addTest("touchevents",function(){var t;if("ontouchstart"in e||e.DocumentTouch&&n instanceof DocumentTouch)t=!0;else{var o=["@media (",x.join("touch-enabled),("),"heartz",")","{#modernizr{top:9px;position:absolute}}"].join("");b(o,function(e){t=9===e.offsetTop})}return t});var z="Moz O ms Webkit",T=w._config.usePrefixes?z.split(" "):[];w._cssomPrefixes=T;var P=w._config.usePrefixes?z.toLowerCase().split(" "):[];w._domPrefixes=P;var E={elem:i("modernizr")};Modernizr._q.push(function(){delete E.elem});var j={style:E.elem.style};Modernizr._q.unshift(function(){delete j.style}),w.testAllProps=v,w.testAllProps=y,Modernizr.addTest("csstransforms",function(){return-1===navigator.userAgent.indexOf("Android 2.")&&y("transform","scale(1)",!0)}),r(),s(g),delete w.addTest,delete w.addAsyncTest;for(var N=0;N<Modernizr._q.length;N++)Modernizr._q[N]();e.Modernizr=Modernizr}(window,document);
+    </script>
+
+</head>
+
+<body>
+
+    <header class="page-header" role="banner">
+        <div class="page-bound">
+            <a href="index.htm" class="header-logo">
+                <img src="images/logo.png" alt="" class="header-logo__mark" />
+                <h1 class="header-logo__type">Tim drinks whiskies</h1>
+            </a>
+
+            <button type="button" class="page-nav__toggle" data-toggle-target="next"><img src="images/icon-plus.png" alt="Toggle menu" /></button>
+
+            <nav class="page-nav">
+                <a href="reviews.htm" class="page-nav__item"><span>Reviews</span></a>
+                <a href="articles.htm" class="page-nav__item"><span>Thoughts</span></a>
+                <a href="colophon.htm" class="page-nav__item page-nav__item--small"><span>Colophon</span></a>
+            </nav>
+        </div>
+    </header>
+
+
+    <section role="main">
+
+        <a class="title-bar title-bar--main" href="article.htm">
+            <span class="title-bar__label">Latest thing:</span>
+            <h1 class="title-bar__title">On the Consumption of Alcohol</h1>
+            <h2 class="title-bar__subtitle">And the Oddity of the Hobby</h2>
+        </a>
+
+        <div class="content">
+            <div class="page-bound">
+                <h3 class="align-center">More things:</h3>
+                <ul class="post-list margin-large">
+                    <li class="post-list__item">
+                        <a href="review.htm" class="post-list__anchor">
+                            <span class="post-list__label">Review</span>
+                            <h3 class="post-list__title">Rittenhouse</h3>
+                            <h3 class="post-list__subtitle">25-year Rye</h3>
+                            <p class="post-list__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, provident?</p>
+                            <img src="http://lorempixel.com/600/900" alt="" class="post-list__image" />
+                        </a>
+                    </li>
+                    <li class="post-list__item">
+                        <a href="review.htm" class="post-list__anchor">
+                            <span class="post-list__label">Review</span>
+                            <h3 class="post-list__title">Elijah Craig</h3>
+                            <h3 class="post-list__subtitle">Small Batch NAS</h3>
+                            <p class="post-list__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, neque?</p>
+                            <img src="http://lorempixel.com/599/900" alt="" class="post-list__image" />
+                        </a>
+                    </li>
+                    <li class="post-list__item">
+                        <a href="review.htm" class="post-list__anchor">
+                            <span class="post-list__label">Review</span>
+                            <h3 class="post-list__title">Westland</h3>
+                            <h3 class="post-list__subtitle">Sherry Wood</h3>
+                            <p class="post-list__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, perspiciatis.</p>
+                            <img src="http://lorempixel.com/598/900" alt="" class="post-list__image" />
+                        </a>
+                    </li>
+                    <li class="post-list__item">
+                        <a href="review.htm" class="post-list__anchor">
+                            <span class="post-list__label">Review</span>
+                            <h3 class="post-list__title">Westland</h3>
+                            <h3 class="post-list__subtitle">Original Single-Malt</h3>
+                            <p class="post-list__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, harum.</p>
+                            <img src="http://lorempixel.com/597/900" alt="" class="post-list__image" />
+                        </a>
+                    </li>
+                    <li class="post-list__item">
+                        <a href="review.htm" class="post-list__anchor">
+                            <span class="post-list__label">Article</span>
+                            <h3 class="post-list__title">Tasting Whiskey Effectively</h3>
+                            <p class="post-list__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, harum.</p>
+                            <img src="http://lorempixel.com/596/900" alt="" class="post-list__image" />
+                        </a>
+                    </li>
+                    <li class="post-list__item">
+                        <a href="review.htm" class="post-list__anchor">
+                            <span class="post-list__label">Review</span>
+                            <h3 class="post-list__title">Colonel E.H. Taylor</h3>
+                            <h3 class="post-list__subtitle">Barrel Proof, Batch 3</h3>
+                            <p class="post-list__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, neque.</p>
+                            <img src="http://lorempixel.com/595/900" alt="" class="post-list__image" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="home-actions grid">
+                    <div class="home-actions__item grid__unit grid__unit--1-2-s">
+                        <a href="reviews.htm" class="button button--highlight home-actions__action">All reviews</a>
+                    </div>
+                    <div class="home-actions__item grid__unit grid__unit--1-2-s">
+                        <a href="articles.htm" class="button home-actions__action">All articles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <footer class="page-footer" role="contentinfo">
+        <div class="page-bound">
+            <p>&copy; 2016 Tim Gavlick. <a href="colophon.htm">Colophon</a></p>
+        </div>
+    </footer><!-- .review -->
+
+
+    <script src="js/scripts.js"></script>
+
+</body>
+
+</html>
