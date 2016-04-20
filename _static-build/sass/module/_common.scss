@@ -49,13 +49,13 @@ a {
   padding: $line/2 $line;
   font-weight: 700;
   text-align: center;
-  background: $primary-dark url('../images/bg-polygons.svg') no-repeat 0 -94px;
+  background: $accent-dark url('../images/bg-polygons.svg') no-repeat 0 -94px;
   color: $bg;
   &--highlight {
     background-position: 0 90%;
   }
   &:hover {
-    background-color: $primary;
+    background-color: lighten($accent-dark, 8%);
   }
 }
 

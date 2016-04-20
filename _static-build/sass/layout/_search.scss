@@ -17,6 +17,7 @@ Search Pages
     // background-size: auto 400%, auto;
     a {
         @extend a.bow;
+        box-shadow: none
     }
     &__facet {
         &__title {
@@ -27,6 +28,7 @@ Search Pages
             margin-left: 0;
         }
         &__item {
+            @extend .title;
             padding-left: $line/2;
             text-indent: -$line/2;
             &.is-current {
@@ -69,7 +71,7 @@ Search Pages
 
 
 @media #{$max-l} {
-    .search-refine:not(.is-active), .search-refine__title {
+    .search-refine:not(.is-active) {
         display: none;
     }
 }
@@ -77,34 +79,38 @@ Search Pages
 
 @media #{$min-l} {
     .search-layout {
-        max-width: $page-width*2;
+        max-width: $page-width*4/3;
         padding: 0 $line*2;
         margin: 0 auto;
     }
-    .search-refine, .search-content {
-        width: 50%;
-        padding: 0;
-    }
     .search-refine {
+        width: 25%;
+        padding: 0;
         float: left;
         padding-right: $line;
     }
     .search-content {
+        width: 75%;
+        padding: 0;
         float: right;
-        padding-left: $line;
     }
 
     .search-refine {
         &__toggle {
             display: none;
         }
-        &__title {
-            font-weight: 400;
-            opacity: 0.5;
-        }
     }
 
     .search-current-filters {
-        padding: $line*1.5 $line*2;
+        padding: $line*2 $line*2;
+    }
+}
+
+
+@media (min-width: $page-width*2) {
+    .search-layout {
+        padding: 0;
+        position: relative;
+        left: -$page-width/6;
     }
 }
