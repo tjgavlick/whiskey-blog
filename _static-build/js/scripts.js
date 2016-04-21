@@ -229,9 +229,9 @@ var WHISKIES = (function (window, document) {
 
     function addParallax() {
         var parallaxEl = document.querySelector('.article-image__positioner'),
+            parallaxScale = 10,
             pageHeight = 0,
             effectiveHeight = 0,
-            parallaxScale = 20,
             currentTransform = 0;
 
         function updatePageHeight() {

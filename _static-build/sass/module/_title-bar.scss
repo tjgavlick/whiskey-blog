@@ -31,6 +31,7 @@ Title Bars
     }
     &__title, &__subtitle {
         display: inline-block;
+        word-wrap: break-word;
     }
     &__title {
         font-weight: 900;

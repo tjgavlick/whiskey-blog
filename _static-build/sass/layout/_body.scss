@@ -36,6 +36,9 @@ body {
 
 
 @media #{$min-m} {
+    body {
+        background: $bg url('../images/bg-barrels.jpg') no-repeat 50% 0;
+    }
     .content {
         padding: $line*2;
     }

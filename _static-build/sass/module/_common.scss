@@ -59,22 +59,6 @@ a {
   }
 }
 
-.article-related {
-    margin: 0 (-$line) $line;
-    padding: $line;
-    font-style: italic;
-    color: $bg;
-    color: transparentize($bg, 0.2);
-    background: $primary;
-    background: url('../images/bg-polygons.svg') no-repeat 0 100%,
-                linear-gradient(to right, $primary-dark, $accent-dark);
-    a {
-        @extend a.wob;
-        @extend .title;
-        font-style: normal;
-    }
-}
-
 figure {
     img {
         padding: 4px;
@@ -102,12 +86,4 @@ figure {
 
 .group {
   @include clear;
-}
-
-
-@media #{$min-m} {
-    .article-related {
-        margin: $line*2 (-$line*2);
-        padding: $line $line*2;
-    }
 }

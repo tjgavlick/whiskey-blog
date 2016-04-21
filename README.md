@@ -6,3 +6,7 @@ Initial thoughts on software are Python 3.5, Flask, Postgres, SQLAlchemy, and ng
 
 More to come ...
 
+---
+
+MIT license. Please let me know if you use some part of this, as well as give credit on the work itself.
+

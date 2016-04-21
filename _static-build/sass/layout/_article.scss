@@ -6,6 +6,31 @@ Article
 */
 
 
+.article-related {
+    margin: 0 (-$line) $line;
+    padding: $line;
+    font-style: italic;
+    color: $bg;
+    color: transparentize($bg, 0.2);
+    background: $primary;
+    background: url('../images/bg-polygons.svg') no-repeat 0 100%,
+                linear-gradient(to right, $primary-dark, $accent-dark);
+    a {
+        @extend a.wob;
+        @extend .title;
+        font-style: normal;
+    }
+}
+
+p.article-reference {  // specificity over p:last-child rule
+    margin-bottom: $line;
+}
+.article-reference a {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+
 // get article images out of the way due to messy media queries
 @media #{$max-s} {
     .article-image {
@@ -31,6 +56,18 @@ Article
         &__positioner {
             transform: none !important;
         }
+    }
+}
+
+
+@media #{$min-m} {
+    .article-related {
+        margin: $line (-$line*2);
+        padding: $line $line*2;
+    }
+
+    .article-reference a {
+        margin-right: 2em;
     }
 }
 
