@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+
+    <title>Admin // Tim drinks whiskies</title>
+
+    <link rel="stylesheet" href="style/public.css" />
+
+</head>
+
+<body>
+
+    <header class="page-header" role="banner">
+        <div class="page-bound">
+            <a href="add-post.htm" class="header-logo">
+                <img src="images/logo.png" alt="" class="header-logo__mark" />
+                <h1 class="header-logo__type">Tim drinks whiskies</h1>
+            </a>
+
+            <button type="button" class="page-nav__toggle" data-toggle-target="next"><img src="images/icon-plus.png" alt="Toggle menu" /></button>
+
+            <nav class="page-nav">
+                <a href="admin-edit-review.htm" class="page-nav__item"><span>New review</span></a>
+                <a href="admin-edit-article.htm" class="page-nav__item"><span>New article</span></a>
+                <a href="admin-list-posts.htm" class="page-nav__item"><span>Manage</span></a>
+            </nav>
+        </div>
+    </header>
+
+
+    <section role="main">
+        <div class="content">
+            <form class="page-bound" action="" method="POST">
+                <h1>Add a Review</h1>
+
+                <h2>Basics</h2>
+
+                <label class="form-label">
+                    <span class="form-label__text">Title</span>
+                    <input type="text" name="title" />
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Subtitle</span>
+                    <input type="text" name="subtitle" />
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Main image</span>
+                    <input type="file" name="mainimage" />
+                    <p class="form-label__help">600x900, approx</p>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">List image</span>
+                    <input type="file" name="listimage" />
+                    <p class="form-label__help">300x300, approx</p>
+                </label>
+
+
+                <h2>Stats</h2>
+
+                <label class="form-label">
+                    <span class="form-label__text">Type</span>
+                    <select name="type">
+                        <option value="americanmalt">American malt</option>
+                        <option value="bourbon">Bourbon</option>
+                        <option value="rye">Rye</option>
+                        <option value="blendedscotch">Scotch (blended)</option>
+                        <option value="singlemaltscotch">Scotch (single-malt)</option>
+                        <option value="world">World</option>
+                        <option value="other">Other</option>
+                    </select>
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Age (years)</span>
+                    <input type="number" name="age" min="-1" max="100" step="0.5" />
+                    <p class="form-label__help">Enter -1 for unknown/NAS</p>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Proof</span>
+                    <input type="number" name="proof" min="80" max="200" step="0.1" />
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">MSRP (USD)</span>
+                    <input type="number" name="price" min="0" max="2000" />
+                </label>
+                <div class="grid grid--compact">
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Mashbill description</span>
+                            <input type="text" name="mashbilldescription" />
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Mashbill</span>
+                            <input type="text" name="mashbill" />
+                        </label>
+                    </div>
+                </div>
+
+                <label class="form-label">
+                    <span class="form-label__text">Distiller</span>
+                    <select name="distiller">
+                        <option value="unknown">Unknown/NDP</option>
+                        <option value="newbernheim">Bernheim (new)</option>
+                        <option value="oldbernheim">Bernheim (old)</option>
+                        <option value="brownforman">Brown-Forman</option>
+                        <option value="buffalotrace">Buffalo Trace</option>
+                        <option value="fourroses">Four Roses</option>
+                        <option value="heavenhill">Heaven Hill</option>
+                        <option value="stitzelweller">Stitzel-Weller</option>
+                        <option value="other">Other</option>
+                    </select>
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Rarity</span>
+                    <select name="distiller">
+                        <option value="10">Common</option>
+                        <option value="20">Uncommon</option>
+                        <option value="30">Rare</option>
+                        <option value="40">Not happening</option>
+                    </select>
+                </label>
+
+
+                <h2>Content</h2>
+
+                <label class="form-label">
+                    <span class="form-label__text">Review body</span>
+                    <textarea name="body"></textarea>
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Related</span>
+                    <input type="text" name="related" />
+                    <p class="form-label__help">Comma-separated list of post ids</p>
+                </label>
+
+                <button type="submit" class="button">Save</button>
+            </form>
+        </div>
+    </section>
+
+
+    <footer class="page-footer" role="contentinfo">
+        <div class="page-bound">
+            <p><a href="index.htm">Homepage</a>, <a href="https://github.com/tjgavlick/whiskey-blog" target="_blank">GitHub</a></p>
+        </div>
+    </footer><!-- .review -->
+
+
+    <script src="js/scripts.js"></script>
+    <script src="js/admin.js"></script>
+
+</body>
+
+</html>

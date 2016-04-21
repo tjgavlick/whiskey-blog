@@ -262,6 +262,7 @@ var WHISKIES = (function (window, document) {
     }
 
 
+    // add a full-height gradient to post lists
     function colorizePostList(postList) {
         var items = toArray(postList.children),
             startColor = [11, 108, 115],  // #0b6c73
@@ -278,6 +279,16 @@ var WHISKIES = (function (window, document) {
         });
     }
     forEach(document.getElementsByClassName('post-list'), colorizePostList);
+
+
+    // add some html to post bodies that I can't do with markdown
+    function beautifyPost(post) {
+        // add title-note <span>s to parens in headings
+        forEach(post.querySelectorAll('h1, h2, h3'), function (heading) {
+            heading.innerHTML = heading.innerHTML.replace(/\(.*?\)/g, '<span class="title-note">$&</span>');
+        });
+    }
+    forEach(document.getElementsByClassName('article-body'), beautifyPost);
 
 
     //////////////////////

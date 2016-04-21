@@ -8,11 +8,10 @@
 // global typography
 @import "base/_typography.scss";
 
-// global components/states
+// common components
 @import "module/_common.scss";
-
-// utility grids
 @import "module/_grids.scss";
+@import "module/_forms.scss";
 
 // layouts
 @import "layout/_body.scss";
@@ -22,7 +21,7 @@
 @import "layout/_article.scss";
 @import "layout/_search.scss";
 
-// modules
+// specialized components
 @import "module/_title-bar.scss";
 @import "module/_post-list.scss";
 @import "module/_colophon.scss";
