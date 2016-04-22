@@ -1,0 +1,44 @@
+/*
+
+Forms
+-----
+
+*/
+
+
+.form-label {
+    display: block;
+    margin-bottom: $line;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    &__text {
+        @extend .title;
+        display: block;
+        color: $gray-light;
+    }
+    &__help {
+        font-style: italic;
+        font-size: $milli;
+        opacity: 0.6;
+    }
+}
+
+input[type="text"], input[type="number"], select, textarea {
+    display: block;
+    width: 100%;
+    padding: $line/4 $line/2;
+    background: $bg;
+    border: 1px solid $gray-light;
+    &:focus {
+        border-color: $primary;
+    }
+}
+
+textarea {
+    @extend .copy;
+    min-height: $line*20;
+    font-size: $text;
+    line-height: $line;
+    padding: $line/2;
+}

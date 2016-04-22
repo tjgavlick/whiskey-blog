@@ -1,0 +1,42 @@
+{% macro title_bar(title, subtitle='', modifier='', prefix='', url='') -%}
+    {% if url %}
+        <a class="title-bar title-bar--{{ modifier }}" href="{{ url }}">
+    {% else %}
+        <header class="title-bar title-bar--{{ modifier }}">
+    {% endif %}
+
+        {% if prefix %}
+            <span class="title-bar__label">{{ prefix }}</span>
+        {% endif %}
+        <h1 class="title-bar__title">{{ title }}</h1>
+        {% if subtitle %}
+            <h2 class="title-bar__subtitle">{{ subtitle }}</h2>
+        {% endif %}
+
+    {% if url %}
+        </a>
+    {% else %}
+        </header>
+    {% endif %}
+{%- endmacro %}
+
+
+{% macro post_list_item(title, subtitle='', description='', category='', image='', url='') -%}
+    <li class="post-list__item">
+        <a href="{{ url }}" class="post-list__anchor">
+            {% if category %}
+                <span class="post-list__label">{{ category }}</span>
+            {% endif %}
+            <h3 class="post-list__title">{{ title }}</h3>
+            {% if subtitle %}
+                <h3 class="post-list__subtitle">{{ subtitle }}</h3>
+            {% endif %}
+            {% if description %}
+                <p class="post-list__description">{{ description }}</p>
+            {% endif %}
+            {% if image %}
+                <img src="{{ image }}" alt="" class="post-list__image" />
+            {% endif %}
+        </a>
+    </li>
+{%- endmacro %}

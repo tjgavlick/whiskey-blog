@@ -1,0 +1,45 @@
+/*
+
+Body
+----
+
+Sets the stage for the main content areas of the site
+
+*/
+
+body {
+    width: 100%;
+    background-color: $bg;
+    overflow-x: hidden;
+}
+
+.content {
+    padding: $line;
+}
+.page-bound {
+    max-width: $page-width;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.browser-message {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: $line/2 $line;
+    text-align: center;
+    z-index: 50;
+    background: $bg;
+    border-bottom: 2px solid $primary;
+}
+
+
+@media #{$min-m} {
+    body {
+        background: $bg url('../images/bg-barrels.jpg') no-repeat 50% 0;
+    }
+    .content {
+        padding: $line*2;
+    }
+}

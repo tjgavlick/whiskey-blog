@@ -1,0 +1,18 @@
+/*
+
+Colophon
+--------
+
+*/
+
+
+.colophon {
+    text-align: center;
+    &__text {
+        @extend .copy;
+        margin: $line 0 0;
+        font-size: $text;
+        line-height: $line;
+    }
+
+}

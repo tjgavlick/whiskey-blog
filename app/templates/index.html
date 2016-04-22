@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <section role="main">
+
+        {% for post in posts if post.published %}
+            {% if loop.first %}
+                {{ includes.title_bar(post.title,
+                                      subtitle=post.subtitle,
+                                      url=post.url,
+                                      modifier='main',
+                                      prefix='Latest thing:') }}
+            {% endif %}
+        {% endfor %}
+
+        <div class="content">
+            <div class="page-bound">
+                <h4 class="home-more-title">More things:</h4>
+                <ul class="post-list margin-large">
+                    {% for post in posts if post.published %}
+                        {% if not loop.first %}
+                            {{ includes.post_list_item(post.title,
+                                                       subtitle=post.subtitle,
+                                                       description=post.description,
+                                                       category=post.category,
+                                                       image=post.image,
+                                                       url=post.url) }}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <div class="home-actions grid">
+                    <div class="home-actions__item grid__unit grid__unit--1-2-s">
+                        <a href="{{ url_for('review_list') }}" class="button button--highlight home-actions__action">All reviews</a>
+                    </div>
+                    <div class="home-actions__item grid__unit grid__unit--1-2-s">
+                        <a href="{{ url_for('article_list') }}" class="button home-actions__action">All articles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

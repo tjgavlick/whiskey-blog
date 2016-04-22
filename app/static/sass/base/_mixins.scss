@@ -1,0 +1,74 @@
+// prefixers
+
+@mixin prefix($prop, $params) {
+    -webkit-#{$prop}: $params;
+    -moz-#{$prop}: $params;
+    -ms-#{$prop}: $params;
+    -o-#{$prop}: $params;
+    #{$prop}: $params;
+}
+
+@mixin prefix-w($prop, $params) {
+    -webkit-#{$prop}: $params;
+    #{$prop}: $params;
+}
+
+@mixin prefix-wm($prop, $params) {
+    -webkit-#{$prop}: $params;
+    -moz-#{$prop}: $params;
+    #{$prop}: $params;
+}
+
+@mixin prefix-wms($prop, $params) {
+    -webkit-#{$prop}: $params;
+    -ms-#{$prop}: $params;
+    #{$prop}: $params;
+}
+
+@mixin prefix-wmo($prop, $params) {
+    -webkit-#{$prop}: $params;
+    -moz-#{$prop}: $params;
+    -o-#{$prop}: $params;
+    #{$prop}: $params;
+}
+
+@mixin transition($prop: all, $duration: 0.2s, $easing: ease-in-out) {
+    -webkit-transition: $prop $duration $easing;
+    transition: $prop $duration $easing;
+}
+
+@mixin linear-gradient($params...) {
+    background-image: -webkit-linear-gradient($params);
+    background-image: linear-gradient($params);
+}
+
+@mixin blur($radius: 8) {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='effect-blur-1'><feGaussianBlur stdDeviation='" + $radius + "' /></filter></svg>#effect-blur-1");
+    -webkit-filter: blur(#{$radius}px);
+    -moz-filter: blur(#{$radius}px);
+    filter: blur(#{$radius}px);
+}
+
+
+// box-sizing: border-box
+
+@mixin box-sizing {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    .lt-ie8 & {
+        behavior: url('js/boxsizing.htc');
+    }
+}
+
+
+// expanded clearfix
+
+@mixin clear {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+ 

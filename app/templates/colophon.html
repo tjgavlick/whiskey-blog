@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <article role="main">
+
+        {{ includes.title_bar('Colophon', modifier='main') }}
+
+        <section class="colophon content">
+            <div class="page-bound">
+
+                <pre class="colophon__text">
+<i>Tim drinks whiskies</i>
+was hand-written in
+<a href="http://www.sublimetext.com/" target="_blank">Sublime Text</a>. It uses
+HTML5, CSS3, and just
+a touch of vanilla JS for
+the frontend. On the flip
+side, it's being delivered to
+you using Python with <a href="http://flask.pocoo.org/" target="_blank">Flask</a>,
+served via <a href="https://www.nginx.com/" target="_blank">nginx</a>, and stored in
+<a href="http://www.postgresql.org/" target="_blank">Postgres</a> by way of <a href="http://www.sqlalchemy.org/" target="_blank">SQLAlchemy</a>.
+It's typeset in <a href="https://www.google.com/fonts/specimen/Lora" target="_blank"><i>Lora</i></a> by <a href="http://www.cyreal.org/" target="_blank">Cyreal</a> and
+<a href="https://www.google.com/fonts/specimen/Lato" target="_blank"><i>Lato</i></a> by <a href="https://www.fontfont.com/designers/lukasz-dziedzic" target="_blank">Łukasz Dziedzic</a>, both
+under the SIL Open Font
+License. Photographs
+were taken with
+a Sony NEX-6,
+and design was in
+<a href="http://www.sketchapp.com/" target="_blank">Sketch</a>. Find me on <a href="https://github.com/tjgavlick/whiskey-blog" target="_blank">GitHub</a>
+                </pre>
+
+            </div>
+        </section>
+    </article>
+{% endblock %}

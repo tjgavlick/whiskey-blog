@@ -5,4 +5,3 @@ app.config.from_object('config.DevelopmentConfig')
 db = None
 
 from app import views, models
-
