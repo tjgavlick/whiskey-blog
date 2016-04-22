@@ -3,6 +3,10 @@
 _static-build/assets/
 _static-build/style/
 
+# python #
+__pycache__/
+ve/
+
 # os crud #
 .DS_Store
 .DS_Store?
