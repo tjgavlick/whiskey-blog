@@ -1,7 +1,7 @@
 class Config(object):
     DEBUG = False
     SECRET_KEY = 'changeme'
-    DATABASE_URI = 'sqlite://:memory:'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 
 class DevelopmentConfig(Config):
     DEBUG = True

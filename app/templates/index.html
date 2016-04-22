@@ -3,7 +3,7 @@
 {% block body %}
     <section role="main">
 
-        {% for post in posts if post.published %}
+        {% for post in posts if post.is_published %}
             {% if loop.first %}
                 {{ includes.title_bar(post.title,
                                       subtitle=post.subtitle,
@@ -17,7 +17,7 @@
             <div class="page-bound">
                 <h4 class="home-more-title">More things:</h4>
                 <ul class="post-list margin-large">
-                    {% for post in posts if post.published %}
+                    {% for post in posts if post.is_published %}
                         {% if not loop.first %}
                             {{ includes.post_list_item(post.title,
                                                        subtitle=post.subtitle,
