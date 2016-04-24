@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "admin_base.html" %}
 
 {% block body %}
     <section role="main">
@@ -14,8 +14,10 @@
 
                 <label class="form-label">
                     <span class="form-label__text">Name</span>
-                    <input type="text" name="name" />
+                    <input type="text" name="name" value="{{ drink_type.name }}" tabindex="1" />
                 </label>
+
+                <button class="button" type="submit">Save</button>
             </form>
         </div>
     </section>
