@@ -84,12 +84,11 @@ The global page header
                 color: mix($primary-light, $accent, 60%);
             }
             &:nth-child(3) {
-                // color: mix($primary-light, $accent, 75%);
+                color: mix($primary-light, $accent, 30%);
+            }
+            &:nth-child(4) {
                 color: $primary-light;
             }
-            // &:nth-child(4) {
-            //     color: $primary-light;
-            // }
         }
         .js & {
             position: fixed;
@@ -166,6 +165,12 @@ The global page header
                 span {
                     box-shadow: 0 2px 0 $bg, 0 6px 0 $primary;
                 }
+            }
+        }
+        .page-header--admin & {
+            margin-right: -$line/2;
+            &__item {
+                padding: $line $line/2;
             }
         }
     }

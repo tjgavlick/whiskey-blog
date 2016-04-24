@@ -25,7 +25,7 @@
 
 <body>
 
-    <header class="page-header {% block headermodifier %}{% endblock %}" role="banner">
+    <header class="page-header page-header--admin {% block headermodifier %}{% endblock %}" role="banner">
         <div class="page-bound">
             <a href="{{ url_for('index') }}" class="header-logo">
                 <img src="/static/images/logo.png" alt="" class="header-logo__mark" />
@@ -35,6 +35,7 @@
             <button type="button" class="page-nav__toggle" data-toggle-target="next"><img src="/static/images/icon-plus.png" alt="Toggle menu" /></button>
 
             <nav class="page-nav">
+                <a href="{{ url_for('admin_list_reviews') }}" class="page-nav__item"><span>Reviews</span></a>
                 <a href="{{ url_for('admin_list_drinktypes') }}" class="page-nav__item"><span>Types</span></a>
                 <a href="{{ url_for('admin_list_origins') }}" class="page-nav__item"><span>Origins</span></a>
                 <a href="{{ url_for('admin_list_distillers') }}" class="page-nav__item"><span>Distillers</span></a>

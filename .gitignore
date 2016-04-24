@@ -5,7 +5,7 @@
 _static-build/assets/
 _static-build/style/
 app/static/assets/
-app/static/style/
+app/static/style/*
 
 # python #
 __pycache__/

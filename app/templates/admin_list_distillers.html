@@ -8,8 +8,8 @@
                 <ul>
                     {% for distiller in distillers %}
                         <li><p>
-                            <a href="/admin/distiller/{{ distiller.id }}">{{ distiller.name }}</a>
-                            <a href="/admin/distiller/remove/{{ distiller.id }}">(delete)</a>
+                            <a href="{{ url_for('admin_edit_distiller', distiller_id=distiller.id) }}">{{ distiller.name }}</a>
+                            <a href="{{ url_for('admin_remove_distiller', distiller_id=distiller.id) }}">(delete)</a>
                         </p></li>
                     {% else %}
                         <li><p>No distillers added yet. <a href="{{ url_for('admin_new_distiller') }}">Add one</a>.</p></li>

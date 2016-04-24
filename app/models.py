@@ -7,25 +7,26 @@ from app import db
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(255))
-    date_posted = db.Column(db.DateTime)
     is_published = db.Column(db.Boolean)
+    date_posted = db.Column(db.DateTime)
     title = db.Column(db.String(200))
     subtitle = db.Column(db.String(200))
-    rating = db.Column(db.Float)
-    # TODO: rating range
     image_main = db.Column(db.String(255))
     image_list = db.Column(db.String(255))
-    age = db.Column(db.Float)
-    # TODO: age range
-    proof = db.Column(db.Float)
-    # TODO: proof range
-    price = db.Column(db.Float)
-    # TODO: price range
+    rating_low = db.Column(db.Float)
+    rating_high = db.Column(db.Float)
+    age_low = db.Column(db.Float)
+    age_high = db.Column(db.Float)
+    proof_low = db.Column(db.Float)
+    proof_high = db.Column(db.Float)
+    price_low = db.Column(db.Float)
+    price_high = db.Column(db.Float)
     mashbill = db.Column(db.String(100))
     mashbill_description = db.Column(db.String(50))
     rarity = db.Column(db.Integer)
     color = db.Column(db.Integer)
     body = db.Column(db.Text)
+    abstract = db.Column(db.Text)
 
     drink_type_id = db.Column(db.Integer, db.ForeignKey('drink_type.id'))
     drink_type = db.relationship('DrinkType', backref=db.backref('reviews', lazy='dynamic'))
@@ -36,34 +37,41 @@ class Review(db.Model):
     origin_id = db.Column(db.Integer, db.ForeignKey('origin.id'))
     origin = db.relationship('Origin', backref=db.backref('reviews', lazy='dynamic'))
 
-    def __init__(self, url=None, is_published=False,
-                 date_posted=None, title=None, subtitle=None, rating=None, image_main=None,
-                 image_list=None, drink_type_id=None, age=None, proof=None, price=None,
-                 mashbill=None, mashbill_description=None, distiller_id=None, origin_id=None,
-                 rarity=None, color=None, body=None):
-        if url is None:
-            tmp_url = '_'.join(title.split(' ') + subtitle.split(' '))
-            self.url = re.sub(r'[^a-zA-Z0-9_]', '', tmp_url)
+    def __init__(self, url=None, is_published=False, date_posted=None,
+                 title=None, subtitle=None, rating_low=None, rating_high=None,
+                 image_main=None, image_list=None, age_low=None, age_high=None,
+                 proof_low=None, proof_high=None, price_low=None, price_high=None,
+                 mashbill=None, mashbill_description=None, rarity=None,
+                 color=None, body=None, abstract=None, drink_type_id=None,
+                 distiller_id=None, origin_id=None):
+
         if date_posted is None:
             date_posted = datetime.utcnow()
-        self.date_posted = date_posted
+
+        self.url = url
         self.is_published = is_published
+        self.date_posted = date_posted
         self.title = title
         self.subtitle = subtitle
-        self.rating = rating
         self.image_main = image_main
         self.image_list = image_list
-        self.drink_type_id = drink_type_id
-        self.age = age
-        self.proof = proof
-        self.price = price
+        self.rating_low = rating_low
+        self.rating_high = rating_high
+        self.age_low = age_low
+        self.age_high = age_high
+        self.proof_low = proof_low
+        self.proof_high = proof_high
+        self.price_low = price_low
+        self.price_high = price_high
         self.mashbill = mashbill
         self.mashbill_description = mashbill_description
-        self.distiller_id = distiller_id
-        self.origin_id = origin_id
         self.rarity = rarity
         self.color = color
         self.body = body
+        self.abstract = abstract
+        self.drink_type_id = drink_type_id
+        self.distiller_id = distiller_id
+        self.origin_id = origin_id
 
     def __repr__(self):
         return '<Review #{} - {} {}>'.format(self.id, self.title, self.subtitle)

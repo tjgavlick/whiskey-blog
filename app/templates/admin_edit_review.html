@@ -1,0 +1,177 @@
+{% extends "admin_base.html" %}
+
+{% block body %}
+    <section role="main">
+        <div class="content">
+            <form action="{{ url_for('admin_save_review') }}" method="POST" class="page-bound">
+                {% if review %}
+                    <p>Editing review #{{ review.id }}: {{ review.name }}</p>
+                    <input type="hidden" name="id" value="{{ review.id }}" />
+                {% else %}
+                    <p>New review</p>
+                    <input type="hidden" name="id" value="0" />
+                {% endif %}
+
+                <h1>Basics</h1>
+
+                <label class="form-label">
+                    <span class="form-label__text">Title</span>
+                    <input type="text" name="title" value="{{ review.title }}" />
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Subtitle</span>
+                    <input type="text" name="subtitle" value="{{ review.subtitle }}" />
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Custom URL</span>
+                    <input type="text" name="url" value="{{ review.url }}" />
+                    <p class="form-label__help">If blank, a url will be generated from the title and subtitle</p>
+                </label>
+
+                <label class="form-label">
+                    <input type="checkbox" name="is_published" value="yes" {% if review.is_published %}checked="checked"{% endif %} />
+                    <span class="form-label__text">Publish</span>
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Main image</span>
+                    <input type="text" name="image_main" value="{{ review.image_main }}" />
+                    <p class="form-label__help">Large review detail image. 600x900, approx</p>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">List image</span>
+                    <input type="text" name="image_list" value="{{ review.image_list }}" />
+                    <p class="form-label__help">List background image. 300x300, approx</p>
+                </label>
+
+
+                <h2>Stats</h2>
+
+                <label class="form-label">
+                    <span class="form-label__text">Drink Type</span>
+                    <select name="drink_type_id">
+                        {% for drink_type in drink_types %}
+                            <option value="{{ drink_type.id }}"{% if drink_type.id == review.drink_type_id %} selected="selected"{% endif %}>{{ drink_type.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Distiller</span>
+                    <select name="distiller_id">
+                        {% for distiller in distillers %}
+                            <option value="{{ distiller.id }}"{% if distiller.id == review.distiller_id %} selected="selected"{% endif %}>{{ distiller.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Origin</span>
+                    <select name="origin_id">
+                        {% for origin in origins %}
+                            <option value="{{ origin.id }}"{% if origin.id == review.origin_id %} selected="selected"{% endif %}>{{ origin.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Rarity</span>
+                    <select name="rarity">
+                        <option value="10" {% if review.rarity == 10 %}selected="selected"{% endif %}>Common</option>
+                        <option value="20" {% if review.rarity == 20 %}selected="selected"{% endif %}>Uncommon</option>
+                        <option value="30" {% if review.rarity == 30 %}selected="selected"{% endif %}>Rare</option>
+                        <option value="40" {% if review.rarity == 40 %}selected="selected"{% endif %}>Not happening</option>
+                    </select>
+                </label>
+
+                <div class="grid grid--compact">
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Age low (years)</span>
+                            <input type="number" name="age_low" min="-1" max="100" step="0.5" value="{{ review.age_low }}" />
+                            <p class="form-label__help">Enter -1 for unknown/NAS</p>
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Age high (years)</span>
+                            <input type="number" name="age_high" min="-1" max="100" step="0.5" value="{{ review.age_high }}" />
+                            <p class="form-label__help">Blank for no range</p>
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Proof low</span>
+                            <input type="number" name="proof_low" min="80" max="200" step="0.1" value="{{ review.proof_low }}" />
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Proof high</span>
+                            <input type="number" name="proof_high" min="80" max="200" step="0.1" value="{{ review.proof_high }}" />
+                            <p class="form-label__help">Blank for no range</p>
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">MSRP low (USD)</span>
+                            <input type="number" name="price_low" min="0" max="2000" value="{{ review.price_low }}" />
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">MSRP high (USD)</span>
+                            <input type="number" name="price_high" min="0" max="2000" value="{{ review.price_high }}" />
+                            <p class="form-label__help">Blank for no range</p>
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Mashbill description</span>
+                            <input type="text" name="mashbill_description" value="{{ review.mashbill_description }}" />
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Mashbill breakdown</span>
+                            <input type="text" name="mashbill" value="{{ review.mashbill }}" />
+                        </label>
+                    </div>
+                </div>
+
+                <label class="form-label">
+                    <span class="form-label__text">Color</span>
+                    <input type="range" name="color" min="1" max="10" step="1" value="{{ review.color }}" />
+                </label>
+
+
+                <h2>Content</h2>
+
+                <label class="form-label">
+                    <span class="form-label__text">Review body</span>
+                    <textarea name="body">{{ review.body }}</textarea>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Review abstract</span>
+                    <textarea name="abstract">{{ review.abstract }}</textarea>
+                </label>
+
+                <div class="grid grid--compact">
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Rating low (1-100)</span>
+                            <input type="number" name="rating_low" min="1" max="100" step="0.1" value="{{ review.rating_low }}" />
+                        </label>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-s">
+                        <label class="form-label">
+                            <span class="form-label__text">Rating high (1-100)</span>
+                            <input type="number" name="rating_high" min="1" max="100" step="0.1" value="{{ review.rating_high }}" />
+                        </label>
+                    </div>
+                </div>
+
+                <button class="button" type="submit">Save</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

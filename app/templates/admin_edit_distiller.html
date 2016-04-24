@@ -3,7 +3,7 @@
 {% block body %}
     <section role="main">
         <div class="content">
-            <form action="{{ url_for('save_distiller') }}" method="POST" class="page-bound">
+            <form action="{{ url_for('admin_save_distiller') }}" method="POST" class="page-bound">
                 {% if distiller %}
                     <p>Editing distiller #{{ distiller.id }}: {{ distiller.name }}</p>
                     <input type="hidden" name="id" value="{{ distiller.id }}" />
