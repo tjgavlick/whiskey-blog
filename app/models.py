@@ -1,12 +1,12 @@
+import re
 from datetime import datetime
 
 from app import db
 
 
 class Review(db.Model):
-    # __tablename__ = 'reviews'
-
     id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(255))
     date_posted = db.Column(db.DateTime)
     is_published = db.Column(db.Boolean)
     title = db.Column(db.String(200))
@@ -36,11 +36,14 @@ class Review(db.Model):
     origin_id = db.Column(db.Integer, db.ForeignKey('origin.id'))
     origin = db.relationship('Origin', backref=db.backref('reviews', lazy='dynamic'))
 
-    def __init__(self, is_published=False,
+    def __init__(self, url=None, is_published=False,
                  date_posted=None, title=None, subtitle=None, rating=None, image_main=None,
                  image_list=None, drink_type_id=None, age=None, proof=None, price=None,
                  mashbill=None, mashbill_description=None, distiller_id=None, origin_id=None,
                  rarity=None, color=None, body=None):
+        if url is None:
+            tmp_url = '_'.join(title.split(' ') + subtitle.split(' '))
+            self.url = re.sub(r'[^a-zA-Z0-9_]', '', tmp_url)
         if date_posted is None:
             date_posted = datetime.utcnow()
         self.date_posted = date_posted

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <section role="main">
+        <div class="content">
+            <form action="{{ url_for('save_drinktype') }}" method="POST" class="page-bound">
+                {% if drink_type %}
+                    <p>Editing drink #{{ drink_type.id }}: {{ drink_type.name }}</p>
+                    <input type="hidden" name="id" value="{{ drink_type.id }}" />
+                {% else %}
+                    <p>New drink type</p>
+                    <input type="hidden" name="id" value="0" />
+                {% endif %}
+
+                <label class="form-label">
+                    <span class="form-label__text">Name</span>
+                    <input type="text" name="name" />
+                </label>
+            </form>
+        </div>
+    </section>
+{% endblock %}
