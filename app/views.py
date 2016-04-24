@@ -8,8 +8,14 @@ from app.models import Review, DrinkType, Distiller, Origin
 
 @app.route('/')
 def index():
-    posts = Review.query.all()
+    posts = Review.query.order_by(Review.date_posted.desc())
     return render_template('index.html', posts=posts)
+
+
+@app.route('/review/<review_name>')
+def view_review(review_name):
+    review = Review.query.filter_by(url=review_name).first()
+    return render_template('review.html', review=review)
 
 
 # main nav items

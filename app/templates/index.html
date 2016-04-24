@@ -7,7 +7,7 @@
             {% if loop.first %}
                 {{ includes.title_bar(post.title,
                                       subtitle=post.subtitle,
-                                      url=post.url,
+                                      url=url_for('view_review', review_name=post.url),
                                       modifier='main',
                                       prefix='Latest thing:') }}
             {% endif %}
@@ -21,10 +21,10 @@
                         {% if not loop.first %}
                             {{ includes.post_list_item(post.title,
                                                        subtitle=post.subtitle,
-                                                       description=post.description,
-                                                       category=post.category,
-                                                       image=post.image,
-                                                       url=post.url) }}
+                                                       description=post.abstract,
+                                                       category='Review',
+                                                       image=post.image_list,
+                                                       url=url_for('view_review', review_name=post.url)) }}
                         {% endif %}
                     {% endfor %}
                 </ul>
