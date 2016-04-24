@@ -9,7 +9,7 @@
                     {% for drink_type in drink_types %}
                         <li><p>
                             <a href="/admin/drinktype/{{ drink_type.id }}">{{ drink_type.name }}</a>
-                            <a href="/admin/remove/drinktype/{{ drink_type.id }}">(delete)</a>
+                            <a href="/admin/drinktype/remove/{{ drink_type.id }}">(delete)</a>
                         </p></li>
                     {% else %}
                         <li><p>No drink types added yet. <a href="{{ url_for('admin_new_drinktype') }}">Add one</a>.</p></li>

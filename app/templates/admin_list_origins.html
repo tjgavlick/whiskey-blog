@@ -9,7 +9,7 @@
                     {% for origin in origins %}
                         <li><p>
                             <a href="/admin/origin/{{ origin.id }}">{{ origin.name }}</a>
-                            <a href="/admin/remove/origin/{{ origin.id }}">(delete)</a>
+                            <a href="/admin/origin/remove/{{ origin.id }}">(delete)</a>
                         </p></li>
                     {% else %}
                         <li><p>No origins added yet. <a href="{{ url_for('admin_new_origin') }}">Add one</a>.</p></li>

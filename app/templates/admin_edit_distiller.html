@@ -1,0 +1,33 @@
+{% extends "admin_base.html" %}
+
+{% block body %}
+    <section role="main">
+        <div class="content">
+            <form action="{{ url_for('save_distiller') }}" method="POST" class="page-bound">
+                {% if distiller %}
+                    <p>Editing distiller #{{ distiller.id }}: {{ distiller.name }}</p>
+                    <input type="hidden" name="id" value="{{ distiller.id }}" />
+                {% else %}
+                    <p>New distiller</p>
+                    <input type="hidden" name="id" value="0" />
+                {% endif %}
+
+                <label class="form-label">
+                    <span class="form-label__text">Name</span>
+                    <input type="text" name="name" value="{{ distiller.name }}" tabindex="1" />
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Origin</span>
+                    <select name="origin">
+                        {% for origin in origins %}
+                            <option value="{{ origin.id }}"{% if origin.id == distiller.origin_id %} selected="selected"{% endif %}>{{ origin.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <button class="button" type="submit">Save</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
