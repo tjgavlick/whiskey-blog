@@ -108,6 +108,13 @@ Search Pages
             z-index: 1;
         }
     }
+    &__nudge {
+        // remove whitespace between filters and period in order to keep
+        // if blocks somewhat tidier
+        display: inline-block;
+        vertical-align: baseline;
+        margin-left: -0.2em;
+    }
 }
 
 

@@ -63,19 +63,19 @@ AGE_RANGES = {
     },
     'youngish': {
         'name': '2 – 4 years',
-        'filter_name': '2 – 4 years of age',
+        'filter_name': '2–4 years of age',
         'age_min': 2,
         'age_max': 5
     },
     'mid': {
         'name': '5 – 10 years',
-        'filter_name': '5 – 10 years of age',
+        'filter_name': '5–10 years of age',
         'age_min': 5,
         'age_max': 10
     },
     'old': {
         'name': '10 – 15 years',
-        'filter_name': '10 – 15 years of age',
+        'filter_name': '10–15 years of age',
         'age_min': 10,
         'age_max': 15
     },
@@ -96,13 +96,13 @@ PROOF_RANGES = {
     },
     'low': {
         'name': '81 – 90',
-        'filter_name': '81 – 90 proof',
+        'filter_name': '81–90 proof',
         'proof_min': 80.1,
         'proof_max': 91
     },
     'med': {
         'name': '91 – 100',
-        'filter_name': '91 – 100 proof',
+        'filter_name': '91–100 proof',
         'proof_min': 91,
         'proof_max': 101
     },
@@ -123,19 +123,19 @@ PRICE_RANGES = {
     },
     'affordable': {
         'name': '$25 – $40',
-        'filter_name': '$25 – $40',
+        'filter_name': '$25–40',
         'price_min': 25,
         'price_max': 40
     },
     'moderate': {
         'name': '$41 – $75',
-        'filter_name': '$41 – $75',
+        'filter_name': '$41–75',
         'price_min': 40,
         'price_max': 75
     },
     'high': {
         'name': '$76 – $150',
-        'filter_name': '$76 – $150',
+        'filter_name': '$76–150',
         'price_min': 75,
         'price_max': 150
     },
