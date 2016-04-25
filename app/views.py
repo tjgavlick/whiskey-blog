@@ -39,12 +39,14 @@ def view_article(article_name):
 
 @app.route('/reviews/')
 def review_list():
-    return render_template('review_list.html')
+    reviews = Review.query.order_by(Review.date_posted.desc())
+    return render_template('review_list.html', reviews=reviews)
 
 
 @app.route('/articles/')
 def article_list():
-    return render_template('article_list.html')
+    articles = Article.query.order_by(Article.date_posted.desc())
+    return render_template('article_list.html', articles=articles)
 
 
 @app.route('/colophon/')

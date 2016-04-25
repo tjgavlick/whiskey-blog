@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Articles //{% endblock %}
+
+{% block body %}
+    <section role="main">
+
+        {{ includes.title_bar('Thoughts', modifier='main') }}
+
+        <div class="content">
+            <div class="page-bound">
+                <ul class="post-list margin-large">
+                    {% for article in articles %}
+                        {{ includes.post_list_item(article.title,
+                                subtitle=article.subtitle,
+                                description=article.abstract,
+                                image=article.image_list,
+                                url=url_for('view_article', article_name=article.url)) }}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
