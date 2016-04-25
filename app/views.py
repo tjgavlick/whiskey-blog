@@ -1,6 +1,7 @@
 import re
 
 from flask import render_template, request, redirect, url_for
+from sqlalchemy import and_
 
 from app import app, db, constants
 from app.models import Review, Article, Distiller, Origin
@@ -44,23 +45,48 @@ def view_article(article_name):
 @app.route('/reviews/')
 def review_list():
     reviews = Review.query.order_by(Review.date_posted.desc())
+    origins = Origin.query.all()
+    this_origin = None
 
     drink_type = request.args.get('type', '')
     if drink_type:
-        reviews = reviews.filter_by(drink_type=drink_type)
-    rarity = request.args.get('rarity', '')
-    if rarity:
-        reviews = reviews.filter_by(rarity=rarity)
+        reviews = reviews.filter(Review.drink_type == drink_type)
 
     age = request.args.get('age', '')
-    distiller = request.args.get('distiller', '')
+    if age:
+        age_min = constants.AGE_RANGES[age]['age_min']
+        age_max = constants.AGE_RANGES[age]['age_max']
+        reviews = reviews.filter(and_(Review.age_low >= age_min, Review.age_low < age_max))
+
     proof = request.args.get('proof', '')
+    if proof:
+        proof_min = constants.PROOF_RANGES[proof]['proof_min']
+        proof_max = constants.PROOF_RANGES[proof]['proof_max']
+        reviews = reviews.filter(and_(Review.proof_low >= proof_min, Review.proof_low < proof_max))
+
     price = request.args.get('price', '')
+    if price:
+        price_min = constants.PRICE_RANGES[price]['price_min']
+        price_max = constants.PRICE_RANGES[price]['price_max']
+        reviews = reviews.filter(and_(Review.price_low >= price_min, Review.price_low < price_max))
+
     rarity = request.args.get('rarity', '')
+    if rarity:
+        reviews = reviews.filter(Review.rarity == rarity)
+
+    origin = request.args.get('origin', '')
+    if origin:
+        this_origin = Origin.query.get(origin)
+        reviews = reviews.filter(Review.origin == this_origin)
 
     return render_template('review_list.html', reviews=reviews,
+                           origins=origins,
+                           this_origin=this_origin,
                            drink_types=constants.DRINK_TYPES,
-                           rarities=constants.RARITIES)
+                           rarities=constants.RARITIES,
+                           age_ranges=constants.AGE_RANGES,
+                           proof_ranges=constants.PROOF_RANGES,
+                           price_ranges=constants.PRICE_RANGES)
 
 
 @app.route('/articles/')
