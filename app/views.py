@@ -79,6 +79,9 @@ def review_list():
         this_origin = Origin.query.get(origin)
         reviews = reviews.filter(Review.origin == this_origin)
 
+    if reviews.count() == 0:
+        reviews = None
+
     return render_template('review_list.html', reviews=reviews,
                            origins=origins,
                            this_origin=this_origin,

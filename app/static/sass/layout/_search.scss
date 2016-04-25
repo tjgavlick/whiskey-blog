@@ -83,9 +83,16 @@ Search Pages
 }
 
 .search-current-filters {
-    padding: $line;
+    padding: $line $line 0;
     line-height: $line*1.5;
+    color: transparentize($copy, 0.2);
+    &__none {
+        margin: $line;
+        font-style: italic;
+        opacity: 0.6;
+    }
     &__close {
+        @extend .title;
         position: relative;
         &:after {
             content: '';
@@ -126,8 +133,12 @@ Search Pages
         }
     }
     .search-current-filters {
-        padding: $line $line*2;
+        padding: $line $line*2 0;
         text-align: center;
+        &__none {
+            margin: $line*1.5 $line*2;
+            text-align: center;
+        }
     }
 }
 
@@ -163,7 +174,7 @@ Search Pages
     }
 
     .search-current-filters {
-        padding: $line*2 $line*2;
+        padding: $line*1.25 $line*2 $line/4;
     }
 }
 

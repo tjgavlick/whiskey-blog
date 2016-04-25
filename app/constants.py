@@ -1,5 +1,5 @@
 DRINK_TYPES = {
-    'american_single_malt': {
+    'american-malt': {
         'name': 'American single-malt',
         'filter_name': 'American single-malts'
     },

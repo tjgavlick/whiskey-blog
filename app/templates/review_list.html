@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Reviews //{% endblock %}
+{% block title %}Reviews // {% endblock %}
 
 {% block body %}
     <section role="main">
@@ -10,19 +10,22 @@
 
             <div class="title-bar__related">
                 <a href="ethics.htm" class="title-bar__related__item">Review ethics</a>
-                <a href="ratings.htm" class="title-bar__related__item">Rating scale</a>
+                <a href="ratings.htm" class="title-bar__related__item">Why listen to me?</a>
                 <a href="glossary.htm" class="title-bar__related__item">Lingo</a>
             </div>
         </header>
 
-        <div class="search-current-filters">
-            {% if request.args %}
+        {% if request.args %}
+            <div class="search-current-filters">
                 <p>
                     Showing
                     {% if request.args['rarity'] %}
                         <a href="{{ modify_query(rarity=None) }}" class="search-current-filters__close">{{ rarities[request.args['rarity']].filter_name }}</a>
                     {% endif %}
                     {% if request.args['type'] %}
+                        {% if not (request.args['rarity'] or request.args['age'] or request.args['origin'] or request.args['proof'] or request.args['price']) %}
+                            all
+                        {% endif %}
                         <a href="{{ modify_query(type=None) }}" class="search-current-filters__close">{{ drink_types[request.args['type']].filter_name }}</a>
                     {% else %}
                         whiskies
@@ -52,12 +55,12 @@
                         <a href="{{ modify_query(price=None) }}" class="search-current-filters__close">{{ price_ranges[request.args['price']].filter_name }}</a>
                     {% endif %}
                     <span class="search-current-filters__nudge">.</span>
-                    You can <a href="{{ request.path }}" class="search-current-filters__close">remove all these filters</a> if you'd like.</p>
+                    You can <a href="{{ request.path }}" class="search-current-filters__close">remove these filters</a> if you'd like.</p>
                 </p>
-            {% else %}
-                <p class="search-current-filters__none">Showing all whiskies. You can filter this list below</p>
-            {% endif %}
-        </div>
+            </div>
+        {% else %}
+            <p class="search-current-filters__none">Showing all whiskies. You can filter this list below</p>
+        {% endif %}
 
         <div class="search-layout">
             <button type="button" class="search-refine__toggle" data-toggle-target="next">Refine <img src="/static/images/arrow-right.png" alt="" class="search-refine__toggle__arrow" /></button>
@@ -166,15 +169,19 @@
             <div class="search-content content">
 
                 <div class="page-bound">
-                    <ul class="post-list">
-                        {% for review in reviews %}
-                            {{ includes.post_list_item(review.title,
-                                    subtitle=review.subtitle,
-                                    description=review.abstract,
-                                    image=review.image_list,
-                                    url=url_for('view_review', review_name=review.url)) }}
-                        {% endfor %}
-                    </ul>
+                    {% if reviews %}
+                        <ul class="post-list">
+                            {% for review in reviews %}
+                                {{ includes.post_list_item(review.title,
+                                        subtitle=review.subtitle,
+                                        description=review.abstract,
+                                        image=review.image_list,
+                                        url=url_for('view_review', review_name=review.url)) }}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="post-list-empty">No reviews matched these criteria. Obviously, I need to drink more.</p>
+                    {% endif %}
                 </div>
             </div>
         </div><!-- .search-layout -->

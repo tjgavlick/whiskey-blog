@@ -17,7 +17,7 @@ Not much here
 
 @media #{$min-l} {
     .home-more-title {
-        margin: $line 0 $line*1.5;
+        margin: -$line/2 0 $line*1.5;
         text-align: center;
         opacity: 0.6;
     }
