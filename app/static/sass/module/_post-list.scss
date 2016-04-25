@@ -14,7 +14,7 @@ Post Lists
     }
     &__anchor {
         display: block;
-        padding: $line*2 $line;
+        padding: $line;
         background: $primary-dark;
         color: $bg;
         position: relative;
@@ -31,7 +31,7 @@ Post Lists
         @extend .title;
         display: block;
         padding: $line/4 $line;
-        margin: -$line*2 (-$line) $line*3/2;
+        margin: -$line (-$line) $line*3/4;
         color: transparentize($bg, 0.3);
         background: $gray-dark;
         background: transparentize($gray-dark, 0.4);
@@ -61,7 +61,7 @@ Post Lists
         min-height: 100%;
         left: 0;
         top: 0;
-        opacity: 0.1;
+        opacity: 0.05;
         .csstransforms & {
             top: 50%;
             transform: translateY(-50%);
@@ -88,8 +88,8 @@ Post Lists
             font-size: $exa;
             line-height: 1.2;
         }
-        &__description {
-            margin-top: $line;
+        &__subtitle {
+            font-size: $tera;
         }
     }
 }
