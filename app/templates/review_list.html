@@ -16,19 +16,21 @@
         </header>
 
         <div class="search-current-filters">
-            {#
-            {% if filters %}
+            {% if request.args %}
                 <p>
                     Showing
-                    {% if filters['type'] %}
-                        <a href="{{ modify_query(type=None) }}" class="search-current-filters__close">{{ filters['type'][1] }}s</a>.
-                    {% endif %}
+                    {% if request.args['rarity'] %}
+                        <a href="{{ modify_query(rarity=None) }}" class="search-current-filters__close">{{ rarities[request.args['rarity']].filter_name }}</a>
+                    {% endif %}{% if request.args['type'] %}
+                        <a href="{{ modify_query(type=None) }}" class="search-current-filters__close">{{ drink_types[request.args['type']].filter_name }}</a>
+                    {% else %}
+                        whiskies
+                    {% endif %}.
                     You can <a href="{{ request.path }}" class="search-current-filters__close">remove all these filters</a> if you'd like.</p>
                 </p>
             {% else %}
-                <p>Showing all reviews. Filters to be implemented</p>
+                <p class="search-current-filters__none">Showing all reviews. You can filter these reviews below</p>
             {% endif %}
-            #}
         </div>
 
         <div class="search-layout">
@@ -39,9 +41,15 @@
                         <h3 class="search-refine__facet__title">Type</h3>
                         <ul class="search-refine__facet__list">
                             {% for key, vals in drink_types.items()|sort(attribute='0') %}
-                                <li class="search-refine__facet__item">
-                                    <a href="{{ modify_query(type=key) }}">{{ vals['name'] }}</a>
-                                </li>
+                                {% if request.args['type'] == key %}
+                                    <li class="search-refine__facet__item is-current">
+                                        {{ vals['name'] }}
+                                    </li>
+                                {% else %}
+                                    <li class="search-refine__facet__item">
+                                        <a href="{{ modify_query(type=key) }}">{{ vals['name'] }}</a>
+                                    </li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     </div>
@@ -94,9 +102,15 @@
                         <h3 class="search-refine__facet__title">Rarity</h3>
                         <ul class="search-refine__facet__list">
                             {% for key, vals in rarities.items()|sort(attribute='1.value') %}
-                                <li class="search-refine__facet__item">
-                                    <a href="{{ modify_query(rarity=key) }}">{{ vals['name'] }}</a>
-                                </li>
+                                {% if request.args['rarity'] == key %}
+                                    <li class="search-refine__facet__item is-current">
+                                        {{ vals['name'] }}
+                                    </li>
+                                {% else %}
+                                    <li class="search-refine__facet__item">
+                                        <a href="{{ modify_query(rarity=key) }}">{{ vals['name'] }}</a>
+                                    </li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     </div>

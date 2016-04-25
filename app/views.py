@@ -26,13 +26,17 @@ def index():
 @app.route('/review/<review_name>')
 def view_review(review_name):
     review = Review.query.filter_by(url=review_name).first()
-    return render_template('review.html', review=review)
+    return render_template('review.html', review=review,
+                           drink_types=constants.DRINK_TYPES,
+                           rarities=constants.RARITIES)
 
 
 @app.route('/article/<article_name>')
 def view_article(article_name):
     article = Article.query.filter_by(url=article_name).first()
-    return render_template('article.html', article=article)
+    return render_template('article.html', article=article,
+                           drink_types=constants.DRINK_TYPES,
+                           rarities=constants.RARITIES)
 
 
 # main nav items
@@ -44,6 +48,9 @@ def review_list():
     drink_type = request.args.get('type', '')
     if drink_type:
         reviews = reviews.filter_by(drink_type=drink_type)
+    rarity = request.args.get('rarity', '')
+    if rarity:
+        reviews = reviews.filter_by(rarity=rarity)
 
     age = request.args.get('age', '')
     distiller = request.args.get('distiller', '')
