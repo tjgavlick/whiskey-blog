@@ -2,8 +2,7 @@
 .sass-cache
 
 # static cruft #
-_static-build/assets/
-_static-build/style/
+_static-build/
 app/static/assets/
 app/static/style/*
 
