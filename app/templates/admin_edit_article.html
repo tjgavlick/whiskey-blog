@@ -1,0 +1,64 @@
+{% extends "admin_base.html" %}
+
+{% block body %}
+    <section role="main">
+        <div class="content">
+            <form action="{{ url_for('admin_save_article') }}" method="POST" class="page-bound">
+                {% if article %}
+                    <p>Editing article #{{ article.id }}: {{ article.title }}</p>
+                    <input type="hidden" name="id" value="{{ article.id }}" />
+                {% else %}
+                    <p>New article</p>
+                    <input type="hidden" name="id" value="0" />
+                {% endif %}
+
+                <h1>Basics</h1>
+
+                <label class="form-label">
+                    <span class="form-label__text">Title</span>
+                    <input type="text" name="title" value="{{ article.title }}" />
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Subtitle</span>
+                    <input type="text" name="subtitle" value="{{ article.subtitle }}" />
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Custom URL</span>
+                    <input type="text" name="url" value="{{ article.url }}" />
+                    <p class="form-label__help">If blank, a url will be generated from the title and subtitle</p>
+                </label>
+
+                <label class="form-label">
+                    <input type="checkbox" name="is_published" value="yes" {% if article.is_published %}checked="checked"{% endif %} />
+                    <span class="form-label__text">Publish</span>
+                </label>
+
+                <label class="form-label">
+                    <span class="form-label__text">Main image</span>
+                    <input type="text" name="image_main" value="{{ article.image_main }}" />
+                    <p class="form-label__help">Large article detail image. 600x900, approx</p>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">List image</span>
+                    <input type="text" name="image_list" value="{{ article.image_list }}" />
+                    <p class="form-label__help">List background image. 300x300, approx</p>
+                </label>
+
+
+                <h2>Content</h2>
+
+                <label class="form-label">
+                    <span class="form-label__text">Article body</span>
+                    <textarea name="body">{{ article.body }}</textarea>
+                </label>
+                <label class="form-label">
+                    <span class="form-label__text">Article abstract</span>
+                    <textarea name="abstract">{{ article.abstract }}</textarea>
+                </label>
+
+                <button class="button" type="submit">Save</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

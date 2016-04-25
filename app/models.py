@@ -6,7 +6,7 @@ from app import db
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(255))
+    url = db.Column(db.String(255), unique=True)
     is_published = db.Column(db.Boolean)
     date_posted = db.Column(db.DateTime)
     title = db.Column(db.String(200))
@@ -102,3 +102,36 @@ class Origin(db.Model):
 
     def __init__(self, name):
         self.name = name
+
+
+class Article(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(255), unique=True)
+    is_published = db.Column(db.Boolean)
+    date_posted = db.Column(db.DateTime)
+    title = db.Column(db.String(255))
+    subtitle = db.Column(db.String(255))
+    image_main = db.Column(db.String(255))
+    image_list = db.Column(db.String(255))
+    body = db.Column(db.Text)
+    abstract = db.Column(db.Text)
+
+    def __init__(self, url=None, is_published=False, date_posted=None,
+                 title=None, subtitle=None, image_main=None, image_list=None,
+                 body=None, abstract=None):
+
+        if date_posted is None:
+            date_posted = datetime.utcnow()
+
+        self.url = url
+        self.is_published = is_published
+        self.date_posted = date_posted
+        self.title = title
+        self.subtitle = subtitle
+        self.image_main = image_main
+        self.image_list = image_list
+        self.body = body
+        self.abstract = abstract
+
+    def __repr__(self):
+        return '<Article #{} - {} {}>'.format(self.id, self.title, self.subtitle)

@@ -6,10 +6,10 @@
         {% for post in posts if post.is_published %}
             {% if loop.first %}
                 {{ includes.title_bar(post.title,
-                                      subtitle=post.subtitle,
-                                      url=url_for('view_review', review_name=post.url),
-                                      modifier='main',
-                                      prefix='Latest thing:') }}
+                      subtitle=post.subtitle + ' Review' if post.type == 'review' else post.subtitle,
+                      url=url_for('view_review', review_name=post.url) if post.type == 'review' else url_for('view_article', article_name=post.url),
+                      modifier='main',
+                      prefix='Latest thing:') }}
             {% endif %}
         {% endfor %}
 
@@ -20,11 +20,11 @@
                     {% for post in posts if post.is_published %}
                         {% if not loop.first %}
                             {{ includes.post_list_item(post.title,
-                                                       subtitle=post.subtitle,
-                                                       description=post.abstract,
-                                                       category='Review',
-                                                       image=post.image_list,
-                                                       url=url_for('view_review', review_name=post.url)) }}
+                                  subtitle=post.subtitle,
+                                  description=post.abstract,
+                                  category='Review' if post.type == 'review' else 'Article',
+                                  image=post.image_list,
+                                  url=url_for('view_review', review_name=post.url) if post.type == 'review' else url_for('view_article', article_name=post.url)) }}
                         {% endif %}
                     {% endfor %}
                 </ul>

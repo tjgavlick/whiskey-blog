@@ -86,7 +86,7 @@ The global page header
             &:nth-child(3) {
                 color: mix($primary-light, $accent, 70%);
             }
-            &:nth-child(4) {
+            &:nth-child(n+4) {
                 color: $primary-light;
             }
         }

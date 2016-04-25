@@ -1,0 +1,30 @@
+{% extends "admin_base.html" %}
+
+{% block body %}
+    <section role="main">
+        <div class="content">
+            <div class="page-bound">
+
+                <ul>
+                    {% for article in articles %}
+                        <li><p>
+                            <a href="{{ url_for('admin_edit_article', article_id=article.id) }}">{{ article.title }} {{ article.subtitle }}</a>
+                            &mdash;
+                            {% if article.is_published %}
+                                published
+                            {% else %}
+                                <i style="opacity: 0.4">unpublished</i>
+                            {% endif %}
+                            <a href="{{ url_for('admin_remove_article', article_id=article.id) }}">(delete)</a>
+                        </p></li>
+                    {% else %}
+                        <li><p>No articles added yet. <a href="{{ url_for('admin_new_article') }}">Add one</a>.</p></li>
+                    {% endfor %}
+                </ul>
+
+                <p><a href="{{ url_for('admin_new_article') }}">Add new</a></p>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}

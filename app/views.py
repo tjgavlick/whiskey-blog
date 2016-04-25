@@ -3,12 +3,23 @@ import re
 from flask import render_template, request, redirect, url_for
 
 from app import app, db
-from app.models import Review, DrinkType, Distiller, Origin
+from app.models import Review, Article, DrinkType, Distiller, Origin
 
 
 @app.route('/')
 def index():
-    posts = Review.query.order_by(Review.date_posted.desc())
+    reviews = list(Review.query.order_by(Review.date_posted.desc()).limit(6))
+    articles = list(Article.query.order_by(Article.date_posted.desc()).limit(6))
+
+    # add type attributes to items so we can label the list
+    for review in reviews:
+        review.type = 'review'
+    for article in articles:
+        article.type = 'article'
+
+    # combine the two different post types into a single ordered list
+    posts = sorted(reviews + articles, key=lambda x: x.date_posted, reverse=True)
+
     return render_template('index.html', posts=posts)
 
 
@@ -16,6 +27,12 @@ def index():
 def view_review(review_name):
     review = Review.query.filter_by(url=review_name).first()
     return render_template('review.html', review=review)
+
+
+@app.route('/article/<article_name>')
+def view_article(article_name):
+    article = Article.query.filter_by(url=article_name).first()
+    return render_template('article.html', article=article)
 
 
 # main nav items
@@ -73,8 +90,8 @@ def admin_save_review():
     if request.form['url']:
         tmp_url = request.form['url']
     else:
-        tmp_url = '_'.join(request.form['title'].split(' ') + request.form['subtitle'].split(' '))
-        tmp_url = re.sub(r'[^a-zA-Z0-9_]', '', tmp_url).lower()
+        tmp_url = '-'.join(request.form['title'].split(' ') + request.form['subtitle'].split(' '))
+        tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', tmp_url).lower()
     tmp_is_published = True if request.form.get('is_published') else False
     tmp_rating_low = request.form['rating_low'] if request.form['rating_low'] else 0
     tmp_rating_high = request.form['rating_high'] if request.form['rating_high'] else None
@@ -153,6 +170,77 @@ def admin_remove_review(review_id):
         db.session.delete(review)
         db.session.commit()
     return redirect(url_for('admin_list_reviews'))
+
+
+# admin - articles
+##################
+
+@app.route('/admin/article/')
+def admin_list_articles():
+    articles = Article.query.order_by(Article.date_posted.desc())
+    return render_template('admin_list_articles.html', articles=articles)
+
+
+@app.route('/admin/article/new/')
+def admin_new_article():
+    return render_template('admin_edit_article.html', article=None)
+
+
+@app.route('/admin/article/<int:article_id>')
+def admin_edit_article(article_id):
+    article = Article.query.get(article_id)
+    return render_template('admin_edit_article.html', article=article)
+
+
+@app.route('/admin/article/save/', methods=['POST'])
+def admin_save_article():
+    article_id = int(request.form['id'])
+
+    if request.form['url']:
+        tmp_url = request.form['url']
+    else:
+        tmp_url = '-'.join(request.form['title'].split(' ') + request.form['subtitle'].split(' '))
+        tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', tmp_url).lower()
+    tmp_is_published = True if request.form.get('is_published') else False
+
+    # if we're editing an existing entry
+    if article_id > 0:
+        article = Article.query.get(article_id)
+        article.url = tmp_url
+        article.is_published = tmp_is_published
+        article.title = request.form['title']
+        article.subtitle = request.form['subtitle']
+        article.image_main = request.form['image_main']
+        article.image_list = request.form['image_list']
+        article.body = request.form['body']
+        article.abstract = request.form['abstract']
+
+    # if we're adding a new entry
+    else:
+        article = Article(url=tmp_url,
+                          is_published=tmp_is_published,
+                          title=request.form['title'],
+                          subtitle=request.form['subtitle'],
+                          image_main=request.form['image_main'],
+                          image_list=request.form['image_list'],
+                          body=request.form['body'],
+                          abstract=request.form['abstract']
+                          )
+
+
+    db.session.add(article)
+    db.session.commit()
+
+    return redirect(url_for('admin_list_articles'))
+
+
+@app.route('/admin/article/remove/<int:article_id>')
+def admin_remove_article(article_id):
+    article = Article.query.get(article_id)
+    if not article is None:
+        db.session.delete(article)
+        db.session.commit()
+    return redirect(url_for('admin_list_articles'))
 
 
 
