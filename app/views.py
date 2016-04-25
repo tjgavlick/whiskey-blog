@@ -2,8 +2,8 @@ import re
 
 from flask import render_template, request, redirect, url_for
 
-from app import app, db
-from app.models import Review, Article, DrinkType, Distiller, Origin
+from app import app, db, constants
+from app.models import Review, Article, Distiller, Origin
 
 
 @app.route('/')
@@ -40,7 +40,20 @@ def view_article(article_name):
 @app.route('/reviews/')
 def review_list():
     reviews = Review.query.order_by(Review.date_posted.desc())
-    return render_template('review_list.html', reviews=reviews)
+
+    drink_type = request.args.get('type', '')
+    if drink_type:
+        reviews = reviews.filter_by(drink_type=drink_type)
+
+    age = request.args.get('age', '')
+    distiller = request.args.get('distiller', '')
+    proof = request.args.get('proof', '')
+    price = request.args.get('price', '')
+    rarity = request.args.get('rarity', '')
+
+    return render_template('review_list.html', reviews=reviews,
+                           drink_types=constants.DRINK_TYPES,
+                           rarities=constants.RARITIES)
 
 
 @app.route('/articles/')
@@ -68,10 +81,10 @@ def admin_list_reviews():
 def admin_new_review():
     origins = Origin.query.order_by(Origin.name)
     distillers = Distiller.query.order_by(Distiller.name)
-    drink_types = DrinkType.query.order_by(DrinkType.name)
     return render_template('admin_edit_review.html', review=None,
                            origins=origins, distillers=distillers,
-                           drink_types=drink_types)
+                           drink_types=constants.DRINK_TYPES,
+                           rarities=constants.RARITIES)
 
 
 @app.route('/admin/review/<int:review_id>')
@@ -79,10 +92,10 @@ def admin_edit_review(review_id):
     review = Review.query.get(review_id)
     origins = Origin.query.order_by(Origin.name)
     distillers = Distiller.query.order_by(Distiller.name)
-    drink_types = DrinkType.query.order_by(DrinkType.name)
     return render_template('admin_edit_review.html', review=review,
                            origins=origins, distillers=distillers,
-                           drink_types=drink_types)
+                           drink_types=constants.DRINK_TYPES,
+                           rarities=constants.RARITIES)
 
 
 @app.route('/admin/review/save/', methods=['POST'])
@@ -121,13 +134,13 @@ def admin_save_review():
         review.proof_high = tmp_proof_high
         review.price_low = tmp_price_low
         review.price_high = tmp_price_high
+        review.drink_type = request.form['drink_type']
         review.mashbill = request.form['mashbill']
         review.mashbill_description = request.form['mashbill_description']
         review.rarity = request.form['rarity']
         review.color = request.form['color']
         review.body = request.form['body']
         review.abstract = request.form['abstract']
-        review.drink_type_id = request.form['drink_type_id']
         review.distiller_id = request.form['distiller_id']
         review.origin_id = request.form['origin_id']
 
@@ -147,13 +160,13 @@ def admin_save_review():
                         proof_high=tmp_proof_high,
                         price_low=tmp_price_low,
                         price_high=tmp_price_high,
+                        drink_type=request.form['drink_type'],
                         mashbill=request.form['mashbill'],
                         mashbill_description=request.form['mashbill_description'],
                         rarity=request.form['rarity'],
                         color=request.form['color'],
                         body=request.form['body'],
                         abstract=request.form['abstract'],
-                        drink_type_id=request.form['drink_type_id'],
                         distiller_id=request.form['distiller_id'],
                         origin_id=request.form['origin_id']
                         )
@@ -244,53 +257,6 @@ def admin_remove_article(article_id):
         db.session.commit()
     return redirect(url_for('admin_list_articles'))
 
-
-
-# admin - drink types
-#####################
-
-@app.route('/admin/drinktype/')
-def admin_list_drinktypes():
-    drink_types = DrinkType.query.order_by(DrinkType.name)
-    return render_template('admin_list_drinktypes.html', drink_types=drink_types)
-
-
-@app.route('/admin/drinktype/new/')
-def admin_new_drinktype():
-    return render_template('admin_edit_drinktype.html', drink_type=None)
-
-
-@app.route('/admin/drinktype/<int:drink_type_id>')
-def admin_edit_drinktype(drink_type_id):
-    drink_type = DrinkType.query.get(drink_type_id)
-    return render_template('admin_edit_drinktype.html', drink_type=drink_type)
-
-
-@app.route('/admin/drinktype/save/', methods=['POST'])
-def admin_save_drinktype():
-    drink_type_id = int(request.form['id'])
-    drink_type_name = request.form['name']
-
-    # if we're editing an existing entry
-    if drink_type_id > 0:
-        drink_type = DrinkType.query.get(drink_type_id)
-        drink_type.name = drink_type_name
-    # if we're adding a new entry
-    else:
-        drink_type = DrinkType(drink_type_name)
-
-    db.session.add(drink_type)
-    db.session.commit()
-    return redirect(url_for('admin_list_drinktypes'))
-
-
-@app.route('/admin/drinktype/remove/<int:drink_type_id>')
-def admin_remove_drinktype(drink_type_id):
-    drink_type = DrinkType.query.get(drink_type_id)
-    if not drink_type is None:
-        db.session.delete(drink_type)
-        db.session.commit()
-    return redirect(url_for('admin_list_drinktypes'))
 
 
 # admin - distillers

@@ -21,15 +21,14 @@ class Review(db.Model):
     proof_high = db.Column(db.Float)
     price_low = db.Column(db.Float)
     price_high = db.Column(db.Float)
+    drink_type = db.Column(db.String(50))
     mashbill = db.Column(db.String(100))
     mashbill_description = db.Column(db.String(50))
-    rarity = db.Column(db.Integer)
+    rarity = db.Column(db.String(50))
     color = db.Column(db.Integer)
     body = db.Column(db.Text)
     abstract = db.Column(db.Text)
 
-    drink_type_id = db.Column(db.Integer, db.ForeignKey('drink_type.id'))
-    drink_type = db.relationship('DrinkType', backref=db.backref('reviews', lazy='dynamic'))
 
     distiller_id = db.Column(db.Integer, db.ForeignKey('distiller.id'))
     distiller = db.relationship('Distiller', backref=db.backref('reviews', lazy='dynamic'))
@@ -42,7 +41,7 @@ class Review(db.Model):
                  image_main=None, image_list=None, age_low=None, age_high=None,
                  proof_low=None, proof_high=None, price_low=None, price_high=None,
                  mashbill=None, mashbill_description=None, rarity=None,
-                 color=None, body=None, abstract=None, drink_type_id=None,
+                 color=None, body=None, abstract=None, drink_type=None,
                  distiller_id=None, origin_id=None):
 
         if date_posted is None:
@@ -63,26 +62,18 @@ class Review(db.Model):
         self.proof_high = proof_high
         self.price_low = price_low
         self.price_high = price_high
+        self.drink_type = drink_type
         self.mashbill = mashbill
         self.mashbill_description = mashbill_description
         self.rarity = rarity
         self.color = color
         self.body = body
         self.abstract = abstract
-        self.drink_type_id = drink_type_id
         self.distiller_id = distiller_id
         self.origin_id = origin_id
 
     def __repr__(self):
         return '<Review #{} - {} {}>'.format(self.id, self.title, self.subtitle)
-
-
-class DrinkType(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-
-    def __init__(self, name):
-        self.name = name
 
 
 class Distiller(db.Model):

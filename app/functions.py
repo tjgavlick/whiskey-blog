@@ -1,3 +1,6 @@
+from flask import request
+from werkzeug import url_encode
+
 def format_price(price):
     if price % 1 == 0:
         return '${}'.format(int(price))
@@ -21,3 +24,11 @@ def format_proof(proof):
     if proof % 1 == 0:
         return str(int(proof))
     return proof
+
+def modify_query(**new_values):
+    args = request.args.copy()
+
+    for key, val in new_values.items():
+        args[key] = val
+
+    return '{}?{}'.format(request.path, url_encode(args))

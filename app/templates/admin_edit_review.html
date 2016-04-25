@@ -50,9 +50,9 @@
 
                 <label class="form-label">
                     <span class="form-label__text">Drink Type</span>
-                    <select name="drink_type_id">
-                        {% for drink_type in drink_types %}
-                            <option value="{{ drink_type.id }}"{% if drink_type.id == review.drink_type_id %} selected="selected"{% endif %}>{{ drink_type.name }}</option>
+                    <select name="drink_type">
+                        {% for key, vals in drink_types.items()|sort(attribute='0') %}
+                            <option value="{{ key }}"{% if key == review.drink_type %} selected="selected"{% endif %}>{{ vals['name'] }}</option>
                         {% endfor %}
                     </select>
                 </label>
@@ -76,10 +76,9 @@
                 <label class="form-label">
                     <span class="form-label__text">Rarity</span>
                     <select name="rarity">
-                        <option value="10" {% if review.rarity == 10 %}selected="selected"{% endif %}>Common</option>
-                        <option value="20" {% if review.rarity == 20 %}selected="selected"{% endif %}>Uncommon</option>
-                        <option value="30" {% if review.rarity == 30 %}selected="selected"{% endif %}>Rare</option>
-                        <option value="40" {% if review.rarity == 40 %}selected="selected"{% endif %}>Not happening</option>
+                        {% for key, vals in rarities.items()|sort(attribute='1.value') %}
+                            <option value="{{ key }}" {% if review.rarity == key %}selected="selected"{% endif %}>{{ vals['name'] }}</option>
+                        {% endfor %}
                     </select>
                 </label>
 
