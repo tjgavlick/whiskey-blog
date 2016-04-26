@@ -39,6 +39,10 @@ input[type="text"], input[type="number"], select, textarea {
     }
 }
 
+input[type="range"] {
+    width: 100%;
+}
+
 textarea {
     @extend .copy;
     min-height: $line*5;

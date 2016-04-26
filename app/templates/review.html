@@ -101,14 +101,18 @@
             </ul>
         </header><!-- .review__title-bar -->
 
+        <div class="color-bar article-color">
+            <span class="color-bar__marker" style="left: {{ review.color }}%"></span>
+        </div>
+
         <div class="article-image">
             <div class="article-image__positioner">
                 <img src="{{ review.image_main }}" alt="" class="article-image__image" />
             </div>
         </div>
 
-
         <section class="article-body content">
+
             {{ markdown(review.body)|safe }}
 
             <!-- <aside class="article-related">

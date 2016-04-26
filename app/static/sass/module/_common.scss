@@ -42,6 +42,20 @@ hr {
   margin: $line 0;
 }
 
+figure {
+    img {
+        padding: 4px;
+        background: $primary;
+        background: linear-gradient(to bottom right, $primary, $accent);
+    }
+    figcaption {
+        font-size: $milli;
+        font-style: italic;
+        opacity: 0.8;
+        margin: $line/4 0 $line*3/4;
+    }
+}
+
 .title-note {
   color: $primary-dark;
   font-weight: 400;
@@ -64,20 +78,6 @@ hr {
   }
 }
 
-figure {
-    img {
-        padding: 4px;
-        background: $primary;
-        background: linear-gradient(to bottom right, $primary, $accent);
-    }
-    figcaption {
-        font-size: $milli;
-        font-style: italic;
-        opacity: 0.8;
-        margin: $line/4 0 $line*3/4;
-    }
-}
-
 .margin {
   margin-bottom: $line;
 }
@@ -87,6 +87,24 @@ figure {
 
 .align-center {
   text-align: center;
+}
+
+.color-bar {
+  width: 100%;
+  height: $line/2;
+  // border: 1px solid darken($bg, 15%);
+  background: linear-gradient(to right, #fdfdfd 0, #f6da53 25%, #e39300 60%, #af3029 80%, #722d1d 90%, #431a0c 100%);
+  position: relative;
+  z-index: 10;  // overlap article title bar gradients
+  &__marker {
+    display: block;
+    width: 4px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    background: #000;
+  }
 }
 
 .group {
