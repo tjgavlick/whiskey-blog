@@ -113,7 +113,7 @@ p.article-reference {  // specificity over p:last-child rule
 
 
 @media #{$min-w} {
-    .article-body figure {
+    .article-body figure, .admin-write__preview figure {
         max-width: 60%;
         float: right;
         margin-left: $line;

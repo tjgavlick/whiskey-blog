@@ -3,8 +3,9 @@ import random
 
 from flask import render_template, request, redirect, url_for
 from sqlalchemy import and_
+from markupsafe import Markup
 
-from app import app, db, constants
+from app import app, db, constants, markdown
 from app.models import Review, Article, Distiller, Origin
 
 
@@ -25,6 +26,9 @@ def index():
     return render_template('index.html', posts=posts)
 
 
+# reviews
+#########
+
 @app.route('/review/<review_name>')
 def view_review(review_name):
     review = Review.query.filter_by(url=review_name).first()
@@ -32,16 +36,6 @@ def view_review(review_name):
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES)
 
-
-@app.route('/article/<article_name>')
-def view_article(article_name):
-    article = Article.query.filter_by(url=article_name).first()
-    return render_template('article.html', article=article,
-                           drink_types=constants.DRINK_TYPES,
-                           rarities=constants.RARITIES)
-
-
-# main nav items
 
 @app.route('/reviews/')
 def review_list():
@@ -103,16 +97,35 @@ def review_list():
                            no_reviews_message=random.choice(constants.NO_REVIEWS_MESSAGES))
 
 
+
+# articles
+##########
+
+@app.route('/article/<article_name>')
+def view_article(article_name):
+    article = Article.query.filter_by(url=article_name).first()
+    return render_template('article.html', article=article,
+                           drink_types=constants.DRINK_TYPES,
+                           rarities=constants.RARITIES)
+
+
 @app.route('/articles/')
 def article_list():
     articles = Article.query.order_by(Article.date_posted.desc())
     return render_template('article_list.html', articles=articles)
 
 
+# static pages
+##############
+
 @app.route('/colophon/')
 def colophon():
     return render_template('colophon.html')
 
+
+
+# admin
+#######
 
 @app.route('/admin/')
 def admin_index():
@@ -414,3 +427,12 @@ def admin_remove_origin(origin_id):
         db.session.delete(origin)
         db.session.commit()
     return redirect(url_for('admin_list_origins'))
+
+
+
+# utilities
+###########
+
+@app.route('/api/markdown/', methods=['POST'])
+def parse_markdown():
+    return markdown(request.data.decode('utf-8'))

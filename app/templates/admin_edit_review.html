@@ -155,10 +155,18 @@
 
                 <h2>Content</h2>
 
-                <label class="form-label">
-                    <span class="form-label__text">Review body</span>
-                    <textarea name="body" class="admin-write__textarea" tabindex="1">{{ review.body }}</textarea>
-                </label>
+                <div class="admin-write">
+                    <label class="form-label admin-write__label">
+                        <span class="form-label__text">Review body</span>
+                        <textarea name="body" class="admin-write__textarea markdown-textarea" tabindex="1" data-markdown-preview=".admin-write__preview">{{ review.body }}</textarea>
+                    </label>
+
+                    <div class="admin-write__preview">
+                        <!-- js -->
+                    </div>
+                </div>
+
+
                 <label class="form-label">
                     <span class="form-label__text">Review abstract</span>
                     <textarea name="abstract" tabindex="1">{{ review.abstract }}</textarea>

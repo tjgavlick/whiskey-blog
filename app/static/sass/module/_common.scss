@@ -37,6 +37,11 @@ a {
   }
 }
 
+hr {
+  border-bottom: 1px solid $gray-light;
+  margin: $line 0;
+}
+
 .title-note {
   color: $primary-dark;
   font-weight: 400;

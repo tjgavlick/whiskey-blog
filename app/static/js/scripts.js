@@ -65,84 +65,155 @@ var WHISKIES = (function (window, document) {
         });
     }
 
-    // get a timestamp
-    function now() {
-        'use strict';
-        return Date.now || new Date().getTime();
-    }
 
-    // throttle and debounce from underscore.js
-    function throttle(func, wait, options) {
-        'use strict';
-        var context, args, result,
-            timeout = null,
-            previous = 0;
-        if (!options) {
-            options = {};
+    // debounce function from lodash with dependency functions
+    function isObject(value) {
+        var type = typeof value;
+        return !!value && (type == 'object' || type == 'function');
+    }
+    function toNumber(value) {
+        if (typeof value == 'number') {
+            return value;
         }
-        var later = function () {
-            previous = options.leading === false ? 0 : now();
-            timeout = null;
-            result = func.apply(context, args);
-            if (!timeout) {
-                context = args = null;
-            }
-        };
-        return function () {
-            var now = now();
-            if (!previous && options.leading === false) {
-                previous = now;
-            }
-            var remaining = wait - (now - previous);
-            context = this;
-            args = arguments;
-            if (remaining <= 0 || remaining > wait) {
-                clearTimeout(timeout);
-                timeout = null;
-                previous = now;
-                result = func.apply(context, args);
-                if (!timeout) {
-                    context = args = null;
-                }
-            } else if (!timeout && options.trailing !== false) {
-                timeout = setTimeout(later, remaining);
-            }
-            return result;
-        };
+        if (isSymbol(value)) {
+            return NAN;
+        }
+        if (isObject(value)) {
+            var other = isFunction(value.valueOf) ? value.valueOf() : value;
+            value = isObject(other) ? (other + '') : other;
+        }
+        if (typeof value != 'string') {
+            return value === 0 ? value : +value;
+        }
+        value = value.replace(reTrim, '');
+        var isBinary = reIsBinary.test(value);
+        return (isBinary || reIsOctal.test(value))
+            ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+            : (reIsBadHex.test(value) ? NAN : +value);
     }
-    function debounce(func, wait, immediate) {
-        'use strict';
-        var timeout, args, context, timestamp, result;
-        var later = function () {
-            var last = now() - timestamp;
-            if (last < wait && last > 0) {
-                timeout = setTimeout(later, wait - last);
-            } else {
-                timeout = null;
-                if (!immediate) {
-                    result = func.apply(context, args);
-                    if (!timeout) {
-                        context = args = null;
-                    }
+    function debounce(func, wait, options) {
+        var lastArgs,
+            lastThis,
+            maxWait,
+            result,
+            timerId,
+            lastCallTime = 0,
+            lastInvokeTime = 0,
+            leading = false,
+            maxing = false,
+            trailing = true;
+
+        if (typeof func != 'function') {
+            throw new TypeError(FUNC_ERROR_TEXT);
+        }
+        wait = toNumber(wait) || 0;
+        if (isObject(options)) {
+            leading = !!options.leading;
+            maxing = 'maxWait' in options;
+            maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+            trailing = 'trailing' in options ? !!options.trailing : trailing;
+        }
+
+        function invokeFunc(time) {
+            var args = lastArgs,
+                thisArg = lastThis;
+
+            lastArgs = lastThis = undefined;
+            lastInvokeTime = time;
+            result = func.apply(thisArg, args);
+            return result;
+        }
+
+        function leadingEdge(time) {
+            // Reset any `maxWait` timer.
+            lastInvokeTime = time;
+            // Start the timer for the trailing edge.
+            timerId = setTimeout(timerExpired, wait);
+            // Invoke the leading edge.
+            return leading ? invokeFunc(time) : result;
+        }
+
+        function remainingWait(time) {
+            var timeSinceLastCall = time - lastCallTime,
+                timeSinceLastInvoke = time - lastInvokeTime,
+                result = wait - timeSinceLastCall;
+
+            return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+        }
+
+        function shouldInvoke(time) {
+            var timeSinceLastCall = time - lastCallTime,
+                timeSinceLastInvoke = time - lastInvokeTime;
+
+            // Either this is the first call, activity has stopped and we're at the
+            // trailing edge, the system time has gone backwards and we're treating
+            // it as the trailing edge, or we've hit the `maxWait` limit.
+            return (!lastCallTime || (timeSinceLastCall >= wait) ||
+                   (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+        }
+
+        function timerExpired() {
+            var time = Date.now();
+            if (shouldInvoke(time)) {
+                return trailingEdge(time);
+            }
+            // Restart the timer.
+            timerId = setTimeout(timerExpired, remainingWait(time));
+        }
+
+        function trailingEdge(time) {
+            clearTimeout(timerId);
+            timerId = undefined;
+
+            // Only invoke if we have `lastArgs` which means `func` has been
+            // debounced at least once.
+            if (trailing && lastArgs) {
+                return invokeFunc(time);
+            }
+            lastArgs = lastThis = undefined;
+            return result;
+        }
+
+        function cancel() {
+            if (timerId !== undefined) {
+                clearTimeout(timerId);
+            }
+            lastCallTime = lastInvokeTime = 0;
+            lastArgs = lastThis = timerId = undefined;
+        }
+
+        function flush() {
+            return timerId === undefined ? result : trailingEdge(now());
+        }
+
+        function debounced() {
+            var time = Date.now(),
+                isInvoking = shouldInvoke(time);
+
+            lastArgs = arguments;
+            lastThis = this;
+            lastCallTime = time;
+
+            if (isInvoking) {
+                if (timerId === undefined) {
+                    return leadingEdge(lastCallTime);
+                }
+                if (maxing) {
+                    // Handle invocations in a tight loop.
+                    clearTimeout(timerId);
+                    timerId = setTimeout(timerExpired, wait);
+                    return invokeFunc(lastCallTime);
                 }
             }
-        };
-        return function () {
-            context = this;
-            args = arguments;
-            timestamp = now();
-            var callNow = immediate && !timeout;
-            if (!timeout) {
-                timeout = setTimeout(later, wait);
-            }
-            if (callNow) {
-                result = func.apply(context, args);
-                context = args = null;
+            if (timerId === undefined) {
+                timerId = setTimeout(timerExpired, wait);
             }
             return result;
-        };
-    };
-
+        }
+        debounced.cancel = cancel;
+        debounced.flush = flush;
+        return debounced;
+    }
 
 
     ///////////////////////
@@ -287,6 +358,17 @@ var WHISKIES = (function (window, document) {
         forEach(post.querySelectorAll('h1, h2, h3'), function (heading) {
             heading.innerHTML = heading.innerHTML.replace(/\(.*?\)/g, '<span class="title-note">$&</span>');
         });
+        forEach(post.querySelectorAll('img[title]'), function (img) {
+            var figure = document.createElement('figure'),
+                figcaption = document.createElement('figcaption'),
+                text = img.getAttribute('title');
+
+            figcaption.innerHTML = text;
+
+            img.parentNode.insertBefore(figure, img);
+            figure.appendChild(img);
+            figure.appendChild(figcaption);
+        });
     }
     forEach(document.getElementsByClassName('article-body'), beautifyPost);
 
@@ -300,6 +382,34 @@ var WHISKIES = (function (window, document) {
             }
         });
     });
+
+
+    // live markdown preview when editing
+    function updateMarkdownPreviews(source, previews) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                forEach(previews, function (preview) {
+                    preview.innerHTML = xhr.responseText;
+                    beautifyPost(preview);
+                    source.style.minHeight = preview.clientHeight + 'px';
+                });
+            }
+        };
+        xhr.open('POST', '/api/markdown/');
+        xhr.send(source.value);
+    }
+    forEach(document.querySelectorAll('[data-markdown-preview]'), function (textarea) {
+        var previews = document.querySelectorAll(textarea.getAttribute('data-markdown-preview'));
+        if (!previews) {
+            return false;
+        }
+        updateMarkdownPreviews(textarea, previews);
+        textarea.addEventListener('keyup', debounce(function (ev) {
+            updateMarkdownPreviews(textarea, previews);
+        }, 400));
+    });
+
 
 
     //////////////////////
