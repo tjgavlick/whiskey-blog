@@ -65,17 +65,24 @@ Title Bars
             @extend a.wob;
             @extend .title;
             display: inline-block;
+            margin-right: 1em;
             opacity: 0.7;
+            &:last-child {
+                margin-right: 0;
+            }
             &:hover {
                 opacity: 1;
             }
         }
-        &__item + &__item {
-            margin-left: 1.5em;
-        }
     }
 }
 
+
+@media #{$min-s} {
+    .title-bar__related__item {
+        margin-right: 1.5em;
+    }
+}
 
 
 // use 'details' toggle on small glass to avoid clutter

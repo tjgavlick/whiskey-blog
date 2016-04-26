@@ -146,3 +146,24 @@ PRICE_RANGES = {
         'price_max': 10000
     }
 }
+
+REVIEW_SORTS = {
+    'best': {
+        'name': 'Best',
+        'filter_name': 'my favorites'
+    },
+    'worst': {
+        'name': 'Worst',
+        'filter_name': 'my least favorite'
+    }
+}
+
+NO_REVIEWS_MESSAGES = [
+    "Obviously, I need to drink more.",
+    "Sorry about that.",
+    "Hold tight; I'm always trying new things!",
+    "Try removing one or two and see if that helps.",
+    "One man can only drink so quickly!",
+    "I'm drinking new things all the time, so try again later.",
+    "I have failed you and brought dishonor to my family."
+]

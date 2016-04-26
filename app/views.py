@@ -1,4 +1,5 @@
 import re
+import random
 
 from flask import render_template, request, redirect, url_for
 from sqlalchemy import and_
@@ -44,7 +45,15 @@ def view_article(article_name):
 
 @app.route('/reviews/')
 def review_list():
-    reviews = Review.query.order_by(Review.date_posted.desc())
+    sort = request.args.get('sort', '')
+    if sort:
+        if sort == 'best':
+            reviews = Review.query.order_by(Review.rating_low.desc())
+        else:
+            reviews = Review.query.order_by(Review.rating_low)
+    else:
+        reviews = Review.query.order_by(Review.date_posted.desc())
+
     origins = Origin.query.all()
     this_origin = None
 
@@ -83,13 +92,15 @@ def review_list():
         reviews = None
 
     return render_template('review_list.html', reviews=reviews,
+                           review_sorts=constants.REVIEW_SORTS,
                            origins=origins,
                            this_origin=this_origin,
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES,
                            age_ranges=constants.AGE_RANGES,
                            proof_ranges=constants.PROOF_RANGES,
-                           price_ranges=constants.PRICE_RANGES)
+                           price_ranges=constants.PRICE_RANGES,
+                           no_reviews_message=random.choice(constants.NO_REVIEWS_MESSAGES))
 
 
 @app.route('/articles/')
