@@ -16,8 +16,12 @@ Forms
         @extend .title;
         display: block;
         color: $gray-light;
+        input[type='checkbox'] + & {
+            display: inline-block;
+        }
     }
     &__help {
+        margin-bottom: 0;
         font-style: italic;
         font-size: $milli;
         opacity: 0.6;
@@ -37,7 +41,7 @@ input[type="text"], input[type="number"], select, textarea {
 
 textarea {
     @extend .copy;
-    min-height: $line*20;
+    min-height: $line*5;
     font-size: $text;
     line-height: $line;
     padding: $line/2;

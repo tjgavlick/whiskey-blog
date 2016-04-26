@@ -2,21 +2,29 @@
 
 {% block body %}
     <section role="main">
+
+        <header class="title-bar title-bar--admin">
+            <h1 class="title-bar__title">Admin / Origins</h1>
+
+            <div class="title-bar__related">
+                <a href="{{ url_for('admin_new_origin') }}" class="title-bar__related__item">New origin</a>
+            </div>
+        </header>
+
         <div class="content">
             <div class="page-bound">
-
-                <ul>
+                <ul class="admin-list">
                     {% for origin in origins %}
-                        <li><p>
-                            <a href="{{ url_for('admin_edit_origin', origin_id=origin.id) }}">{{ origin.name }}</a>
-                            <a href="{{ url_for('admin_remove_origin', origin_id=origin.id) }}">(delete)</a>
-                        </p></li>
+                        <li class="admin-list__item">
+                            <h4 class="admin-list__title">
+                                <a href="{{ url_for('admin_edit_origin', origin_id=origin.id) }}">{{ origin.name }}</a>
+                            </h4>
+                            <a href="{{ url_for('admin_remove_origin', origin_id=origin.id) }}" class="admin-list__remove"><img src="/static/images/icon-x.png" alt="" /></a>
+                        </li>
                     {% else %}
                         <li><p>No origins added yet. <a href="{{ url_for('admin_new_origin') }}">Add one</a>.</p></li>
                     {% endfor %}
                 </ul>
-
-                <p><a href="{{ url_for('admin_new_origin') }}">Add new</a></p>
 
             </div>
         </div>

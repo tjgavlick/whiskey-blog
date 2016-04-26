@@ -54,7 +54,7 @@ a {
   &--highlight {
     background-position: 0 90%;
   }
-  &:hover {
+  &:hover, &:focus {
     background-color: lighten($accent-dark, 8%);
   }
 }

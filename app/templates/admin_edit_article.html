@@ -2,46 +2,56 @@
 
 {% block body %}
     <section role="main">
+
+        <header class="title-bar title-bar--admin">
+            {% if article %}
+                <h1 class="title-bar__title">Article {{ article.id }}: {{ article.title }}</h1>
+                <h2 class="title-bar__subtitle">{{ article.subtitle }}</h2>
+            {% else %}
+                <h1 class="title-bar__title">New article</h1>
+            {% endif %}
+        </header>
+
         <div class="content">
             <form action="{{ url_for('admin_save_article') }}" method="POST" class="page-bound">
                 {% if article %}
-                    <p>Editing article #{{ article.id }}: {{ article.title }}</p>
                     <input type="hidden" name="id" value="{{ article.id }}" />
                 {% else %}
-                    <p>New article</p>
                     <input type="hidden" name="id" value="0" />
                 {% endif %}
+
+                <button class="button admin-write__top-save" type="submit" tabindex="1">Save</button>
 
                 <h1>Basics</h1>
 
                 <label class="form-label">
                     <span class="form-label__text">Title</span>
-                    <input type="text" name="title" value="{{ article.title }}" />
+                    <input type="text" name="title" value="{{ article.title }}" tabindex="1" />
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">Subtitle</span>
-                    <input type="text" name="subtitle" value="{{ article.subtitle }}" />
+                    <input type="text" name="subtitle" value="{{ article.subtitle }}" tabindex="1" />
                 </label>
 
                 <label class="form-label">
                     <span class="form-label__text">Custom URL</span>
-                    <input type="text" name="url" value="{{ article.url }}" />
+                    <input type="text" name="url" value="{{ article.url }}" tabindex="1" />
                     <p class="form-label__help">If blank, a url will be generated from the title and subtitle</p>
                 </label>
 
                 <label class="form-label">
-                    <input type="checkbox" name="is_published" value="yes" {% if article.is_published %}checked="checked"{% endif %} />
+                    <input type="checkbox" name="is_published" value="yes" {% if article.is_published %}checked="checked"{% endif %} tabindex="1" />
                     <span class="form-label__text">Publish</span>
                 </label>
 
                 <label class="form-label">
                     <span class="form-label__text">Main image</span>
-                    <input type="text" name="image_main" value="{{ article.image_main }}" />
+                    <input type="text" name="image_main" value="{{ article.image_main }}" tabindex="1" />
                     <p class="form-label__help">Large article detail image. 600x900, approx</p>
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">List image</span>
-                    <input type="text" name="image_list" value="{{ article.image_list }}" />
+                    <input type="text" name="image_list" value="{{ article.image_list }}" tabindex="1" />
                     <p class="form-label__help">List background image. 300x300, approx</p>
                 </label>
 
@@ -50,14 +60,14 @@
 
                 <label class="form-label">
                     <span class="form-label__text">Article body</span>
-                    <textarea name="body">{{ article.body }}</textarea>
+                    <textarea name="body" class="admin-write__textarea" tabindex="1">{{ article.body }}</textarea>
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">Article abstract</span>
-                    <textarea name="abstract">{{ article.abstract }}</textarea>
+                    <textarea name="abstract" tabindex="1">{{ article.abstract }}</textarea>
                 </label>
 
-                <button class="button" type="submit">Save</button>
+                <button class="button admin-write__bottom-save" type="submit" tabindex="1">Save</button>
             </form>
         </div>
     </section>

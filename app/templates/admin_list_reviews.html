@@ -2,27 +2,44 @@
 
 {% block body %}
     <section role="main">
+
+        <header class="title-bar title-bar--admin">
+            <h1 class="title-bar__title">Admin / Reviews</h1>
+
+            <div class="title-bar__related">
+                <a href="{{ url_for('admin_new_review') }}" class="title-bar__related__item">New review</a>
+                {% if request.args['order'] == 'alpha' %}
+                    <a href="{{ modify_query(order='written') }}" class="title-bar__related__item">Sort by date</a>
+                {% else %}
+                    <a href="{{ modify_query(order='alpha') }}" class="title-bar__related__item">Sort by name</a>
+                {% endif %}
+            </div>
+        </header>
+
         <div class="content">
             <div class="page-bound">
 
-                <ul>
+                <ul class="admin-list">
                     {% for review in reviews %}
-                        <li><p>
-                            <a href="{{ url_for('admin_edit_review', review_id=review.id) }}">{{ review.title }} {{ review.subtitle }}</a>
-                            &mdash;
+                        <li class="admin-list__item">
+                            <h4 class="admin-list__title">
+                                <a href="{{ url_for('admin_edit_review', review_id=review.id) }}">{{ review.title }} {{ review.subtitle }}</a>
+                            </h4>
                             {% if review.is_published %}
-                                published
+                                <span class="admin-list__published">Published</span>,
                             {% else %}
-                                <i style="opacity: 0.4">unpublished</i>
+                                <span class="admin-list__published admin-list__published--unpublished">Unpublished</span>,
                             {% endif %}
-                            <a href="{{ url_for('admin_remove_review', review_id=review.id) }}">(delete)</a>
-                        </p></li>
+                            <span class="admin-list__written">written {{ review.date_posted|datetime }}</span>
+                            <p class="admin-list__description">{{ review.abstract }}</p>
+                            <a href="{{ url_for('admin_remove_review', review_id=review.id) }}" class="admin-list__remove"><img src="/static/images/icon-x.png" alt="" /></a>
+                        </li>
                     {% else %}
-                        <li><p>No reviews added yet. <a href="{{ url_for('admin_new_review') }}">Add one</a>.</p></li>
+                        <li class="admin-list__none">
+                            <p>No reviews added yet. <a href="{{ url_for('admin_new_review') }}">Add one</a>.</p>
+                        </li>
                     {% endfor %}
                 </ul>
-
-                <p><a href="{{ url_for('admin_new_review') }}">Add new</a></p>
 
             </div>
         </div>

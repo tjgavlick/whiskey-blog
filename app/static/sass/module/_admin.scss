@@ -1,0 +1,85 @@
+/*
+
+Admin
+-----
+
+*/
+
+
+.admin-list {
+    list-style: none;
+    margin: 0 0 $line*2;
+    &__item {
+        position: relative;
+        padding-right: $line;
+    }
+    &__item + &__item {
+        margin-top: $line*3/4;
+        padding-top: $line*3/4;
+        border-top: 1px solid darken($bg, 15%);
+    }
+    &__title {
+        margin-bottom: 0;
+        a {
+            display: block;
+            &:hover {
+                color: $accent;
+            }
+        }
+    }
+    &__published {
+        font-size: $milli;
+        font-weight: 700;
+        color: darken($accent, 10%);
+        &--unpublished {
+            font-weight: 400;
+            color: $copy;
+            opacity: 0.6;
+            font-style: italic;
+        }
+    }
+    &__written {
+        font-size: $milli;
+        opacity: 0.9;
+    }
+    &__description {
+        margin: 0;
+        font-size: $milli;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    &__remove {
+        padding: 4px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        opacity: 0.3;
+        &:hover {
+            opacity: 0.5;
+        }
+        &.is-primed {
+            opacity: 1;
+            background: #f00;
+        }
+        img {
+            display: block;
+            width: 12px;
+        }
+    }
+    &__item:first-child &__remove {
+        margin-top: -$line*3/8;
+    }
+}
+
+.admin-write {
+    &__top-save {
+        float: right;
+    }
+    &__bottom-save {
+        width: 100%;
+    }
+    &__textarea {
+        min-height: $line*20;
+    }
+}

@@ -129,11 +129,14 @@ Title Bars
                 margin-bottom: $line/2;
             }
         }
-        &--article, &--main, &--search {
+        &--article, &--main, &--search, &--admin {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+        }
+        &--admin {
+            min-height: $line*4;
         }
 
         &__data {
@@ -174,7 +177,7 @@ Title Bars
                         url('../images/bg-polygons.svg') no-repeat 0 0,
                         linear-gradient(to right, transparentize($gray-dark, 0.3) 0, $gray-dark 30%);
         }
-        &--article, &--main, &--search {
+        &--article, &--main, &--search, &--admin {
             text-align: center;
             align-items: stretch;
         }

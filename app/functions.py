@@ -1,3 +1,5 @@
+import datetime
+
 from flask import request
 from werkzeug import url_encode
 
@@ -24,6 +26,11 @@ def format_proof(proof):
     if proof % 1 == 0:
         return str(int(proof))
     return proof
+
+
+def format_datetime(t):
+    return t.strftime('%B %d, %Y at %H:%M')
+
 
 def modify_query(**new_values):
     args = request.args.copy()

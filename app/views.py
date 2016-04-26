@@ -103,13 +103,20 @@ def colophon():
     return render_template('colophon.html')
 
 
+@app.route('/admin/')
+def admin_index():
+    return render_template('admin_index.html')
+
 
 # admin - reviews
 ####################
 
 @app.route('/admin/review/')
 def admin_list_reviews():
-    reviews = Review.query.order_by(Review.date_posted.desc())
+    if request.args.get('order', '') == 'alpha':
+        reviews = Review.query.order_by(Review.title)
+    else:
+        reviews = Review.query.order_by(Review.date_posted.desc())
     return render_template('admin_list_reviews.html', reviews=reviews)
 
 
@@ -228,7 +235,10 @@ def admin_remove_review(review_id):
 
 @app.route('/admin/article/')
 def admin_list_articles():
-    articles = Article.query.order_by(Article.date_posted.desc())
+    if request.args.get('order', '') == 'alpha':
+        articles = Article.query.order_by(Article.title)
+    else:
+        articles = Article.query.order_by(Article.date_posted.desc())
     return render_template('admin_list_articles.html', articles=articles)
 
 
@@ -251,7 +261,7 @@ def admin_save_article():
         tmp_url = request.form['url']
     else:
         tmp_url = '-'.join(request.form['title'].split(' ') + request.form['subtitle'].split(' '))
-        tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', tmp_url).lower()
+        tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', tmp_url).lower().rstrip('-')
     tmp_is_published = True if request.form.get('is_published') else False
 
     # if we're editing an existing entry

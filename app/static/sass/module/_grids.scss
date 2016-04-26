@@ -16,6 +16,9 @@ A handy utility ltr grid
   letter-spacing: -0.31em;
   text-rendering: optimizespeed;
   text-align: center;
+  &--compact {
+    margin-right: -$line/2;
+  }
 }
 
 .grid__unit {
@@ -27,6 +30,9 @@ A handy utility ltr grid
   letter-spacing: normal;
   text-rendering: auto;
   text-align: left;
+  .grid--compact > & {
+    padding: 0 $line/2 $line/2 0;
+  }
 }
 
 .grid__unit--1-2 { width: 50%; }
@@ -61,10 +67,16 @@ A handy utility ltr grid
 @media #{$min-m} {
   .grid {
     margin-right: -$line*2;
+    &--compact {
+      margin-right: -$line;
+    }
   }
 
   .grid__unit {
     padding: 0 $line*2 $line*2 0;
+    .grid--compact > & {
+      padding: 0 $line $line 0;
+    }
   }
 
   .grid__unit--1-1-m { width: 100%; }

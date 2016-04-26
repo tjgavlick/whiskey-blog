@@ -2,46 +2,56 @@
 
 {% block body %}
     <section role="main">
+
+        <header class="title-bar title-bar--admin">
+            {% if review %}
+                <h1 class="title-bar__title">Review {{ review.id }}: {{ review.title }}</h1>
+                <h2 class="title-bar__subtitle">{{ review.subtitle }}</h2>
+            {% else %}
+                <h1 class="title-bar__title">New review</h1>
+            {% endif %}
+        </header>
+
         <div class="content">
             <form action="{{ url_for('admin_save_review') }}" method="POST" class="page-bound">
                 {% if review %}
-                    <p>Editing review #{{ review.id }}: {{ review.name }}</p>
                     <input type="hidden" name="id" value="{{ review.id }}" />
                 {% else %}
-                    <p>New review</p>
                     <input type="hidden" name="id" value="0" />
                 {% endif %}
+
+                <button class="button admin-write__top-save" type="submit" tabindex="1">Save</button>
 
                 <h1>Basics</h1>
 
                 <label class="form-label">
                     <span class="form-label__text">Title</span>
-                    <input type="text" name="title" value="{{ review.title }}" />
+                    <input type="text" name="title" value="{{ review.title }}" tabindex="1" />
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">Subtitle</span>
-                    <input type="text" name="subtitle" value="{{ review.subtitle }}" />
+                    <input type="text" name="subtitle" value="{{ review.subtitle }}" tabindex="1" />
                 </label>
 
                 <label class="form-label">
                     <span class="form-label__text">Custom URL</span>
-                    <input type="text" name="url" value="{{ review.url }}" />
+                    <input type="text" name="url" value="{{ review.url }}" tabindex="1" />
                     <p class="form-label__help">If blank, a url will be generated from the title and subtitle</p>
                 </label>
 
                 <label class="form-label">
-                    <input type="checkbox" name="is_published" value="yes" {% if review.is_published %}checked="checked"{% endif %} />
+                    <input type="checkbox" name="is_published" value="yes" {% if review.is_published %}checked="checked"{% endif %} tabindex="1" />
                     <span class="form-label__text">Publish</span>
                 </label>
 
                 <label class="form-label">
                     <span class="form-label__text">Main image</span>
-                    <input type="text" name="image_main" value="{{ review.image_main }}" />
+                    <input type="text" name="image_main" value="{{ review.image_main }}" tabindex="1" />
                     <p class="form-label__help">Large review detail image. 600x900, approx</p>
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">List image</span>
-                    <input type="text" name="image_list" value="{{ review.image_list }}" />
+                    <input type="text" name="image_list" value="{{ review.image_list }}" tabindex="1" />
                     <p class="form-label__help">List background image. 300x300, approx</p>
                 </label>
 
@@ -50,7 +60,7 @@
 
                 <label class="form-label">
                     <span class="form-label__text">Drink Type</span>
-                    <select name="drink_type">
+                    <select name="drink_type" tabindex="1">
                         {% for key, vals in drink_types.items()|sort(attribute='0') %}
                             <option value="{{ key }}"{% if key == review.drink_type %} selected="selected"{% endif %}>{{ vals['name'] }}</option>
                         {% endfor %}
@@ -58,7 +68,7 @@
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">Distiller</span>
-                    <select name="distiller_id">
+                    <select name="distiller_id" tabindex="1">
                         {% for distiller in distillers %}
                             <option value="{{ distiller.id }}"{% if distiller.id == review.distiller_id %} selected="selected"{% endif %}>{{ distiller.name }}</option>
                         {% endfor %}
@@ -66,7 +76,7 @@
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">Origin</span>
-                    <select name="origin_id">
+                    <select name="origin_id" tabindex="1">
                         {% for origin in origins %}
                             <option value="{{ origin.id }}"{% if origin.id == review.origin_id %} selected="selected"{% endif %}>{{ origin.name }}</option>
                         {% endfor %}
@@ -75,7 +85,7 @@
 
                 <label class="form-label">
                     <span class="form-label__text">Rarity</span>
-                    <select name="rarity">
+                    <select name="rarity" tabindex="1">
                         {% for key, vals in rarities.items()|sort(attribute='1.value') %}
                             <option value="{{ key }}" {% if review.rarity == key %}selected="selected"{% endif %}>{{ vals['name'] }}</option>
                         {% endfor %}
@@ -86,60 +96,60 @@
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Age low (years)</span>
-                            <input type="number" name="age_low" min="-1" max="100" step="0.5" value="{{ review.age_low }}" />
+                            <input type="number" name="age_low" min="-1" max="100" step="0.5" value="{{ review.age_low }}" tabindex="1" />
                             <p class="form-label__help">Enter -1 for unknown/NAS</p>
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Age high (years)</span>
-                            <input type="number" name="age_high" min="-1" max="100" step="0.5" value="{{ review.age_high }}" />
+                            <input type="number" name="age_high" min="-1" max="100" step="0.5" value="{{ review.age_high }}" tabindex="1" />
                             <p class="form-label__help">Blank for no range</p>
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Proof low</span>
-                            <input type="number" name="proof_low" min="80" max="200" step="0.1" value="{{ review.proof_low }}" />
+                            <input type="number" name="proof_low" min="80" max="200" step="0.1" value="{{ review.proof_low }}" tabindex="1" />
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Proof high</span>
-                            <input type="number" name="proof_high" min="80" max="200" step="0.1" value="{{ review.proof_high }}" />
+                            <input type="number" name="proof_high" min="80" max="200" step="0.1" value="{{ review.proof_high }}" tabindex="1" />
                             <p class="form-label__help">Blank for no range</p>
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">MSRP low (USD)</span>
-                            <input type="number" name="price_low" min="0" max="2000" value="{{ review.price_low }}" />
+                            <input type="number" name="price_low" min="0" max="2000" value="{{ review.price_low }}" tabindex="1" />
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">MSRP high (USD)</span>
-                            <input type="number" name="price_high" min="0" max="2000" value="{{ review.price_high }}" />
+                            <input type="number" name="price_high" min="0" max="2000" value="{{ review.price_high }}" tabindex="1" />
                             <p class="form-label__help">Blank for no range</p>
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Mashbill description</span>
-                            <input type="text" name="mashbill_description" value="{{ review.mashbill_description }}" />
+                            <input type="text" name="mashbill_description" value="{{ review.mashbill_description }}" tabindex="1" />
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Mashbill breakdown</span>
-                            <input type="text" name="mashbill" value="{{ review.mashbill }}" />
+                            <input type="text" name="mashbill" value="{{ review.mashbill }}" tabindex="1" />
                         </label>
                     </div>
                 </div>
 
                 <label class="form-label">
                     <span class="form-label__text">Color</span>
-                    <input type="range" name="color" min="1" max="10" step="1" value="{{ review.color }}" />
+                    <input type="range" name="color" min="1" max="10" step="1" value="{{ review.color }}" tabindex="1" />
                 </label>
 
 
@@ -147,29 +157,29 @@
 
                 <label class="form-label">
                     <span class="form-label__text">Review body</span>
-                    <textarea name="body">{{ review.body }}</textarea>
+                    <textarea name="body" class="admin-write__textarea" tabindex="1">{{ review.body }}</textarea>
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">Review abstract</span>
-                    <textarea name="abstract">{{ review.abstract }}</textarea>
+                    <textarea name="abstract" tabindex="1">{{ review.abstract }}</textarea>
                 </label>
 
                 <div class="grid grid--compact">
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Rating low (1-100)</span>
-                            <input type="number" name="rating_low" min="1" max="100" step="0.1" value="{{ review.rating_low }}" />
+                            <input type="number" name="rating_low" min="1" max="100" step="0.1" value="{{ review.rating_low }}" tabindex="1" />
                         </label>
                     </div>
                     <div class="grid__unit grid__unit--1-2-s">
                         <label class="form-label">
                             <span class="form-label__text">Rating high (1-100)</span>
-                            <input type="number" name="rating_high" min="1" max="100" step="0.1" value="{{ review.rating_high }}" />
+                            <input type="number" name="rating_high" min="1" max="100" step="0.1" value="{{ review.rating_high }}" tabindex="1" />
                         </label>
                     </div>
                 </div>
 
-                <button class="button" type="submit">Save</button>
+                <button class="button admin-write__bottom-save" type="submit" tabindex="1">Save</button>
             </form>
         </div>
     </section>

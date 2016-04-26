@@ -291,6 +291,17 @@ var WHISKIES = (function (window, document) {
     forEach(document.getElementsByClassName('article-body'), beautifyPost);
 
 
+    // careful, now
+    forEach(document.getElementsByClassName('admin-list__remove'), function (el) {
+        el.addEventListener('click', function (ev) {
+            if (!el.classList.contains('is-primed')) {
+                ev.preventDefault();
+                el.classList.add('is-primed');
+            }
+        });
+    });
+
+
     //////////////////////
     //  initialization  //
     //////////////////////

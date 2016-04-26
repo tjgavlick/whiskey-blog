@@ -1,0 +1,34 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Admin // {% endblock %}
+
+{% block body %}
+    <section role="main">
+
+        <header class="title-bar title-bar--admin">
+            <h1 class="title-bar__title">Admin</h1>
+
+            <div class="title-bar__related">
+                <a href="{{ url_for('admin_new_review') }}" class="title-bar__related__item">New review</a>
+                <a href="{{ url_for('admin_new_article') }}" class="title-bar__related__item">New article</a>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="page-bound">
+
+                <div class="grid">
+                    <div class="grid__unit grid__unit--1-2-m">
+                        <h2>Latest reviews:</h2>
+
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-m">
+                        <h2>Latest articles:</h2>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
