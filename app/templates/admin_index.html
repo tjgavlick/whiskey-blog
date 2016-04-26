@@ -20,11 +20,39 @@
                 <div class="grid">
                     <div class="grid__unit grid__unit--1-2-m">
                         <h2>Latest reviews:</h2>
-
+                        <ul class="admin-list">
+                            {% for review in reviews %}
+                                <li class="admin-list__item">
+                                    <h5 class="admin-list__title">
+                                        <a href="{{ url_for('admin_edit_review', review_id=review.id) }}">{{ review.title }} {{ review.subtitle }}</a>
+                                    </h5>
+                                    {% if review.is_published %}
+                                        <span class="admin-list__published">Published</span>
+                                    {% else %}
+                                        <span class="admin-list__published admin-list__published--unpublished">Unpublished</span>
+                                    {% endif %}
+                                    <a href="{{ url_for('admin_remove_review', review_id=review.id) }}" class="admin-list__remove"><img src="/static/images/icon-x.png" alt="" /></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                     <div class="grid__unit grid__unit--1-2-m">
                         <h2>Latest articles:</h2>
-
+                        <ul class="admin-list">
+                            {% for article in articles %}
+                                <li class="admin-list__item">
+                                    <h5 class="admin-list__title">
+                                        <a href="{{ url_for('admin_edit_article', article_id=article.id) }}">{{ article.title }} {{ article.subtitle }}</a>
+                                    </h5>
+                                    {% if article.is_published %}
+                                        <span class="admin-list__published">Published</span>
+                                    {% else %}
+                                        <span class="admin-list__published admin-list__published--unpublished">Unpublished</span>
+                                    {% endif %}
+                                    <a href="{{ url_for('admin_remove_article', article_id=article.id) }}" class="admin-list__remove"><img src="/static/images/icon-x.png" alt="" /></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
 

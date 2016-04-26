@@ -105,7 +105,9 @@ def colophon():
 
 @app.route('/admin/')
 def admin_index():
-    return render_template('admin_index.html')
+    reviews = Review.query.order_by(Review.date_posted.desc()).limit(5)
+    articles = Article.query.order_by(Article.date_posted.desc()).limit(5)
+    return render_template('admin_index.html', reviews=reviews, articles=articles)
 
 
 # admin - reviews
