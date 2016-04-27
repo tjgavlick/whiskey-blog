@@ -107,6 +107,11 @@ figure {
   }
 }
 
+.careful-remove.is-primed {
+  opacity: 1 !important;
+  background-color: #f00 !important;
+}
+
 .group {
   @include clear;
 }

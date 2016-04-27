@@ -3,6 +3,13 @@ import datetime
 from flask import request
 from werkzeug import url_encode
 
+from app import constants
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in constants.ALLOWED_EXTENSIONS
+
+
 def format_price(price):
     if price % 1 == 0:
         return '${}'.format(int(price))

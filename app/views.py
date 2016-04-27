@@ -1,12 +1,13 @@
-import re
-import random
+import re, random, os, time
 
 from flask import render_template, request, redirect, url_for
+from werkzeug import secure_filename
 from sqlalchemy import and_
 from markupsafe import Markup
 
 from app import app, db, constants, markdown
 from app.models import Review, Article, Distiller, Origin
+from app.functions import allowed_file
 
 
 @app.route('/')
@@ -430,8 +431,55 @@ def admin_remove_origin(origin_id):
 
 
 
+# admin - files
+###############
+
+@app.route('/admin/files/')
+def admin_list_files():
+    upload_folder = app.config['UPLOAD_FOLDER']
+    files = [(file, \
+              os.path.getmtime(os.path.join(upload_folder, file)), \
+              time.ctime(os.path.getmtime(os.path.join(upload_folder, file)))) \
+             for file in os.listdir(upload_folder) if \
+             os.path.isfile(os.path.join(upload_folder, file)) and \
+             allowed_file(file)]
+    folder = upload_folder.replace('app', '')
+
+    if request.args.get('order', '') == 'time':
+        files = sorted(files, key=lambda x: x[1], reverse=True)
+
+    return render_template('admin_list_files.html', files=files, folder=folder)
+
+
+@app.route('/admin/files/new/')
+def admin_new_file():
+    return render_template('admin_new_file.html')
+
+
+@app.route('/admin/files/remove/<file>')
+def admin_delete_file(file):
+    path = os.path.join(app.config['UPLOAD_FOLDER'], file)
+    if file and os.path.isfile(path):
+        os.remove(path)
+
+    return redirect(url_for('admin_list_files'))
+
+
+
 # utilities
 ###########
+
+@app.route('/upload/', methods=['POST'])
+def upload_file():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # todo: replace with upload success
+        return redirect(url_for('admin_list_files'))
+    # todo: replace with upload failure
+    return redirect(url_for('admin_list_files'))
+
 
 @app.route('/api/markdown/', methods=['POST'])
 def parse_markdown():

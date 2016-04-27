@@ -374,7 +374,7 @@ var WHISKIES = (function (window, document) {
 
 
     // careful, now
-    forEach(document.getElementsByClassName('admin-list__remove'), function (el) {
+    forEach(document.getElementsByClassName('careful-remove'), function (el) {
         el.addEventListener('click', function (ev) {
             if (!el.classList.contains('is-primed')) {
                 ev.preventDefault();
@@ -408,6 +408,29 @@ var WHISKIES = (function (window, document) {
         textarea.addEventListener('keyup', debounce(function (ev) {
             updateMarkdownPreviews(textarea, previews);
         }, 400));
+    });
+
+
+    // make copying a file url more convenient
+    forEach(document.getElementsByClassName('admin-image-list'), function (list) {
+        // delegate clicks to grid
+        list.addEventListener('click', function (ev) {
+            if (ev.target.tagName.toLowerCase() === 'img') {
+                var item = getParentsByClassName(ev.target, 'admin-image-list__item')[0],
+                    input;
+                if (!item) {
+                    return false;
+                }
+                input = item.querySelector('.admin-image-list__filename');
+                if (item.classList.contains('is-active')) {
+                    item.classList.remove('is-active');
+                    input.blur();
+                } else {
+                    item.classList.add('is-active');
+                    input.focus();
+                }
+            }
+        });
     });
 
 

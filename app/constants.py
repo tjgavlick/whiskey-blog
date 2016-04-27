@@ -1,3 +1,5 @@
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 DRINK_TYPES = {
     'american-malt': {
         'name': 'American single-malt',

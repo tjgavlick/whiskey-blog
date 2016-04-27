@@ -20,7 +20,7 @@
                             <h4 class="admin-list__title">
                                 <a href="{{ url_for('admin_edit_distiller', distiller_id=distiller.id) }}">{{ distiller.name }}</a>
                             </h4>
-                            <a href="{{ url_for('admin_remove_distiller', distiller_id=distiller.id) }}" class="admin-list__remove"><img src="/static/images/icon-x.png" alt="" /></a>
+                            <a href="{{ url_for('admin_remove_distiller', distiller_id=distiller.id) }}" class="admin-list__remove careful-remove"><img src="/static/images/icon-x.png" alt="" /></a>
                         </li>
                     {% else %}
                         <li><p>No distillers added yet. <a href="{{ url_for('admin_new_distiller') }}">Add one</a>.</p></li>

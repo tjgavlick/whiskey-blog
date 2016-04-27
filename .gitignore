@@ -4,7 +4,10 @@
 # static cruft #
 _static-build/
 app/static/assets/
-app/static/style/*
+app/static/style/*.css*
+uploads/*.png
+uploads/*.jpg
+uploads/*.jpeg
 
 # python #
 __pycache__/

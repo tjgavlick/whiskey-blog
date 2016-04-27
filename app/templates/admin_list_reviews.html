@@ -32,7 +32,7 @@
                             {% endif %}
                             <span class="admin-list__written">written {{ review.date_posted|datetime }}</span>
                             <p class="admin-list__description">{{ review.abstract }}</p>
-                            <a href="{{ url_for('admin_remove_review', review_id=review.id) }}" class="admin-list__remove"><img src="/static/images/icon-x.png" alt="" /></a>
+                            <a href="{{ url_for('admin_remove_review', review_id=review.id) }}" class="admin-list__remove careful-remove"><img src="/static/images/icon-x.png" alt="" /></a>
                         </li>
                     {% else %}
                         <li class="admin-list__none">

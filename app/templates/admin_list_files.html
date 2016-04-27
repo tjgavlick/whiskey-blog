@@ -1,0 +1,38 @@
+{% extends "admin_base.html" %}
+
+{% block body %}
+    <section role="main">
+
+        <header class="title-bar title-bar--admin">
+            <h1 class="title-bar__title">Admin / Files</h1>
+
+            <div class="title-bar__related">
+                <a href="{{ url_for('admin_new_file') }}" class="title-bar__related__item">Upload</a>
+                {% if request.args['order'] == 'time' %}
+                    <a href="{{ modify_query(order='alpha') }}" class="title-bar__related__item">Sort by name</a>
+                {% else %}
+                    <a href="{{ modify_query(order='time') }}" class="title-bar__related__item">Latest first</a>
+                {% endif %}
+            </div>
+        </header>
+
+        <div class="content">
+            {% if files %}
+                <div class="admin-image-list grid grid--compact">
+                    {% for file in files %}
+                        <div class="grid__unit grid__unit--1-2 grid__unit--1-3-s grid__unit--1-4-l grid__unit--1-6-w admin-image-list__item">
+                            <img src="{{ folder -}}{{ file[0] }}" alt="" class="admin-image-list__image" />
+                            <div class="admin-image-list__attributes">
+                                <input type="text" class="admin-image-list__filename" value="{{ folder -}}{{ file[0] }}" />
+                                <span class="admin-image-list__time">{{ file[2] }}</span>
+                            </div>
+                            <a href="{{ url_for('admin_delete_file', file=file[0]) }}" class="admin-image-list__remove careful-remove"><img src="/static/images/icon-x.png" alt="" /></a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No files here yet. You should <a href="{{ url_for('admin_new_file') }}">upload one</a>.</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

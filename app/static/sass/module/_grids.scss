@@ -48,6 +48,10 @@ A handy utility ltr grid
 .grid__unit--3-5 { width: 60%; }
 .grid__unit--4-5 { width: 80%; }
 
+$unit-1-6: 16.66%;
+.grid__unit--1-6 { width: $unit-1-6; }
+.grid__unit--5-6 { width: $unit-1-6 * 5; }
+
 
 @media #{$min-s} {
   .grid__unit--1-2-s { width: 50%; }
@@ -62,6 +66,9 @@ A handy utility ltr grid
   .grid__unit--2-5-s { width: 40%; }
   .grid__unit--3-5-s { width: 60%; }
   .grid__unit--4-5-s { width: 80%; }
+
+  .grid__unit--1-6-s { width: $unit-1-6; }
+  .grid__unit--5-6-s { width: $unit-1-6 * 5; }
 }
 
 @media #{$min-m} {
@@ -93,6 +100,9 @@ A handy utility ltr grid
   .grid__unit--2-5-m { width: 40%; }
   .grid__unit--3-5-m { width: 60%; }
   .grid__unit--4-5-m { width: 80%; }
+
+  .grid__unit--1-6-m { width: $unit-1-6; }
+  .grid__unit--5-6-m { width: $unit-1-6 * 5; }
 }
 
 @media #{$min-l} {
@@ -110,6 +120,9 @@ A handy utility ltr grid
   .grid__unit--2-5-l { width: 40%; }
   .grid__unit--3-5-l { width: 60%; }
   .grid__unit--4-5-l { width: 80%; }
+
+  .grid__unit--1-6-l { width: $unit-1-6; }
+  .grid__unit--5-6-l { width: $unit-1-6 * 5; }
 }
 
 @media #{$min-w} {
@@ -127,4 +140,7 @@ A handy utility ltr grid
   .grid__unit--2-5-w { width: 40%; }
   .grid__unit--3-5-w { width: 60%; }
   .grid__unit--4-5-w { width: 80%; }
+
+  .grid__unit--1-6-w { width: $unit-1-6; }
+  .grid__unit--5-6-w { width: $unit-1-6 * 5; }
 }
