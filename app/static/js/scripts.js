@@ -358,6 +358,7 @@ var WHISKIES = (function (window, document) {
         forEach(post.querySelectorAll('h1, h2, h3'), function (heading) {
             heading.innerHTML = heading.innerHTML.replace(/\(.*?\)/g, '<span class="title-note">$&</span>');
         });
+        // wrap images with captions into <figure> elements
         forEach(post.querySelectorAll('img[title]'), function (img) {
             var figure = document.createElement('figure'),
                 figcaption = document.createElement('figcaption'),
@@ -368,6 +369,13 @@ var WHISKIES = (function (window, document) {
             img.parentNode.insertBefore(figure, img);
             figure.appendChild(img);
             figure.appendChild(figcaption);
+
+            // remove only-child figures from restrictive paragraphs
+            var p = figure.parentNode;
+            if (p.childNodes.length == 1) {
+                p.parentNode.insertBefore(figure, p);
+                p.parentNode.removeChild(p);
+            }
         });
     }
     forEach(document.getElementsByClassName('article-body'), beautifyPost);
