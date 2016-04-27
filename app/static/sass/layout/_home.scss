@@ -15,10 +15,54 @@ Not much here
 }
 
 
-@media #{$min-l} {
+@media #{$max-m} {
+    .home-image {
+        display: none;
+    }
+}
+
+
+@media #{$min-m} {
+    .home-image {
+        width: 110%;
+        height: $line*23;
+        position: absolute;
+        left: -5%;  // cut off edges to hide blur edge errors
+        top: 0;
+        background: #000;
+        overflow: hidden;
+        z-index: 0;
+        &__image {
+            display: block;
+            width: 100%;
+            opacity: 0.75;
+            filter: blur(2px);
+            .csstransforms & {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
     .home-more-title {
-        margin: -$line/2 0 $line*1.5;
+        margin-top: $line;
+        color: #fff;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        opacity: 1;
+        position: relative;
+        z-index: 2;
+    }
+}
+
+
+@media #{$min-l} {
+    .home-image {
+        height: $line*30;
+    }
+    .home-more-title {
+        margin: $line*3 0 $line;
         text-align: center;
-        opacity: 0.6;
     }
 }

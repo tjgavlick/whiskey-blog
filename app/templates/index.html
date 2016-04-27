@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 
+{% block headermodifier %}page-header--home{% endblock %}
+
 {% block body %}
     <section role="main">
 
         {% for post in posts %}
             {% if loop.first %}
                 {{ includes.title_bar(post.title,
-                      subtitle=post.subtitle + ' Review' if post.type == 'review' else post.subtitle,
+                      subtitle=post.subtitle,
                       url=url_for('view_review', review_name=post.url) if post.type == 'review' else url_for('view_article', article_name=post.url),
                       modifier='main',
                       prefix='Latest thing:') }}
+                <div class="home-image">
+                    <img src="{{ post.image_main }}" alt="" class="home-image__image" />
+                </div>
             {% endif %}
         {% endfor %}
 

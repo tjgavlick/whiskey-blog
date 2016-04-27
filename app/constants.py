@@ -151,12 +151,12 @@ PRICE_RANGES = {
 
 REVIEW_SORTS = {
     'best': {
-        'name': 'Best',
-        'filter_name': 'my favorites'
+        'name': 'Favorite',
+        'filter_name': 'what I liked the most'
     },
     'worst': {
-        'name': 'Worst',
-        'filter_name': 'my least favorite'
+        'name': 'Least Favorite',
+        'filter_name': 'what I least enjoyed'
     }
 }
 
