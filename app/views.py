@@ -172,11 +172,10 @@ def admin_edit_review(review_id):
 def admin_save_review():
     review_id = int(request.form['id'])
 
-    if request.form['url']:
-        tmp_url = request.form['url']
-    else:
+    tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', request.form['url']).lower()
+    if not tmp_url:
         tmp_url = '-'.join(request.form['title'].split(' ') + request.form['subtitle'].split(' '))
-        tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', tmp_url).lower()
+        tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', tmp_url).lower().rstrip('-')
     tmp_is_published = True if request.form.get('is_published') else False
     tmp_rating_low = request.form['rating_low'] if request.form['rating_low'] else 0
     tmp_rating_high = request.form['rating_high'] if request.form['rating_high'] else None
@@ -284,9 +283,8 @@ def admin_edit_article(article_id):
 def admin_save_article():
     article_id = int(request.form['id'])
 
-    if request.form['url']:
-        tmp_url = request.form['url']
-    else:
+    tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', request.form['url']).lower()
+    if not tmp_url:
         tmp_url = '-'.join(request.form['title'].split(' ') + request.form['subtitle'].split(' '))
         tmp_url = re.sub(r'[^a-zA-Z0-9\-]', '', tmp_url).lower().rstrip('-')
     tmp_is_published = True if request.form.get('is_published') else False
