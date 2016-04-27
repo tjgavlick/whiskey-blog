@@ -445,7 +445,9 @@ def admin_list_files():
              allowed_file(file)]
     folder = upload_folder.replace('app', '')
 
-    if request.args.get('order', '') == 'time':
+    if request.args.get('order', '') == 'alpha':
+        files = sorted(files, key=lambda x: x[0])
+    else:
         files = sorted(files, key=lambda x: x[1], reverse=True)
 
     return render_template('admin_list_files.html', files=files, folder=folder)

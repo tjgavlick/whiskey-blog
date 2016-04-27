@@ -8,10 +8,10 @@
 
             <div class="title-bar__related">
                 <a href="{{ url_for('admin_new_file') }}" class="title-bar__related__item">Upload</a>
-                {% if request.args['order'] == 'time' %}
-                    <a href="{{ modify_query(order='alpha') }}" class="title-bar__related__item">Sort by name</a>
-                {% else %}
+                {% if request.args['order'] == 'alpha' %}
                     <a href="{{ modify_query(order='time') }}" class="title-bar__related__item">Latest first</a>
+                {% else %}
+                    <a href="{{ modify_query(order='alpha') }}" class="title-bar__related__item">Sort by name</a>
                 {% endif %}
             </div>
         </header>
