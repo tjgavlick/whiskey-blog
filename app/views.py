@@ -12,8 +12,8 @@ from app.functions import allowed_file
 
 @app.route('/')
 def index():
-    reviews = list(Review.query.order_by(Review.date_posted.desc()).limit(6))
-    articles = list(Article.query.order_by(Article.date_posted.desc()).limit(6))
+    reviews = list(Review.query.filter_by(is_published=True).order_by(Review.date_posted.desc()).limit(6))
+    articles = list(Article.query.filter_by(is_published=True).order_by(Article.date_posted.desc()).limit(6))
 
     # add type attributes to items so we can label the list
     for review in reviews:
@@ -43,11 +43,11 @@ def review_list():
     sort = request.args.get('sort', '')
     if sort:
         if sort == 'best':
-            reviews = Review.query.order_by(Review.rating_low.desc())
+            reviews = Review.query.filter_by(is_published=True).order_by(Review.rating_low.desc())
         else:
-            reviews = Review.query.order_by(Review.rating_low)
+            reviews = Review.query.filter_by(is_published=True).order_by(Review.rating_low)
     else:
-        reviews = Review.query.order_by(Review.date_posted.desc())
+        reviews = Review.query.filter_by(is_published=True).order_by(Review.date_posted.desc())
 
     origins = Origin.query.all()
     this_origin = None
@@ -112,7 +112,7 @@ def view_article(article_name):
 
 @app.route('/articles/')
 def article_list():
-    articles = Article.query.order_by(Article.date_posted.desc())
+    articles = Article.query.filter_by(is_published=True).order_by(Article.date_posted.desc())
     return render_template('article_list.html', articles=articles)
 
 
