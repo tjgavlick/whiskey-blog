@@ -48,13 +48,13 @@
                     <span class="form-label__text">Main image</span>
                     <input type="text" name="image_main" value="{{ article.image_main }}" tabindex="1" id="main-image" />
                     <button type="button" class="button" data-fills-image-input="main-image">Browse</button>
-                    <p class="form-label__help">Large article detail image. 600x900, approx</p>
+                    <p class="form-label__help">Large article detail image. 1024x768, approx</p>
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">List image</span>
                     <input type="text" name="image_list" value="{{ article.image_list }}" tabindex="1" id="list-image" />
                     <button type="button" class="button" data-fills-image-input="list-image">Browse</button>
-                    <p class="form-label__help">List background image. 300x300, approx</p>
+                    <p class="form-label__help">List background image. 300x200, approx</p>
                 </label>
 
 
@@ -64,6 +64,7 @@
                     <label class="form-label admin-write__label">
                         <span class="form-label__text">Article body</span>
                         <textarea name="body" class="admin-write__textarea markdown-textarea" tabindex="1" data-markdown-preview=".admin-write__preview">{{ article.body }}</textarea>
+                        <p class="form-label__help">2:1 images work well here</p>
                     </label>
 
                     <div class="admin-write__preview">

@@ -36,7 +36,7 @@ Not much here
             display: block;
             width: 100%;
             opacity: 0.75;
-            filter: blur(2px);
+            filter: blur(3px);
             .csstransforms & {
                 position: absolute;
                 left: 0;
@@ -59,10 +59,20 @@ Not much here
 
 @media #{$min-l} {
     .home-image {
-        height: $line*30;
+        height: $line*25;
     }
     .home-more-title {
         margin: $line*3 0 $line;
         text-align: center;
+    }
+}
+
+
+@media #{$min-w} {
+    .home-image {
+        height: $line*30;
+    }
+    .home-more-title {
+        margin-top: $line*5;
     }
 }

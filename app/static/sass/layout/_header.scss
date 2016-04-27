@@ -44,6 +44,9 @@ The global page header
 
 
 @media #{$max-m} {
+    .page-header {
+        z-index: 200;
+    }
     .header-logo {
         &__mark, &__type {
             vertical-align: middle;
@@ -200,13 +203,23 @@ The global page header
     .page-header {
         padding: $line*2.5 $line*2 $line*1;
         &--home {
-            padding-top: $line*6;
+            padding-top: $line*4;
+            padding-bottom: 0;
         }
         &--article {
             margin-left: 35%;
             .page-bound {
                 margin: 0;
             }
+        }
+    }
+}
+
+
+@media #{$min-w} {
+    .page-header {
+        &--home {
+            padding-top: $line*7;
         }
     }
 }
