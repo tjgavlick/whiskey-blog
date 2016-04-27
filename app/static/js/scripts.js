@@ -442,6 +442,18 @@ var WHISKIES = (function (window, document) {
     });
 
 
+    // get image dimensions for an image grid item
+    // expects a .image-grid__item
+    function updateImageDimensions(img, target) {
+        if (img && target) {
+            target.innerHTML = img.naturalWidth + 'x' + img.naturalHeight;
+        }
+    }
+    forEach(document.getElementsByClassName('admin-image-list__item'), function (item) {
+        updateImageDimensions(item.querySelector('.image-grid__image'), item.querySelector('.image-grid__size'));
+    });
+
+
     // convenient upload selectors for post writing
     // end result is writing a file path to a particular input
     // written after alcohol, revisit later
@@ -451,7 +463,7 @@ var WHISKIES = (function (window, document) {
         imageSelectorPath = '',
         imageSelectorCurrentInput;
     imageSelector.className = 'image-selector';
-    imageSelectorGrid.className = 'image-selector__items grid grid--compact';
+    imageSelectorGrid.className = 'image-selector__items image-grid grid grid--compact';
     imageSelector.appendChild(imageSelectorGrid);
     document.body.appendChild(imageSelector);
 
@@ -473,14 +485,14 @@ var WHISKIES = (function (window, document) {
             size = document.createElement('span'),
             date = document.createElement('span');
 
-        result.className = 'image-selector__item grid__unit grid__unit--1-2 grid__unit--1-3-s grid__unit--1-4-l grid__unit--1-6-w';
-        img.className = 'image-selector__image';
+        result.className = 'image-selector__item image-grid__item grid__unit';
+        img.className = 'image-selector__image image-grid__image';
         img.src = imageSelectorPath + data[0];
-        filename.className = 'image-selector__filename';
+        filename.className = 'image-selector__filename image-grid__filename';
         filename.innerHTML = data[0];
-        size.className = 'image-selector__size';
-        size.innerHTML = img.naturalWidth + 'x' + img.naturalHeight;
-        date.className = 'image-selector__date';
+        size.className = 'image-selector__size image-grid__size';
+        updateImageDimensions(img, size);
+        date.className = 'image-selector__date image-grid__date';
         date.innerHTML = data[2];
 
         result.appendChild(img);

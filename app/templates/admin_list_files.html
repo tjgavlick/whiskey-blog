@@ -18,14 +18,14 @@
 
         <div class="content">
             {% if files %}
-                <div class="admin-image-list grid grid--compact">
+                <div class="admin-image-list image-grid grid grid--compact">
                     {% for file in files %}
-                        <div class="grid__unit grid__unit--1-2 grid__unit--1-3-s grid__unit--1-4-l grid__unit--1-6-w admin-image-list__item">
-                            <img src="{{ folder -}}{{ file[0] }}" alt="" class="admin-image-list__image" />
-                            <div class="admin-image-list__attributes">
-                                <input type="text" class="admin-image-list__filename" value="{{ folder -}}{{ file[0] }}" />
-                                <span class="admin-image-list__time">{{ file[2] }}</span>
-                            </div>
+                        <div class="image-grid__item admin-image-list__item grid__unit">
+                            <img src="{{ folder -}}{{ file[0] }}" alt="" class="admin-image-list__image image-grid__image" />
+                            <span class="image-grid__filename">{{ file[0] }}</span>
+                            <input type="text" class="admin-image-list__filename" value="{{ folder -}}{{ file[0] }}" />
+                            <span class="image-grid__size"></span>
+                            <span class="image-grid__date">{{ file[2] }}</span>
                             <a href="{{ url_for('admin_delete_file', file=file[0]) }}" class="admin-image-list__remove careful-remove"><img src="/static/images/icon-x.png" alt="" /></a>
                         </div>
                     {% endfor %}
