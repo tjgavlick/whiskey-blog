@@ -46,12 +46,14 @@
 
                 <label class="form-label">
                     <span class="form-label__text">Main image</span>
-                    <input type="text" name="image_main" value="{{ article.image_main }}" tabindex="1" />
+                    <input type="text" name="image_main" value="{{ article.image_main }}" tabindex="1" id="main-image" />
+                    <button type="button" class="button" data-fills-image-input="main-image">Browse</button>
                     <p class="form-label__help">Large article detail image. 600x900, approx</p>
                 </label>
                 <label class="form-label">
                     <span class="form-label__text">List image</span>
-                    <input type="text" name="image_list" value="{{ article.image_list }}" tabindex="1" />
+                    <input type="text" name="image_list" value="{{ article.image_list }}" tabindex="1" id="list-image" />
+                    <button type="button" class="button" data-fills-image-input="list-image">Browse</button>
                     <p class="form-label__help">List background image. 300x300, approx</p>
                 </label>
 

@@ -118,6 +118,49 @@ Admin
     }
 }
 
+.image-selector {
+    @extend .title;
+    display: none;
+    padding: $line;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: $bg;
+    overflow-y: auto;
+    z-index: 100;
+    &.is-active {
+        display: block;
+    }
+    &__items {
+        text-align: left;
+    }
+    &__image {
+        display: block;
+        max-height: 25vh;
+        margin: 0 auto;
+        border: 1px solid $gray-light;
+    }
+    &__filename, &__size, &__date {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    &__filename {
+        padding: 0 $line/4;
+        margin-top: -$line;
+        color: #fff;
+        background: rgba(0,0,0,0.7);
+        position: relative;
+        z-index: 2;
+    }
+    &__date {
+        opacity: 0.4;
+    }
+}
+
 
 @media (max-width: $page-width*2 - 1px) {
     .admin-write {

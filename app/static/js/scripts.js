@@ -434,6 +434,87 @@ var WHISKIES = (function (window, document) {
     });
 
 
+    // convenient upload selectors for post writing
+    // end result is writing a file path to a particular input
+    // written after alcohol, revisit later
+    var imageSelectorTriggers = document.querySelectorAll('[data-fills-image-input]'),
+        imageSelector = document.createElement('div'),
+        imageSelectorGrid = document.createElement('div'),
+        imageSelectorPath = '',
+        imageSelectorCurrentInput;
+    imageSelector.className = 'image-selector';
+    imageSelectorGrid.className = 'image-selector__items grid grid--compact';
+    imageSelector.appendChild(imageSelectorGrid);
+    document.body.appendChild(imageSelector);
+
+    function loadImages(order, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.open('GET', '/api/files/?order=' + order)
+        xhr.send(null);
+    }
+
+    function makeImageSelectorItem(data) {
+        var result = document.createElement('div'),
+            img = document.createElement('img'),
+            filename = document.createElement('span'),
+            size = document.createElement('span'),
+            date = document.createElement('span');
+
+        result.className = 'image-selector__item grid__unit grid__unit--1-2 grid__unit--1-3-s grid__unit--1-4-l grid__unit--1-6-w';
+        img.className = 'image-selector__image';
+        img.src = imageSelectorPath + data[0];
+        filename.className = 'image-selector__filename';
+        filename.innerHTML = data[0];
+        size.className = 'image-selector__size';
+        size.innerHTML = img.naturalWidth + 'x' + img.naturalHeight;
+        date.className = 'image-selector__date';
+        date.innerHTML = data[2];
+
+        result.appendChild(img);
+        result.appendChild(filename);
+        result.appendChild(size);
+        result.appendChild(date);
+        return result;
+    }
+
+    function refreshImageSelector(order) {
+        imageSelectorGrid.innerHTML = '<div class="grid__unit">Loading ...</div>';
+        loadImages(order, function (response) {
+            var result = document.createDocumentFragment();
+            imageSelectorPath = response.path;
+            forEach(response.files, function (file) {
+                result.appendChild(makeImageSelectorItem(file));
+            });
+            imageSelectorGrid.innerHTML = '';
+            imageSelectorGrid.appendChild(result);
+        });
+    }
+
+    if (imageSelectorTriggers) {
+        forEach(imageSelectorTriggers, function (trigger) {
+            trigger.addEventListener('click', function (ev) {
+                if (!imageSelector.classList.contains('is-active')) {
+                    refreshImageSelector('time');
+                    imageSelector.classList.add('is-active');
+                    imageSelectorCurrentInput = document.getElementById(trigger.getAttribute('data-fills-image-input'));
+                }
+            });
+        });
+        imageSelector.addEventListener('click', function (ev) {
+            var items = getParentsByClassName(ev.target, 'image-selector__item');
+            if (items.length > 0) {
+                imageSelectorCurrentInput.value = imageSelectorPath + items[0].getElementsByClassName('image-selector__filename')[0].innerHTML;
+            }
+            imageSelector.classList.remove('is-active');
+        });
+    }
+
+
 
     //////////////////////
     //  initialization  //

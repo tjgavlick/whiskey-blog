@@ -1,6 +1,6 @@
 import re, random, os, time
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, jsonify
 from werkzeug import secure_filename
 from sqlalchemy import and_
 from markupsafe import Markup
@@ -432,15 +432,19 @@ def admin_remove_origin(origin_id):
 # admin - files
 ###############
 
+def get_uploads(directory):
+    return [(file, \
+             os.path.getmtime(os.path.join(directory, file)), \
+             time.ctime(os.path.getmtime(os.path.join(directory, file)))) \
+            for file in os.listdir(directory) if \
+                os.path.isfile(os.path.join(directory, file)) and \
+                allowed_file(file)]
+
+
 @app.route('/admin/files/')
 def admin_list_files():
     upload_folder = app.config['UPLOAD_FOLDER']
-    files = [(file, \
-              os.path.getmtime(os.path.join(upload_folder, file)), \
-              time.ctime(os.path.getmtime(os.path.join(upload_folder, file)))) \
-             for file in os.listdir(upload_folder) if \
-             os.path.isfile(os.path.join(upload_folder, file)) and \
-             allowed_file(file)]
+    files = get_uploads(upload_folder)
     folder = upload_folder.replace('app', '')
 
     if request.args.get('order', '') == 'alpha':
@@ -465,11 +469,7 @@ def admin_delete_file(file):
     return redirect(url_for('admin_list_files'))
 
 
-
-# utilities
-###########
-
-@app.route('/upload/', methods=['POST'])
+@app.route('/admin/files/upload/', methods=['POST'])
 def upload_file():
     file = request.files['file']
     if file and allowed_file(file.filename):
@@ -481,6 +481,25 @@ def upload_file():
     return redirect(url_for('admin_list_files'))
 
 
+# utilities
+###########
+
 @app.route('/api/markdown/', methods=['POST'])
 def parse_markdown():
     return markdown(request.data.decode('utf-8'))
+
+
+@app.route('/api/files/', methods=['GET'])
+def get_file_list():
+    result = {
+        'path': app.config['UPLOAD_FOLDER'].replace('app', '')
+    }
+    files = get_uploads(app.config['UPLOAD_FOLDER'])
+
+    if request.args.get('order', '') == 'alpha':
+        files = sorted(files, key=lambda x: x[0])
+    else:
+        files = sorted(files, key=lambda x: x[1])
+    result['files'] = files
+
+    return jsonify(**result)

@@ -12,7 +12,7 @@ Right now it has a front-facing UI and an admin area. It can save and list revie
 - [ ] Add external (google?) auth for admin access
 - [x] Add live markdown previews for editing
 - [x] Add image upload
-- [ ] Add an asset browser/selector
+- [x] Add an asset browser/selector
 - [ ] Implement keyword search
 - [ ] Serve it with nginx and set up a local Vagrant or Docker environment for development
 - [ ] Launch the damn thing
