@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ error }} // {% endblock %}
+
+{% block body %}
+    <section role="main">
+
+        {{ includes.title_bar("Can't Let You Do That", subtitle=error, modifier='admin') }}
+
+        <div class="content">
+            <div class="page-bound error-page">
+                <div class="error-page__image">
+                    <img src="/static/images/404.png" alt="" />
+                </div>
+                <h1>What happened?</h1>
+                <p>You're not allowed to be here right now. Can't have just anyone getting all up in my admin section, you know?</p>
+                <h1>Now what?</h1>
+                <p>If you think you should be allowed to be here, you should authenticate and then try again. If you're not allowed to be here but are trying anyway, I would ask you to stop that.</p>
+                <p>If you don't know what this is, you probably are just here on accident. You can <a href="{{ url_for('review_list') }}">browse and filter my reviews</a> or <a href="{{ url_for('article_list') }}">browse my articles</a> if you're looking for something to do.</p>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

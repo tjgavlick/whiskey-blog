@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}404 // {% endblock %}
+
+{% block body %}
+    <section role="main">
+
+        {{ includes.title_bar("Oh no!", subtitle="Error 404: not found", modifier='admin') }}
+
+        <div class="content">
+            <div class="page-bound error-page">
+                <div class="error-page__image">
+                    <img src="/static/images/404.png" alt="" />
+                </div>
+                <div class="grid">
+                    <div class="grid__unit grid__unit--1-2-m">
+                        <h1>What happened?</h1>
+                        <p>I can't find what you're looking for. Either &hellip;</p>
+                        <ul>
+                            <li>You clicked a bad link</li>
+                            <li>The thing was moved or deleted</li>
+                            <li>You need to type <em>then</em> drink</li>
+                        </ul>
+                        <h1>Now what?</h1>
+                        <p>You can try to <a href="{{ url_for('review_list') }}">browse and filter the reviews</a> or <a href="{{ url_for('article_list') }}">browse the articles</a> to find what you're looking for. And here's my most recent stuff:</p>
+                    </div>
+                    <div class="grid__unit grid__unit--1-2-m">
+                        <h3>Latest reviews</h3>
+                        <ul class="item-list">
+                            {% for review in reviews %}
+                                <li class="item-list__item">
+                                    <a href="{{ url_for('view_review', review_name=review.url) }}" class="item-list__title">{{ review.title }} {{ review.subtitle }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Recent articles</h3>
+                        <ul class="item-list">
+                            {% for article in articles %}
+                                <li class="item-list__item">
+                                    <a href="{{ url_for('view_article', article_name=article.url) }}" class="item-list__title">{{ article.title }} {{ article.subtitle }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

@@ -27,12 +27,14 @@ def index():
     return render_template('index.html', posts=posts)
 
 
+
+
 # reviews
 #########
 
 @app.route('/review/<review_name>')
 def view_review(review_name):
-    review = Review.query.filter_by(url=review_name).first()
+    review = Review.query.filter_by(url=review_name).first_or_404()
     return render_template('review.html', review=review,
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES)
@@ -105,7 +107,7 @@ def review_list():
 
 @app.route('/article/<article_name>')
 def view_article(article_name):
-    article = Article.query.filter_by(url=article_name).first()
+    article = Article.query.filter_by(url=article_name).first_or_404()
     return render_template('article.html', article=article,
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES)
@@ -115,6 +117,7 @@ def view_article(article_name):
 def article_list():
     articles = Article.query.filter_by(is_published=True).order_by(Article.date_posted.desc())
     return render_template('article_list.html', articles=articles)
+
 
 
 # static pages
@@ -134,6 +137,7 @@ def admin_index():
     reviews = Review.query.order_by(Review.date_posted.desc()).limit(5)
     articles = Article.query.order_by(Article.date_posted.desc()).limit(5)
     return render_template('admin_index.html', reviews=reviews, articles=articles)
+
 
 
 # admin - reviews
@@ -160,7 +164,7 @@ def admin_new_review():
 
 @app.route('/admin/review/<int:review_id>')
 def admin_edit_review(review_id):
-    review = Review.query.get(review_id)
+    review = Review.query.get_or_404(review_id)
     origins = Origin.query.order_by(Origin.name)
     distillers = Distiller.query.order_by(Distiller.name)
     return render_template('admin_edit_review.html', review=review,
@@ -248,11 +252,12 @@ def admin_save_review():
 
 @app.route('/admin/review/remove/<int:review_id>')
 def admin_remove_review(review_id):
-    review = Review.query.get(review_id)
+    review = Review.query.get_or_404(review_id)
     if not review is None:
         db.session.delete(review)
         db.session.commit()
     return redirect(url_for('admin_list_reviews'))
+
 
 
 # admin - articles
@@ -274,7 +279,7 @@ def admin_new_article():
 
 @app.route('/admin/article/<int:article_id>')
 def admin_edit_article(article_id):
-    article = Article.query.get(article_id)
+    article = Article.query.get_or_404(article_id)
     return render_template('admin_edit_article.html', article=article)
 
 
@@ -321,7 +326,7 @@ def admin_save_article():
 
 @app.route('/admin/article/remove/<int:article_id>')
 def admin_remove_article(article_id):
-    article = Article.query.get(article_id)
+    article = Article.query.get_or_404(article_id)
     if not article is None:
         db.session.delete(article)
         db.session.commit()
@@ -346,7 +351,7 @@ def admin_new_distiller():
 
 @app.route('/admin/distiller/<int:distiller_id>')
 def admin_edit_distiller(distiller_id):
-    distiller = Distiller.query.get(distiller_id)
+    distiller = Distiller.query.get_or_404(distiller_id)
     origins = Origin.query.order_by(Origin.name)
     return render_template('admin_edit_distiller.html', distiller=distiller, origins=origins)
 
@@ -373,11 +378,12 @@ def admin_save_distiller():
 
 @app.route('/admin/distiller/remove/<int:distiller_id>')
 def admin_remove_distiller(distiller_id):
-    distiller = Distiller.query.get(distiller_id)
+    distiller = Distiller.query.get_or_404(distiller_id)
     if not distiller is None:
         db.session.delete(distiller)
         db.session.commit()
     return redirect(url_for('admin_list_distillers'))
+
 
 
 # admin - origins
@@ -396,7 +402,7 @@ def admin_new_origin():
 
 @app.route('/admin/origin/<int:origin_id>')
 def admin_edit_origin(origin_id):
-    origin = Origin.query.get(origin_id)
+    origin = Origin.query.get_or_404(origin_id)
     return render_template('admin_edit_origin.html', origin=origin)
 
 
@@ -420,7 +426,7 @@ def admin_save_origin():
 
 @app.route('/admin/origin/remove/<int:origin_id>')
 def admin_remove_origin(origin_id):
-    origin = Origin.query.get(origin_id)
+    origin = Origin.query.get_or_404(origin_id)
     if not origin is None:
         db.session.delete(origin)
         db.session.commit()
@@ -480,6 +486,7 @@ def upload_file():
     return redirect(url_for('admin_list_files'))
 
 
+
 # utilities
 ###########
 
@@ -502,3 +509,30 @@ def get_file_list():
     result['files'] = files
 
     return jsonify(**result)
+
+
+
+# Errors
+########
+
+@app.errorhandler(401)
+def error_401(error):
+    return render_template('error_401', error=error), 401
+
+
+@app.errorhandler(403)
+def error_403(error):
+    return render_template('error_401', error=error), 403
+
+
+@app.errorhandler(404)
+def error_404(error):
+    reviews = list(Review.query.filter_by(is_published=True).order_by(Review.date_posted.desc()).limit(3))
+    articles = list(Article.query.filter_by(is_published=True).order_by(Article.date_posted.desc()).limit(3))
+
+    return render_template('error_404.html', reviews=reviews, articles=articles), 404
+
+
+@app.errorhandler(500)
+def error_500(error):
+    return render_template('error_500', error=error), 500

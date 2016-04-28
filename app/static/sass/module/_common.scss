@@ -89,6 +89,19 @@ figure {
   text-align: center;
 }
 
+.item-list {
+  list-style: none;
+  margin: 0 0 $line;
+  &__item + &__item {
+    padding-top: $line/2;
+    margin-top: $line/2;
+    border-top: 1px solid darken($bg, 5%);
+  }
+  &__title {
+    @extend .title;
+  }
+}
+
 .color-bar {
   width: 100%;
   height: $line/2;
@@ -112,6 +125,88 @@ figure {
   background-color: #f00 !important;
 }
 
+
+.error-page {
+  margin-bottom: $line;
+  &__image {
+    margin: $line 0 $line*2;
+    border-bottom: 4px solid transparentize($copy, 0.9);
+    position: relative;
+    overflow: hidden;
+    &:before, &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 50%;
+      background: transparentize(#d5790a, 0.3);
+    }
+    // drops
+    &:before {
+      width: 1px;
+      height: 1px;
+      margin-left: 16px;
+      bottom: 15px;
+      z-index: 1;
+      animation-name: drips;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in;
+    }
+    // puddle
+    &:after {
+      width: 85%;
+      height: 2px;
+      margin-left: 17px;
+      bottom: 0;
+      transform: translateX(-50%);
+      box-shadow: 2px 1px 0 transparentize(#d5790a, 0.3), -2px 1px 0 transparentize(#d5790a, 0.3);
+      z-index: 3;
+      animation-name: puddle;
+      animation-duration: 90s;
+      animation-timing-function: ease-out;
+    }
+    img {
+      display: block;
+      max-width: 100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+@keyframes drips {
+  from {
+    bottom: 15px;
+    width: 1px;
+    height: 1px;
+  }
+  5% {
+    width: 3px;
+    height: 3px;
+  }
+  to {
+    bottom: -800px;  // fake an iteration delay
+  }
+}
+@keyframes puddle {
+  from {
+    width: 1%;
+  }
+  to {
+    width: 85%;
+  }
+}
+
 .group {
   @include clear;
+}
+
+
+@media #{$min-m} {
+  .error-page {
+    margin-bottom: $line*2;
+    &__image {
+      margin-bottom: $line*3;
+    }
+  }
 }
