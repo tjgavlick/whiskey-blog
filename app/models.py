@@ -13,8 +13,8 @@ class Review(db.Model):
     subtitle = db.Column(db.String(200))
     image_main = db.Column(db.String(255))
     image_list = db.Column(db.String(255))
-    rating_low = db.Column(db.Float)
-    rating_high = db.Column(db.Float)
+    distiller_id = db.Column(db.Integer, db.ForeignKey('distiller.id'))
+    distiller = db.relationship('Distiller', backref=db.backref('reviews', lazy='dynamic'))
     age_low = db.Column(db.Float)
     age_high = db.Column(db.Float)
     proof_low = db.Column(db.Float)
@@ -28,13 +28,9 @@ class Review(db.Model):
     color = db.Column(db.Integer)
     body = db.Column(db.Text)
     abstract = db.Column(db.Text)
+    rating_low = db.Column(db.Float)
+    rating_high = db.Column(db.Float)
 
-
-    distiller_id = db.Column(db.Integer, db.ForeignKey('distiller.id'))
-    distiller = db.relationship('Distiller', backref=db.backref('reviews', lazy='dynamic'))
-
-    origin_id = db.Column(db.Integer, db.ForeignKey('origin.id'))
-    origin = db.relationship('Origin', backref=db.backref('reviews', lazy='dynamic'))
 
     def __init__(self, url=None, is_published=False, date_posted=None,
                  title=None, subtitle=None, rating_low=None, rating_high=None,
@@ -42,7 +38,7 @@ class Review(db.Model):
                  proof_low=None, proof_high=None, price_low=None, price_high=None,
                  mashbill=None, mashbill_description=None, rarity=None,
                  color=None, body=None, abstract=None, drink_type=None,
-                 distiller_id=None, origin_id=None):
+                 distiller_id=None):
 
         if date_posted is None:
             date_posted = datetime.utcnow()
@@ -54,8 +50,7 @@ class Review(db.Model):
         self.subtitle = subtitle
         self.image_main = image_main
         self.image_list = image_list
-        self.rating_low = rating_low
-        self.rating_high = rating_high
+        self.distiller_id = distiller_id
         self.age_low = age_low
         self.age_high = age_high
         self.proof_low = proof_low
@@ -69,8 +64,8 @@ class Review(db.Model):
         self.color = color
         self.body = body
         self.abstract = abstract
-        self.distiller_id = distiller_id
-        self.origin_id = origin_id
+        self.rating_low = rating_low
+        self.rating_high = rating_high
 
     def __repr__(self):
         return '<Review #{} - {} {}>'.format(self.id, self.title, self.subtitle)

@@ -76,14 +76,6 @@
                         {% endfor %}
                     </select>
                 </label>
-                <label class="form-label">
-                    <span class="form-label__text">Origin</span>
-                    <select name="origin_id" tabindex="1">
-                        {% for origin in origins %}
-                            <option value="{{ origin.id }}"{% if origin.id == review.origin_id %} selected="selected"{% endif %}>{{ origin.name }}</option>
-                        {% endfor %}
-                    </select>
-                </label>
 
                 <label class="form-label">
                     <span class="form-label__text">Rarity</span>

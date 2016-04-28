@@ -52,6 +52,11 @@ def review_list():
     origins = Origin.query.all()
     this_origin = None
 
+    origin = request.args.get('origin', '')
+    if origin:
+        this_origin = Origin.query.get(origin)
+        reviews = reviews.filter(Review.distiller.has(origin_id=origin))
+
     drink_type = request.args.get('type', '')
     if drink_type:
         reviews = reviews.filter(Review.drink_type == drink_type)
@@ -78,10 +83,6 @@ def review_list():
     if rarity:
         reviews = reviews.filter(Review.rarity == rarity)
 
-    origin = request.args.get('origin', '')
-    if origin:
-        this_origin = Origin.query.get(origin)
-        reviews = reviews.filter(Review.origin == this_origin)
 
     if reviews.count() == 0:
         reviews = None
@@ -195,8 +196,7 @@ def admin_save_review():
         review.subtitle = request.form['subtitle']
         review.image_main = request.form['image_main']
         review.image_list = request.form['image_list']
-        review.rating_low = tmp_rating_low
-        review.rating_high = tmp_rating_high
+        review.distiller_id = request.form['distiller_id']
         review.age_low = tmp_age_low
         review.age_high = tmp_age_high
         review.proof_low = tmp_proof_low
@@ -210,8 +210,8 @@ def admin_save_review():
         review.color = request.form['color']
         review.body = request.form['body']
         review.abstract = request.form['abstract']
-        review.distiller_id = request.form['distiller_id']
-        review.origin_id = request.form['origin_id']
+        review.rating_low = tmp_rating_low
+        review.rating_high = tmp_rating_high
 
     # if we're adding a new entry
     else:
@@ -221,8 +221,7 @@ def admin_save_review():
                         subtitle=request.form['subtitle'],
                         image_main=request.form['image_main'],
                         image_list=request.form['image_list'],
-                        rating_low=tmp_rating_low,
-                        rating_high=tmp_rating_high,
+                        distiller_id=request.form['distiller_id'],
                         age_low=tmp_age_low,
                         age_high=tmp_age_high,
                         proof_low=tmp_proof_low,
@@ -236,8 +235,8 @@ def admin_save_review():
                         color=request.form['color'],
                         body=request.form['body'],
                         abstract=request.form['abstract'],
-                        distiller_id=request.form['distiller_id'],
-                        origin_id=request.form['origin_id']
+                        rating_low=tmp_rating_low,
+                        rating_high=tmp_rating_high
                         )
 
 
