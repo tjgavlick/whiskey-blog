@@ -8,11 +8,26 @@ Colophon
 
 .colophon {
     text-align: center;
+    padding: $line;
+    &__icon {
+        display: block;
+        max-height: 30px;
+        margin: 0 auto $line;
+    }
     &__text {
         @extend .copy;
-        margin: $line 0 0;
         font-size: $text;
         line-height: $line;
     }
+}
 
+
+@media #{$min-m} {
+    .colophon {
+        padding: 7vh $line 12vh;
+        &__icon {
+            margin-bottom: $line*3;
+            margin-bottom: 6vh;
+        }
+    }
 }

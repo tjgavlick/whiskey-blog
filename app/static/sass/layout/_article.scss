@@ -20,6 +20,12 @@ Article
         @extend .title;
         font-style: normal;
     }
+    &__back {
+        display: inline-block;
+        vertical-align: middle;
+        width: 9px;
+        margin-right: 10px;
+    }
 }
 
 p.article-reference {  // specificity over p:last-child rule
@@ -62,8 +68,14 @@ p.article-reference {  // specificity over p:last-child rule
 
 @media #{$min-m} {
     .article-related {
-        margin: $line (-$line*2);
+        margin: $line*2 (-$line*2) $line;
         padding: $line $line*2;
+        p + p {
+            margin-top: -$line/2;
+        }
+        &__back {
+            margin-left: -22px;
+        }
     }
 
     .article-reference a {

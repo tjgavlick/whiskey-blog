@@ -201,7 +201,7 @@ The global page header
 
 @media #{$min-l} {
     .page-header {
-        padding: $line*2.5 $line*2 $line*1;
+        padding: $line*3 $line*2 $line/2;
         &--home {
             padding-top: $line*4;
             padding-bottom: 0;

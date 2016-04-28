@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}Colophon // {% endblock %}
+
 {% block body %}
     <article role="main">
 
-        {{ includes.title_bar('Colophon', modifier='main') }}
+        <!-- {{ includes.title_bar('Colophon', modifier='main') }} -->
 
         <section class="colophon content">
             <div class="page-bound">
+
+                <img src="/static/images/heart.png" alt="" class="colophon__icon" />
 
                 <pre class="colophon__text">
 <i>Tim drinks whiskies</i>
@@ -24,9 +28,9 @@ It's typeset in <a href="https://www.google.com/fonts/specimen/Lora" target="_bl
 under the SIL Open Font
 License. Photographs
 were taken with
-a Sony NEX-6,
-and design was in
-<a href="http://www.sketchapp.com/" target="_blank">Sketch</a>. Find me on <a href="https://github.com/tjgavlick/whiskey-blog" target="_blank">GitHub</a>
+a Sony NEX-6.
+Additional design
+work done in <a href="http://www.sketchapp.com/" target="_blank">Sketch</a>.
                 </pre>
 
             </div>

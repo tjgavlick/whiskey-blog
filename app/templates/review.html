@@ -115,13 +115,17 @@
 
             {{ markdown(review.body)|safe }}
 
-            <!-- <aside class="article-related">
-                <p>
+            <aside class="article-related">
+                <!-- <p>
                     Related reviews:
                     <a href="#0">Rittenhouse 21-year Rye</a>,
                     <a href="#0">Rittenhouse Bottled-in-Bond Rye</a>
+                </p> -->
+                <p>
+                    <img src="/static/images/arrow-left.png" alt="" class="article-related__back" />
+                    <a href="{{ url_for('review_list') }}">Back to all reviews</a>
                 </p>
-            </aside> -->
+            </aside>
 
             <p class="article-reference">
                 <a href="ethics.htm">Review ethics</a>
