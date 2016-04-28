@@ -12,8 +12,8 @@ from app.functions import allowed_file
 
 @app.route('/')
 def index():
-    reviews = list(Review.query.filter_by(is_published=True).order_by(Review.date_posted.desc()).limit(6))
-    articles = list(Article.query.filter_by(is_published=True).order_by(Article.date_posted.desc()).limit(6))
+    reviews = list(Review.query.filter_by(is_published=True).order_by(Review.date_posted.desc()).limit(4))
+    articles = list(Article.query.filter_by(is_published=True).order_by(Article.date_posted.desc()).limit(4))
 
     # add type attributes to items so we can label the list
     for review in reviews:
@@ -22,7 +22,7 @@ def index():
         article.type = 'article'
 
     # combine the two different post types into a single ordered list
-    posts = sorted(reviews + articles, key=lambda x: x.date_posted, reverse=True)
+    posts = sorted(reviews + articles, key=lambda x: x.date_posted, reverse=True)[:4]
 
     return render_template('index.html', posts=posts)
 
