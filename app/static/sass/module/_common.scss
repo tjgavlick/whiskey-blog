@@ -180,17 +180,21 @@ figure {
     width: 1px;
     height: 1px;
   }
-  5% {
+  60% {
+    bottom: 13px;
     width: 3px;
     height: 3px;
   }
   to {
-    bottom: -800px;  // fake an iteration delay
+    bottom: -400px;  // fake an iteration delay
   }
 }
 @keyframes puddle {
   from {
-    width: 1%;
+    width: 0%;
+  }
+  2.2% {
+    width: 0%;
   }
   to {
     width: 85%;

@@ -116,11 +116,14 @@
             {{ markdown(review.body)|safe }}
 
             <aside class="article-related">
-                <!-- <p>
-                    Related reviews:
-                    <a href="#0">Rittenhouse 21-year Rye</a>,
-                    <a href="#0">Rittenhouse Bottled-in-Bond Rye</a>
-                </p> -->
+                {% if review.related_reviews.all() %}
+                    <p>
+                        Related reviews:
+                        {% for rel in review.related_reviews %}
+                            <a href="{{ url_for('view_review', review_name=rel.url) }}">{{ rel.title }} {{ rel.subtitle }}</a>{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
                 <p>
                     <img src="/static/images/arrow-left.png" alt="" class="article-related__back" />
                     <a href="{{ url_for('review_list') }}">Back to all reviews</a>

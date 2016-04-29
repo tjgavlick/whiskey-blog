@@ -4,6 +4,12 @@ from datetime import datetime
 from app import db
 
 
+review_rels = db.Table('reviewrels',
+    db.Column('id', db.Integer, db.ForeignKey('review.id')),
+    db.Column('related_id', db.Integer, db.ForeignKey('review.id'))
+)
+
+
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(255), unique=True)
@@ -30,6 +36,12 @@ class Review(db.Model):
     abstract = db.Column(db.Text)
     rating_low = db.Column(db.Float)
     rating_high = db.Column(db.Float)
+    related_reviews = db.relationship('Review',
+        secondary=review_rels,
+        primaryjoin=(review_rels.c.id == id),
+        secondaryjoin=(review_rels.c.related_id == id),
+        backref=db.backref('related_reviews_backref', lazy='dynamic'),
+        lazy='dynamic')
 
 
     def __init__(self, url=None, is_published=False, date_posted=None,
@@ -85,9 +97,11 @@ class Distiller(db.Model):
 class Origin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
+    filter_name = db.Column(db.String(100))
 
-    def __init__(self, name):
+    def __init__(self, name, filter_name=None):
         self.name = name
+        self.filter_name = filter_name
 
 
 class Article(db.Model):

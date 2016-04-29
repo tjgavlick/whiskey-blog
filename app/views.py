@@ -159,7 +159,7 @@ def admin_new_review():
     return render_template('admin_edit_review.html', review=None,
                            origins=origins, distillers=distillers,
                            drink_types=constants.DRINK_TYPES,
-                           rarities=constants.RARITIES)
+                           rarities=constants.RARITIES, related_reviews='')
 
 
 @app.route('/admin/review/<int:review_id>')
@@ -167,10 +167,12 @@ def admin_edit_review(review_id):
     review = Review.query.get_or_404(review_id)
     origins = Origin.query.order_by(Origin.name)
     distillers = Distiller.query.order_by(Distiller.name)
+    related_reviews = ' '.join([str(r.id) for r in review.related_reviews])
     return render_template('admin_edit_review.html', review=review,
                            origins=origins, distillers=distillers,
                            drink_types=constants.DRINK_TYPES,
-                           rarities=constants.RARITIES)
+                           rarities=constants.RARITIES,
+                           related_reviews=related_reviews)
 
 
 @app.route('/admin/review/save/', methods=['POST'])
@@ -190,6 +192,8 @@ def admin_save_review():
     tmp_proof_high = request.form['proof_high'] if request.form['proof_high'] else None
     tmp_price_low = request.form['price_low'] if request.form['price_low'] else 0
     tmp_price_high = request.form['price_high'] if request.form['price_high'] else None
+    tmp_related_reviews = request.form['related_reviews'].strip().split(' ')
+
 
     # if we're editing an existing entry
     if review_id > 0:
@@ -216,6 +220,14 @@ def admin_save_review():
         review.abstract = request.form['abstract']
         review.rating_low = tmp_rating_low
         review.rating_high = tmp_rating_high
+        for r in review.related_reviews:
+            # remove existing reviews so we can rebuild the list
+            review.related_reviews.remove(r)
+        for r in tmp_related_reviews:
+            if r.isdigit():
+                r = Review.query.get(r)
+                if not r in review.related_reviews:
+                    review.related_reviews.append(r)
 
     # if we're adding a new entry
     else:
@@ -242,6 +254,10 @@ def admin_save_review():
                         rating_low=tmp_rating_low,
                         rating_high=tmp_rating_high
                         )
+        for r in tmp_related_reviews:
+            if r.isdigit():
+                r = Review.query.get(r)
+                review.related_reviews.append(r)
 
 
     db.session.add(review)
@@ -410,14 +426,16 @@ def admin_edit_origin(origin_id):
 def admin_save_origin():
     origin_id = int(request.form['id'])
     origin_name = request.form['name']
+    origin_filter_name = request.form['filter_name'] if request.form['filter_name'] else request.form['name']
 
     # if we're editing an existing entry
     if origin_id > 0:
         origin = Origin.query.get(origin_id)
         origin.name = origin_name
+        origin.filter_name = origin_filter_name
     # if we're adding a new entry
     else:
-        origin = Origin(origin_name)
+        origin = Origin(origin_name, filter_name=origin_filter_name)
 
     db.session.add(origin)
     db.session.commit()
