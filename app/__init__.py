@@ -2,7 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import mistune
 
-from app.functions import format_price, format_age, format_proof, format_datetime, modify_query
+from app.functions import format_price, format_age, format_age_range, \
+                          format_proof, format_datetime, modify_query
 
 app = Flask(__name__)
 app.config.from_object('config.DevelopmentConfig')
@@ -14,6 +15,7 @@ markdown = mistune.Markdown(renderer=renderer)
 
 app.jinja_env.globals.update(format_price=format_price)
 app.jinja_env.globals.update(format_age=format_age)
+app.jinja_env.globals.update(format_age_range=format_age_range)
 app.jinja_env.globals.update(format_proof=format_proof)
 app.jinja_env.globals.update(modify_query=modify_query)
 app.jinja_env.globals.update(markdown=markdown)

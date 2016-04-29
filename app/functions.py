@@ -29,6 +29,14 @@ def format_age(age):
     return '{} years {} months'.format(int(age), round(age % 1 * 12))
 
 
+def format_age_range(age1, age2):
+    if age1 > age2:
+        age1, age2 = age2, age1
+    if age1 % 1 == 0 and age2 % 1 == 0:
+        return '{} – {} years'.format(int(age1), int(age2))
+    return format_age(age1) + ' – ' + format_age(age2)
+
+
 def format_proof(proof):
     if proof % 1 == 0:
         return str(int(proof))

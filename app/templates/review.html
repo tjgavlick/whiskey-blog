@@ -62,7 +62,7 @@
                 <li class="title-bar__datum grid__unit grid__unit--1-2-s grid__unit--1-3-m">
                     {% if review.age_low > 0 %}
                         {% if review.age_high %}
-                            <span class="title-bar__datum__value">{{ format_age(review.age_low) }} &ndash; {{ format_age(review.age_high) }}</span>
+                            <span class="title-bar__datum__value">{{ format_age_range(review.age_low, review.age_high) }}</span>
                         {% else %}
                             <span class="title-bar__datum__value">{{ format_age(review.age_low) }}</span>
                         {% endif %}
