@@ -13,7 +13,13 @@
                       modifier='main',
                       prefix='Latest thing:') }}
                 <div class="home-image">
-                    <img src="{{ post.image_main }}" alt="" class="home-image__image" />
+                    {% if post.image_home %}
+                        <img src="{{ post.image_home }}" alt="" class="home-image__image" />
+                    {% elif post.image_main %}
+                        <img src="{{ post.image_main }}" alt="" class="home-image__image" />
+                    {% else %}
+                        <img src="{{ post.image_list }}" alt="" class="home-image__image" />
+                    {% endif %}
                 </div>
             {% endif %}
         {% endfor %}

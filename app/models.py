@@ -19,6 +19,7 @@ class Review(db.Model):
     subtitle = db.Column(db.String(200))
     image_main = db.Column(db.String(255))
     image_list = db.Column(db.String(255))
+    image_home = db.Column(db.String(255))
     distiller_id = db.Column(db.Integer, db.ForeignKey('distiller.id'))
     distiller = db.relationship('Distiller', backref=db.backref('reviews', lazy='dynamic'))
     age_low = db.Column(db.Float)
@@ -45,12 +46,12 @@ class Review(db.Model):
 
 
     def __init__(self, url=None, is_published=False, date_posted=None,
-                 title=None, subtitle=None, rating_low=None, rating_high=None,
-                 image_main=None, image_list=None, age_low=None, age_high=None,
+                 title=None, subtitle=None, image_main=None, image_list=None,
+                 image_home=None, distiller_id=None, age_low=None, age_high=None,
                  proof_low=None, proof_high=None, price_low=None, price_high=None,
-                 mashbill=None, mashbill_description=None, rarity=None,
-                 color=None, body=None, abstract=None, drink_type=None,
-                 distiller_id=None):
+                 drink_type=None, mashbill=None, mashbill_description=None,
+                 rarity=None, color=None, body=None, abstract=None,
+                 rating_low=None, rating_high=None):
 
         if date_posted is None:
             date_posted = datetime.utcnow()
@@ -62,6 +63,7 @@ class Review(db.Model):
         self.subtitle = subtitle
         self.image_main = image_main
         self.image_list = image_list
+        self.image_home = image_home
         self.distiller_id = distiller_id
         self.age_low = age_low
         self.age_high = age_high
@@ -113,12 +115,13 @@ class Article(db.Model):
     subtitle = db.Column(db.String(255))
     image_main = db.Column(db.String(255))
     image_list = db.Column(db.String(255))
+    image_home = db.Column(db.String(255))
     body = db.Column(db.Text)
     abstract = db.Column(db.Text)
 
     def __init__(self, url=None, is_published=False, date_posted=None,
                  title=None, subtitle=None, image_main=None, image_list=None,
-                 body=None, abstract=None):
+                 image_home=None, body=None, abstract=None):
 
         if date_posted is None:
             date_posted = datetime.utcnow()
@@ -130,6 +133,7 @@ class Article(db.Model):
         self.subtitle = subtitle
         self.image_main = image_main
         self.image_list = image_list
+        self.image_home = image_home
         self.body = body
         self.abstract = abstract
 

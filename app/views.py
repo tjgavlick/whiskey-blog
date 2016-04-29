@@ -204,6 +204,7 @@ def admin_save_review():
         review.subtitle = request.form['subtitle']
         review.image_main = request.form['image_main']
         review.image_list = request.form['image_list']
+        review.image_home = request.form['image_home']
         review.distiller_id = request.form['distiller_id']
         review.age_low = tmp_age_low
         review.age_high = tmp_age_high
@@ -237,6 +238,7 @@ def admin_save_review():
                         subtitle=request.form['subtitle'],
                         image_main=request.form['image_main'],
                         image_list=request.form['image_list'],
+                        image_home=request.form['image_home'],
                         distiller_id=request.form['distiller_id'],
                         age_low=tmp_age_low,
                         age_high=tmp_age_high,
@@ -318,6 +320,7 @@ def admin_save_article():
         article.subtitle = request.form['subtitle']
         article.image_main = request.form['image_main']
         article.image_list = request.form['image_list']
+        article.image_home = request.form['image_home']
         article.body = request.form['body']
         article.abstract = request.form['abstract']
 
@@ -329,6 +332,7 @@ def admin_save_article():
                           subtitle=request.form['subtitle'],
                           image_main=request.form['image_main'],
                           image_list=request.form['image_list'],
+                          image_home=request.form['image_home'],
                           body=request.form['body'],
                           abstract=request.form['abstract']
                           )
