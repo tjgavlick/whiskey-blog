@@ -1,9 +1,9 @@
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 DRINK_TYPES = {
-    'american-malt': {
-        'name': 'American single-malt',
-        'filter_name': 'American single-malts'
+    'american': {
+        'name': 'American whiskey',
+        'filter_name': 'American whiskies'
     },
     'bourbon': {
         'name': 'Bourbon',
