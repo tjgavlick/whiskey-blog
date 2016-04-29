@@ -494,13 +494,11 @@ def admin_delete_file(file):
 
 @app.route('/admin/files/upload/', methods=['POST'])
 def upload_file():
-    file = request.files['file']
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # todo: replace with upload success
-        return redirect(url_for('admin_list_files'))
-    # todo: replace with upload failure
+    files = request.files.getlist('files[]')
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return redirect(url_for('admin_list_files'))
 
 

@@ -443,10 +443,13 @@ var WHISKIES = (function (window, document) {
 
 
     // get image dimensions for an image grid item
-    // expects a .image-grid__item
+    // expects an .image-grid__item node
     function updateImageDimensions(img, target) {
         if (img && target) {
-            target.innerHTML = img.naturalWidth + 'x' + img.naturalHeight;
+            // reasonable wait for image data load
+            window.setTimeout(function () {
+                target.innerHTML = img.naturalWidth + 'x' + img.naturalHeight;
+            }, 1000);
         }
     }
     forEach(document.getElementsByClassName('admin-image-list__item'), function (item) {
@@ -533,6 +536,26 @@ var WHISKIES = (function (window, document) {
             imageSelector.classList.remove('is-active');
         });
     }
+
+
+    // list the files selected in a multiple file upload
+    function listFiles(input, list) {
+        var listItem = document.createElement('li');
+        listItem.className = 'item-list__item';
+        list.innerHTML = '';
+        forEach(input.files, function (file) {
+            var clone = listItem.cloneNode(true);
+            clone.innerHTML = file.name;
+            list.appendChild(clone);
+        });
+    }
+    forEach(document.querySelectorAll('input[type="file"][data-lists-to]'), function (input) {
+        var list = document.getElementById(input.getAttribute('data-lists-to'));
+        listFiles(input, list);
+        input.addEventListener('change', function (ev) {
+            listFiles(input, list);
+        });
+    });
 
 
 
