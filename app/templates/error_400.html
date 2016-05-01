@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Something Broke // {% endblock %}
+
+{% block body %}
+    <section role="main">
+
+        {{ includes.title_bar("Something Broke", subtitle=error, modifier='admin') }}
+
+        <div class="content">
+            <div class="page-bound error-page">
+                <div class="error-page__image">
+                    <img src="/static/images/404.png" alt="" />
+                </div>
+                <h1>What happened?</h1>
+                <p>Either your browser sent a really weird request or I forgot to account for something in my application. The latter is far more likely.</p>
+                <h1>Now what?</h1>
+                <p>Wait for a little while then try again. Still broken? I probably made a code mistake or failed to catch a bug. If you're so inclined, feel free to show me the error of my ways by submitting a pull request to <a href="https://github.com/tjgavlick/whiskey-blog" target="_blank">this project on GitHub</a>.</p>
+                <p>In the meantime, you can <a href="{{ url_for('review_list') }}">browse and filter my reviews</a> or <a href="{{ url_for('article_list') }}">browse my articles</a> if you're looking for something to do. If you got this error while doing just that, well, I'm out of ideas.</p>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

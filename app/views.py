@@ -564,6 +564,11 @@ def get_file_list():
 # Errors
 ########
 
+@app.errorhandler(400)
+def error_400(error):
+    return render_template('error_400.html', error=error), 400
+
+
 @app.errorhandler(401)
 def error_401(error):
     return render_template('error_401.html', error=error), 401
