@@ -1,5 +1,6 @@
 class Config(object):
     DEBUG = False
+    SECRET_KEY = 'changemeplz'
     # db
     SQLALCHEMY_DATABASE_URI = 'postgresql://user:pass@localhost/dbname'
     SQLALCHEMY_ECHO = False

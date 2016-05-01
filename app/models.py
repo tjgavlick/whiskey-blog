@@ -139,3 +139,28 @@ class Article(db.Model):
 
     def __repr__(self):
         return '<Article #{} - {} {}>'.format(self.id, self.title, self.subtitle)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    handle = db.Column(db.String)
+    password = db.Column(db.String)
+    authenticated = db.Column(db.Boolean, default=False)
+
+    def __init__(self, handle, password):
+        self.handle = handle
+        self.password = password
+
+    def is_active(self):
+        # all admins are active
+        return True
+
+    def get_id(self):
+        return self.id
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def is_anonymous(self):
+        # we don't have anon admins
+        return False
