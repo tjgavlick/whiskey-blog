@@ -124,17 +124,19 @@
                         </div>
                         <div class="search-refine__facet grid__unit grid__unit--1-2-s grid__unit--1-3-m grid__unit--1-1-l">
                             <h3 class="search-refine__facet__title">Age</h3>
-                            {% for key, vals in age_ranges.items()|sort(attribute='1.age_min') %}
-                                {% if request.args['age'] == key %}
-                                    <li class="search-refine__facet__item is-current">
-                                        {{ vals['name'] }}
-                                    </li>
-                                {% else %}
-                                    <li class="search-refine__facet__item">
-                                        <a href="{{ modify_query(age=key) }}">{{ vals['name'] }}</a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
+                            <ul class="search-refine__facet__list">
+                                <form action="{{ request.path }}" method="GET">
+                                    <label class="form-label">
+                                        <span class="form-label__text">Minimum: <span data-from-input="age-low"></span></span>
+                                        <input type="range" name="age-low" id="age-low" min="-1" max="30" step="1" value="{{ request.args['age-low']|default(-1) }}" data-value-suffix="years" data-min-description="unknown" data-constrain-high="age-high" />
+                                    </label>
+                                    <label class="form-label">
+                                        <span class="form-label__text">Maximum: <span data-from-input="age-high"></span></span>
+                                        <input type="range" name="age-high" id="age-high" min="-1" max="30" step="1" value="{{ request.args['age-high']|default(30) }}" data-value-suffix="years" data-max-description="infinity" data-constrain-low="age-low" />
+                                    </label>
+                                    <button type="submit">Apply</button>
+                                </form>
+                            </ul>
                         </div>
                         <div class="search-refine__facet grid__unit grid__unit--1-2-s grid__unit--1-3-m grid__unit--1-1-l">
                             <h3 class="search-refine__facet__title">Distilled in</h3>

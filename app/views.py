@@ -67,11 +67,15 @@ def review_list():
     if drink_type:
         reviews = reviews.filter(Review.drink_type == drink_type)
 
-    age = request.args.get('age', '')
-    if age:
-        age_min = constants.AGE_RANGES[age]['age_min']
-        age_max = constants.AGE_RANGES[age]['age_max']
-        reviews = reviews.filter(and_(Review.age_low >= age_min, Review.age_low < age_max))
+    age_low = request.args.get('age-low', '')
+    age_high = request.args.get('age-high', '')
+    if age_low and age_high:
+        reviews = reviews.filter(and_(Review.age_low >= age_low, Review.age_low < age_high))
+    elif age_low:
+        reviews = reviews.filter(Review.age_low >= age_low)
+    elif age_high:
+        reviews = reviews.filter(Review.age_low >= age_high)
+
 
     proof = request.args.get('proof', '')
     if proof:
@@ -99,7 +103,6 @@ def review_list():
                            this_origin=this_origin,
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES,
-                           age_ranges=constants.AGE_RANGES,
                            proof_ranges=constants.PROOF_RANGES,
                            price_ranges=constants.PRICE_RANGES,
                            no_reviews_message=random.choice(constants.NO_REVIEWS_MESSAGES))

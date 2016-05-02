@@ -71,6 +71,13 @@ var WHISKIES = (function (window, document) {
         var type = typeof value;
         return !!value && (type == 'object' || type == 'function');
     }
+    function isSymbol(value) {
+      return typeof value == 'symbol' ||
+            (isObjectLike(value) && objectToString.call(value) == symbolTag);
+    }
+    function isObjectLike(value) {
+        return !!value && typeof value == 'object';
+    }
     function toNumber(value) {
         if (typeof value == 'number') {
             return value;
@@ -386,10 +393,106 @@ var WHISKIES = (function (window, document) {
     forEach(document.getElementsByClassName('article-body'), beautifyPost);
 
 
+
+    /////////////////////////////////
+    //  Form element enhancements  //
+    /////////////////////////////////
+
+
+    // update label with input value
+    function updateRangeLabel(label, input) {
+        var result = '',
+            suffix = input.getAttribute('data-value-suffix') || '',
+            min = input.getAttribute('min') || 0,
+            max = input.getAttribute('max') || 0,
+            minDescription = input.getAttribute('data-min-description') || '',
+            maxDescription = input.getAttribute('data-max-description') || '';
+        if (input.value == min && minDescription) {
+            result = minDescription;
+        } else if (input.value == max && maxDescription) {
+            result = maxDescription;
+        } else {
+            result = input.value + ' ' + suffix;
+        }
+        label.innerHTML = result;
+    }
+    function attachRangeLabel(label) {
+        var input = document.getElementById(label.getAttribute('data-from-input'));
+        updateRangeLabel(label, input);
+        input.addEventListener('input', function () {
+            updateRangeLabel(label, input);
+        });
+    }
+    function attachAllRangeLabels() {
+        forEach(document.querySelectorAll('[data-from-input]'), attachRangeLabel);
+    }
+    attachAllRangeLabels();
+
+    // paired range inputs
+    function constrainRangeInput(input, constrainer, constraint) {
+        constrainer.addEventListener('input', function (ev) {
+            var val = parseInt(input.value, 10),
+                val2 = parseInt(constrainer.value, 10),
+                ev = new UIEvent('input', { 'view': window, 'bubbles': true, 'cancelable': true });
+            if (constraint === 'max' && val >= val2) {
+                input.value = val2 - 1;
+                input.dispatchEvent(ev);
+            } else if (constraint === 'min' && val <= val2) {
+                input.value = val2 + 1;
+                input.dispatchEvent(ev);
+            }
+        });
+    }
+    function attachAllRangeConstraints() {
+        forEach(document.querySelectorAll('[data-constrain-high]'), function (input) {
+            var constrainer = document.getElementById(input.getAttribute('data-constrain-high'));
+            constrainRangeInput(input, constrainer, 'max');
+        });
+        forEach(document.querySelectorAll('[data-constrain-low]'), function (input) {
+            var constrainer = document.getElementById(input.getAttribute('data-constrain-low'));
+            constrainRangeInput(input, constrainer, 'min');
+        });
+    }
+    attachAllRangeConstraints();
+
+
+
     ////////////////////////////////
     //  Review list enhancements  //
     ////////////////////////////////
 
+
+    // update a query string with new/changed/deleted param
+    function updateQueryString(key, value, url) {
+        if (!url) url = window.location.href;
+        var re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi"),
+            hash;
+
+        if (re.test(url)) {
+            if (typeof value !== 'undefined' && value !== null) {
+                return url.replace(re, '$1' + key + "=" + value + '$2$3');
+            } else {
+                hash = url.split('#');
+                url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+                if (typeof hash[1] !== 'undefined' && hash[1] !== null)
+                    url += '#' + hash[1];
+                return url;
+            }
+        }
+        else {
+            if (typeof value !== 'undefined' && value !== null) {
+                var separator = url.indexOf('?') !== -1 ? '&' : '?';
+                hash = url.split('#');
+                url = hash[0] + separator + key + '=' + value;
+                if (typeof hash[1] !== 'undefined' && hash[1] !== null) {
+                    url += '#' + hash[1];
+                }
+                return url;
+            } else {
+                return url;
+            }
+        }
+    }
 
     // update post list with ajax
     function updateSearchArea(container, url) {
@@ -403,15 +506,30 @@ var WHISKIES = (function (window, document) {
                 tmp.innerHTML = xhr.responseText;
                 fragment = tmp.querySelector('#' + containerId);
                 container.innerHTML = fragment.innerHTML;
-                searchArea = document.getElementById('search-area');
                 window.history.pushState('', '', url);
+
+                searchArea = document.getElementById('search-area');
+
+                attachAllRangeLabels();
+                attachAllRangeConstraints();
+                attachAllRangeChanges();
             }
         };
         xhr.open('GET', url);
         xhr.send(null);
     }
+
+    function attachAllRangeChanges() {
+        forEach(document.querySelectorAll('.search-refine input[type="range"]'), function (input) {
+            input.addEventListener('change', debounce(function () {
+                updateSearchArea(searchArea, updateQueryString(input.name, input.value));
+            }), 400);
+        });
+    }
+
     var searchArea = document.getElementById('search-area');
     if (searchArea) {
+        attachAllRangeChanges();
         document.body.addEventListener('click', function (ev) {
             if (ev.target.tagName.toLowerCase() === 'a' &&
                 (getParentsByClassName(ev.target, 'search-refine').length > 0 ||
@@ -421,6 +539,7 @@ var WHISKIES = (function (window, document) {
             }
         });
     }
+
 
 
     //////////////////////////////
