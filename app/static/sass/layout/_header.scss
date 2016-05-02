@@ -143,6 +143,8 @@ The global page header
     }
 
     .header-logo {
+        position: relative;
+        z-index: 2;
         &__mark {
             max-height: 60px;
             margin-right: 4px;
