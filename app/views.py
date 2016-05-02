@@ -46,6 +46,9 @@ def view_review(review_name):
 
 @app.route('/reviews/')
 def review_list():
+    adjectives = 0
+    last_adjective = ''
+
     sort = request.args.get('sort', '')
     if sort:
         if sort == 'best':
@@ -55,13 +58,9 @@ def review_list():
     else:
         reviews = Review.query.filter_by(is_published=True).order_by(Review.date_posted.desc())
 
-    origins = Origin.query.all()
-    this_origin = None
-
-    origin = request.args.get('origin', '')
-    if origin:
-        this_origin = Origin.query.get(origin)
-        reviews = reviews.filter(Review.distiller.has(origin_id=origin))
+    rarity = request.args.get('rarity', '')
+    if rarity:
+        reviews = reviews.filter(Review.rarity == rarity)
 
     drink_type = request.args.get('type', '')
     if drink_type:
@@ -75,29 +74,41 @@ def review_list():
         reviews = reviews.filter(Review.age_low >= age_low)
     elif age_high:
         reviews = reviews.filter(Review.age_low >= age_high)
+    if age_low or age_high:
+        adjectives += 1
+        last_adjective = 'age'
 
+    origins = Origin.query.all()
+    this_origin = None
+    origin = request.args.get('origin', '')
+    if origin:
+        this_origin = Origin.query.get(origin)
+        reviews = reviews.filter(Review.distiller.has(origin_id=origin))
+        adjectives += 1
+        last_adjective = 'origin'
 
     proof = request.args.get('proof', '')
     if proof:
         proof_min = constants.PROOF_RANGES[proof]['proof_min']
         proof_max = constants.PROOF_RANGES[proof]['proof_max']
         reviews = reviews.filter(and_(Review.proof_low >= proof_min, Review.proof_low < proof_max))
+        adjectives += 1
+        last_adjective = 'proof'
 
     price = request.args.get('price', '')
     if price:
         price_min = constants.PRICE_RANGES[price]['price_min']
         price_max = constants.PRICE_RANGES[price]['price_max']
         reviews = reviews.filter(and_(Review.price_low >= price_min, Review.price_low < price_max))
-
-    rarity = request.args.get('rarity', '')
-    if rarity:
-        reviews = reviews.filter(Review.rarity == rarity)
-
+        adjectives += 1
+        last_adjective = 'price'
 
     if reviews.count() == 0:
         reviews = None
 
     return render_template('review_list.html', reviews=reviews,
+                           adjectives=adjectives,
+                           last_adjective=last_adjective,
                            review_sorts=constants.REVIEW_SORTS,
                            origins=origins,
                            this_origin=this_origin,

@@ -24,7 +24,7 @@
                         {% if request.args['rarity'] %}
                             <a href="{{ modify_query(rarity=None) }}" class="search-current-filters__close">{{ rarities[request.args['rarity']].filter_name }}</a>
                         {% endif %}
-                        {% if not request.args['rarity'] and not (request.args['age'] or request.args['origin'] or request.args['proof'] or request.args['price']) %}
+                        {% if adjectives == 0 %}
                             all
                         {% endif %}
                         {% if request.args['type'] %}
@@ -33,24 +33,24 @@
                             whiskies
                         {% endif %}
                         {% if request.args['age'] %}
-                            <a href="{{ modify_query(age=None) }}" class="search-current-filters__close">{{ age_ranges[request.args['age']].filter_name }}</a>{% if (request.args['origin'] and request.args['proof']) or (request.args['proof'] and request.args['price']) or (request.args['origin'] and request.args['price']) %},{% endif %}
+                            <a href="{{ modify_query(age=None) }}" class="search-current-filters__close">{{ age_ranges[request.args['age']].filter_name }}</a>{% if adjectives > 2 %},{% endif %}
                         {% endif %}
                         {% if request.args['origin'] %}
-                            {% if request.args['age'] and not (request.args['proof'] or request.args['price']) %}
+                            {% if adjectives > 1 and last_adjective == 'origin' %}
                                 and
                             {% endif %}
                             distilled in
-                            <a href="{{ modify_query(origin=None) }}" class="search-current-filters__close">{{ this_origin.name }}</a>{% if (request.args['age'] and request.args['proof']) or (request.args['age'] and request.args['price']) or (request.args['proof'] and request.args['price']) %},{% endif %}
+                            <a href="{{ modify_query(origin=None) }}" class="search-current-filters__close">{{ this_origin.name }}</a>{% if adjectives > 2 and last_adjective != 'origin' %},{% endif %}
                         {% endif %}
                         {% if request.args['proof'] %}
-                            {% if (request.args['age'] or request.args['origin']) and not request.args['price'] %}
+                            {% if adjectives > 1 and last_adjective == 'proof' %}
                                 and
                             {% endif %}
                             bottled at
-                            <a href="{{ modify_query(proof=None) }}" class="search-current-filters__close">{{ proof_ranges[request.args['proof']].filter_name }}</a>{% if (request.args['origin'] and request.args['price']) or (request.args['age'] and request.args['price']) %},{% endif %}
+                            <a href="{{ modify_query(proof=None) }}" class="search-current-filters__close">{{ proof_ranges[request.args['proof']].filter_name }}</a>{% if adjectives > 2 and last_adjective != 'proof' %},{% endif %}
                         {% endif %}
                         {% if request.args['price'] %}
-                            {% if request.args['age'] or request.args['origin'] or request.args['proof'] %}
+                            {% if adjectives > 1 and last_adjective == 'price' %}
                                 and
                             {% endif %}
                             sold for
