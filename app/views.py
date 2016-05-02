@@ -66,14 +66,14 @@ def review_list():
     if drink_type:
         reviews = reviews.filter(Review.drink_type == drink_type)
 
-    age_low = request.args.get('age-low', '')
-    age_high = request.args.get('age-high', '')
+    age_low = request.args.get('age_low', '')
+    age_high = request.args.get('age_high', '')
     if age_low and age_high:
         reviews = reviews.filter(and_(Review.age_low >= age_low, Review.age_low < age_high))
     elif age_low:
         reviews = reviews.filter(Review.age_low >= age_low)
     elif age_high:
-        reviews = reviews.filter(Review.age_low >= age_high)
+        reviews = reviews.filter(Review.age_low <= age_high)
     if age_low or age_high:
         adjectives += 1
         last_adjective = 'age'

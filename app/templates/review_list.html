@@ -32,8 +32,38 @@
                         {% else %}
                             whiskies
                         {% endif %}
-                        {% if request.args['age'] %}
-                            <a href="{{ modify_query(age=None) }}" class="search-current-filters__close">{{ age_ranges[request.args['age']].filter_name }}</a>{% if adjectives > 2 %},{% endif %}
+                        {% if request.args['age_low'] and request.args['age_high'] %}
+                            between
+                        {% endif %}
+                        {% if request.args['age_low'] %}
+                            {% if not request.args['age_high'] %}
+                                at least
+                            {% endif %}
+                            <a href="{{ modify_query(age_low=None) }}" class="search-current-filters__close">
+                                {% if request.args['age_low'] == '-1' %}
+                                    of an unknown age
+                                {% elif request.args['age_low'] == '1' %}
+                                    1 year of age
+                                {% else %}
+                                    {{ request.args['age_low'] }} years of age
+                                {% endif %}
+                            </a>{% if not request.args['age_high'] and adjectives > 2 %},{% endif %}
+                        {% endif %}
+                        {% if request.args['age_high'] %}
+                            {% if request.args['age_low'] %}
+                                and
+                            {% else %}
+                                at most
+                            {% endif %}
+                            <a href="{{ modify_query(age_high=None) }}" class="search-current-filters__close">
+                                {% if request.args['age_high'] == '30' %}
+                                    infinitely old
+                                {% elif request.args['age_high'] == '1' %}
+                                    1 year of age
+                                {% else %}
+                                    {{ request.args['age_high'] }} years of age
+                                {% endif %}
+                            </a>{% if adjectives > 2 %},{% endif %}
                         {% endif %}
                         {% if request.args['origin'] %}
                             {% if adjectives > 1 and last_adjective == 'origin' %}
@@ -128,13 +158,12 @@
                                 <form action="{{ request.path }}" method="GET">
                                     <label class="form-label">
                                         <span class="form-label__text">Minimum: <span data-from-input="age-low"></span></span>
-                                        <input type="range" name="age-low" id="age-low" min="-1" max="30" step="1" value="{{ request.args['age-low']|default(-1) }}" data-value-suffix="years" data-min-description="unknown" data-constrain-high="age-high" />
+                                        <input type="range" name="age_low" id="age-low" min="-1" max="30" step="1" value="{{ request.args['age_low']|default(-1) }}" data-value-suffix="years" data-min-description="unknown" data-constrain-high="age-high" />
                                     </label>
                                     <label class="form-label">
                                         <span class="form-label__text">Maximum: <span data-from-input="age-high"></span></span>
-                                        <input type="range" name="age-high" id="age-high" min="-1" max="30" step="1" value="{{ request.args['age-high']|default(30) }}" data-value-suffix="years" data-max-description="infinity" data-constrain-low="age-low" />
+                                        <input type="range" name="age_high" id="age-high" min="-1" max="30" step="1" value="{{ request.args['age_high']|default(30) }}" data-value-suffix="years" data-max-description="infinity" data-constrain-low="age-low" />
                                     </label>
-                                    <button type="submit">Apply</button>
                                 </form>
                             </ul>
                         </div>
