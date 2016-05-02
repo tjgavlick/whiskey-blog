@@ -16,13 +16,6 @@ def user_loader(id):
     return User.query.get(id)
 
 
-# testing: automatically make an admin user
-if not User.query.first():
-    u = User('admin', 'password')
-    db.session.add(u)
-    db.session.commit()
-
-
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
