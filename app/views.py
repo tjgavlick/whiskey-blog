@@ -87,11 +87,15 @@ def review_list():
         adjectives += 1
         last_adjective = 'origin'
 
-    proof = request.args.get('proof', '')
-    if proof:
-        proof_min = constants.PROOF_RANGES[proof]['proof_min']
-        proof_max = constants.PROOF_RANGES[proof]['proof_max']
-        reviews = reviews.filter(and_(Review.proof_low >= proof_min, Review.proof_low < proof_max))
+    proof_low = request.args.get('proof_low', '')
+    proof_high = request.args.get('proof_high', '')
+    if proof_low and proof_high:
+        reviews = reviews.filter(and_(Review.proof_low >= proof_low, Review.proof_low < proof_high))
+    elif proof_low:
+        reviews = reviews.filter(Review.proof_low >= proof_low)
+    elif proof_high:
+        reviews = reviews.filter(Review.proof_low <= proof_high)
+    if proof_low or proof_high:
         adjectives += 1
         last_adjective = 'proof'
 
