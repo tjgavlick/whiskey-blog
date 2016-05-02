@@ -294,9 +294,9 @@ var WHISKIES = (function (window, document) {
     }());
 
 
-    //////////////////
-    //  Miscellany  //
-    //////////////////
+    ////////////////
+    //  Parallax  //
+    ////////////////
 
     function addParallax() {
         var parallaxEl = document.querySelector('.article-image__positioner'),
@@ -331,6 +331,11 @@ var WHISKIES = (function (window, document) {
             document.addEventListener('resize', updatePageHeight);
         }
     }
+
+
+    //////////////////////
+    //  Beautification  //
+    //////////////////////
 
 
     // add a full-height gradient to post lists
@@ -379,6 +384,48 @@ var WHISKIES = (function (window, document) {
         });
     }
     forEach(document.getElementsByClassName('article-body'), beautifyPost);
+
+
+    ////////////////////////////////
+    //  Review list enhancements  //
+    ////////////////////////////////
+
+
+    // update post list with ajax
+    function updateSearchArea(container, url) {
+        var xhr = new XMLHttpRequest(),
+            containerId = container.id,
+            tmp = document.createElement('div'),
+            fragment;
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                tmp.innerHTML = xhr.responseText;
+                fragment = tmp.querySelector('#' + containerId);
+                container.innerHTML = fragment.innerHTML;
+                searchArea = document.getElementById('search-area');
+                window.history.pushState('', '', url);
+            }
+        };
+        xhr.open('GET', url);
+        xhr.send(null);
+    }
+    var searchArea = document.getElementById('search-area');
+    if (searchArea) {
+        document.body.addEventListener('click', function (ev) {
+            if (ev.target.tagName.toLowerCase() === 'a' &&
+                (getParentsByClassName(ev.target, 'search-refine').length > 0 ||
+                getParentsByClassName(ev.target, 'search-current-filters').length > 0)) {
+                ev.preventDefault();
+                updateSearchArea(searchArea, ev.target.href);
+            }
+        });
+    }
+
+
+    //////////////////////////////
+    //  Admin area enhancements //
+    //////////////////////////////
 
 
     // careful, now
