@@ -78,6 +78,10 @@ The global page header
                 transform: rotate(135deg);
             }
         }
+        &__user {
+            color: $bg;
+            margin-bottom: $line/2;
+        }
         &__item {
             font-family: $font-stack-body;
             display: block;
@@ -155,11 +159,19 @@ The global page header
     .page-nav {
         text-align: right;
         margin-right: -$line;
+        position: relative;
         &:before {
             content: '';
             display: inline-block;
             vertical-align: baseline;
             height: 60px;
+        }
+        &__user {
+            display: block;
+            position: absolute;
+            right: $line/2;
+            top: 0;
+            font-size: $milli;
         }
         &__item {
             display: inline-block;

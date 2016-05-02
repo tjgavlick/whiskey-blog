@@ -35,6 +35,9 @@
             <button type="button" class="page-nav__toggle" data-toggle-target="next"><img src="/static/images/icon-plus.png" alt="Toggle menu" /></button>
 
             <nav class="page-nav">
+                {% if current_user.is_authenticated %}
+                    <span class="page-nav__user">Hi, you're <i>{{ current_user.handle }}</i>. Yay! <a href="{{ url_for('logout') }}">Log out</a></span>
+                {% endif %}
                 <a href="{{ url_for('admin_list_reviews') }}" class="page-nav__item"><span>Reviews</span></a>
                 <a href="{{ url_for('admin_list_articles') }}" class="page-nav__item"><span>Thoughts</span></a>
                 <a href="{{ url_for('admin_list_files') }}" class="page-nav__item"><span>Files</span></a>
