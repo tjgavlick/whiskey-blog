@@ -21,13 +21,13 @@
                 <div class="search-current-filters">
                     <p>
                         Showing
-                        {% if request.args['rarity'] %}
-                            <a href="{{ modify_query(rarity=None) }}" class="search-current-filters__close">{{ rarities[request.args['rarity']].filter_name }}</a>
-                        {% endif %}
-                        {% if adjectives == 0 %}
+                        {% if adjectives == 0 and not request.args['rarity'] %}
                             all
                         {% endif %}
-                        {% if request.args['type'] %}
+                        {% if request.args['rarity'] and rarities[request.args['rarity']] %}
+                            <a href="{{ modify_query(rarity=None) }}" class="search-current-filters__close">{{ rarities[request.args['rarity']].filter_name }}</a>
+                        {% endif %}
+                        {% if request.args['type'] and drink_types[request.args['type']] %}
                             <a href="{{ modify_query(type=None) }}" class="search-current-filters__close">{{ drink_types[request.args['type']].filter_name }}</a>
                         {% else %}
                             whiskies
@@ -44,9 +44,9 @@
                                 {% if request.args['age_low'] == '-1' %}
                                     of an unknown age
                                 {% elif request.args['age_low'] == '1' %}
-                                    1 year of age
+                                    1 year {% if not request.args['age_high'] %}of age{% endif %}
                                 {% else %}
-                                    {{ request.args['age_low'] }} years of age
+                                    {{ request.args['age_low'] }} years {% if not request.args['age_high'] %}of age{% endif %}
                                 {% endif %}
                             </a>{% if not request.args['age_high'] and adjectives > 2 %},{% endif %}
                         {% endif %}
@@ -135,7 +135,7 @@
 
                         <span class="search-current-filters__nudge">.</span>
 
-                        {% if request.args['sort'] %}
+                        {% if request.args['sort'] and review_sorts[request.args['sort']] %}
                             They're sorted by
                             <a href="{{ modify_query(sort=None) }}" class="search-current-filters__close">{{ review_sorts[request.args['sort']].filter_name }}</a>.
                         {% endif %}

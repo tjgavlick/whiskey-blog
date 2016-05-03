@@ -231,8 +231,7 @@ var WHISKIES = (function (window, document) {
 
     var toggles = (function () {
         // use this module on .toggle elements by default
-        var initEls = document.querySelectorAll('[data-toggle-target]'),
-            toggleList = [],
+        var toggleList = [],
             activeClass = 'is-active';
 
         // individual toggle object; stores element and targets
@@ -290,7 +289,8 @@ var WHISKIES = (function (window, document) {
 
         // public: initialize by adding default elements
         function init() {
-            add(initEls);
+            toggleList = [];
+            add(document.querySelectorAll('[data-toggle-target]'));
         }
 
         return {
@@ -517,6 +517,7 @@ var WHISKIES = (function (window, document) {
                 attachAllRangeConstraints();
                 attachAllRangeChanges();
                 colorizeAllPostLists();
+                toggles.init();
             }
         };
         xhr.open('GET', url);

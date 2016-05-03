@@ -1,6 +1,6 @@
 import re, random, os, time
 
-from flask import render_template, request, redirect, url_for, jsonify
+from flask import render_template, request, redirect, url_for, jsonify, abort
 from flask.ext.login import login_required
 from werkzeug import secure_filename
 from sqlalchemy import and_
@@ -50,7 +50,7 @@ def review_list():
     last_adjective = ''
 
     sort = request.args.get('sort', '')
-    if sort:
+    if sort in constants.REVIEW_SORTS:
         if sort == 'best':
             reviews = Review.query.filter_by(is_published=True).order_by(Review.rating_low.desc())
         else:
@@ -59,59 +59,84 @@ def review_list():
         reviews = Review.query.filter_by(is_published=True).order_by(Review.date_posted.desc())
 
     rarity = request.args.get('rarity', '')
-    if rarity:
+    if rarity in constants.RARITIES:
         reviews = reviews.filter(Review.rarity == rarity)
 
     drink_type = request.args.get('type', '')
-    if drink_type:
+    if drink_type in constants.DRINK_TYPES:
         reviews = reviews.filter(Review.drink_type == drink_type)
 
     age_low = request.args.get('age_low', '')
     age_high = request.args.get('age_high', '')
-    if age_low and age_high:
-        reviews = reviews.filter(and_(Review.age_low >= age_low, Review.age_low < age_high))
-    elif age_low:
-        reviews = reviews.filter(Review.age_low >= age_low)
-    elif age_high:
-        reviews = reviews.filter(Review.age_low <= age_high)
     if age_low or age_high:
-        adjectives += 1
-        last_adjective = 'age'
+        try:
+            if age_low and age_high:
+                age_low = int(age_low)
+                age_high = int(age_high)
+                reviews = reviews.filter(and_(Review.age_low >= age_low, Review.age_low < age_high))
+            elif age_low:
+                age_low = int(age_low)
+                reviews = reviews.filter(Review.age_low >= age_low)
+            elif age_high:
+                age_high = int(age_high)
+                reviews = reviews.filter(Review.age_low <= age_high)
+            adjectives += 1
+            last_adjective = 'age'
+        except ValueError:
+            abort(400)
 
     origins = Origin.query.all()
     this_origin = None
     origin = request.args.get('origin', '')
     if origin:
-        this_origin = Origin.query.get(origin)
-        reviews = reviews.filter(Review.distiller.has(origin_id=origin))
-        adjectives += 1
-        last_adjective = 'origin'
+        try:
+            origin = int(origin)
+            this_origin = Origin.query.get_or_404(origin)
+            reviews = reviews.filter(Review.distiller.has(origin_id=origin))
+            adjectives += 1
+            last_adjective = 'origin'
+        except ValueError:
+            abort(400)
 
     proof_low = request.args.get('proof_low', '')
     proof_high = request.args.get('proof_high', '')
-    if proof_low and proof_high:
-        reviews = reviews.filter(and_(Review.proof_low >= proof_low, Review.proof_low < proof_high))
-    elif proof_low:
-        reviews = reviews.filter(Review.proof_low >= proof_low)
-    elif proof_high:
-        reviews = reviews.filter(Review.proof_low <= proof_high)
     if proof_low or proof_high:
-        adjectives += 1
-        last_adjective = 'proof'
+        try:
+            if proof_low and proof_high:
+                proof_low = int(proof_low)
+                proof_high = int(proof_high)
+                reviews = reviews.filter(and_(Review.proof_low >= proof_low, Review.proof_low < proof_high))
+            elif proof_low:
+                proof_low = int(proof_low)
+                reviews = reviews.filter(Review.proof_low >= proof_low)
+            elif proof_high:
+                proof_high = int(proof_high)
+                reviews = reviews.filter(Review.proof_low <= proof_high)
+            adjectives += 1
+            last_adjective = 'proof'
+        except ValueError:
+            abort(400)
 
     price_low = request.args.get('price_low', '')
     price_high = request.args.get('price_high', '')
-    if price_high == 200:
-        price_high = 10000  # assume max on slider means infinite
-    if price_low and price_high:
-        reviews = reviews.filter(and_(Review.price_low >= price_low, Review.price_low < price_high))
-    elif price_low:
-        reviews = reviews.filter(Review.price_low >= price_low)
-    elif price_high:
-        reviews = reviews.filter(Review.price_low <= price_high)
     if price_low or price_high:
-        adjectives += 1
-        last_adjective = 'price'
+        try:
+            if price_high == 200:
+                price_high = 10000  # assume max on slider means infinite
+            if price_low and price_high:
+                price_high = int(price_high)
+                price_low = int(price_low)
+                reviews = reviews.filter(and_(Review.price_low >= price_low, Review.price_low < price_high))
+            elif price_low:
+                price_low = int(price_low)
+                reviews = reviews.filter(Review.price_low >= price_low)
+            elif price_high:
+                price_high = int(price_high)
+                reviews = reviews.filter(Review.price_low <= price_high)
+            adjectives += 1
+            last_adjective = 'price'
+        except ValueError:
+            abort(400)
 
     if reviews.count() == 0:
         reviews = None
@@ -119,9 +144,9 @@ def review_list():
     return render_template('review_list.html', reviews=reviews,
                            adjectives=adjectives,
                            last_adjective=last_adjective,
-                           review_sorts=constants.REVIEW_SORTS,
                            origins=origins,
                            this_origin=this_origin,
+                           review_sorts=constants.REVIEW_SORTS,
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES,
                            no_reviews_message=random.choice(constants.NO_REVIEWS_MESSAGES))
