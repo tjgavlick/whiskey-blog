@@ -7,9 +7,9 @@ Initial thoughts on software are Python 3.x, Flask, Postgres, SQLAlchemy, and ng
 Right now it has a front-facing UI and an admin area. It can save and list reviews, articles, distilleries, and locales. It can do simple multifaceted filtering on reviews. I'd like to …
 
 - [x] Move my db to postgres
-- [ ] Extend articles and reviews to show related items
+- [x] Extend articles and reviews to show related items
 - [x] Make the admin interface prettier and more useful
-- [ ] Add external (google?) auth for admin access
+- [x] Add auth for admin access
 - [x] Add live markdown previews for editing
 - [x] Add image upload
 - [x] Add an asset browser/selector
