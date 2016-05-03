@@ -9,9 +9,16 @@ Not much here
 
 
 .home-more-title {
+    @extend .copy;
     margin-top: $line/2;
+    font-size: $kilo;
     font-weight: 400;
+    font-style: italic;
     opacity: 0.8;
+}
+
+.home-posts .grid__unit {
+    padding-bottom: 0;
 }
 
 
@@ -64,6 +71,18 @@ Not much here
     .home-more-title {
         margin: $line*3 0 $line;
         text-align: center;
+    }
+}
+
+
+@media #{$max-w} {
+    .post-list.home-posts {
+        max-width: $page-width;
+        margin-left: auto;
+        margin-right: auto;
+        .post-list__item {
+            padding-right: 0;
+        }
     }
 }
 

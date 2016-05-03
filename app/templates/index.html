@@ -25,21 +25,22 @@
         {% endfor %}
 
         <div class="content">
-            <div class="page-bound">
-                <h4 class="home-more-title">More things:</h4>
-                <ul class="post-list margin-large">
-                    {% for post in posts %}
-                        {% if not loop.first %}
-                            {{ includes.post_list_item(post.title,
-                                  subtitle=post.subtitle,
-                                  description=post.abstract,
-                                  category='Review' if post.type == 'review' else 'Article',
-                                  image=post.image_list,
-                                  url=url_for('view_review', review_name=post.url) if post.type == 'review' else url_for('view_article', article_name=post.url)) }}
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+            <h4 class="home-more-title">More things:</h4>
+            <ul class="post-list home-posts grid">
+                {% for post in posts %}
+                    {% if not loop.first %}
+                        {{ includes.post_list_item(post.title,
+                              subtitle=post.subtitle,
+                              description=post.abstract,
+                              category='Review' if post.type == 'review' else 'Article',
+                              image=post.image_list,
+                              url=url_for('view_review', review_name=post.url) if post.type == 'review' else url_for('view_article', article_name=post.url),
+                              class='grid__unit grid__unit--1-3-w') }}
+                    {% endif %}
+                {% endfor %}
+            </ul>
 
+            <div class="page-bound">
                 <div class="home-actions grid">
                     <div class="home-actions__item grid__unit grid__unit--1-2-s">
                         <a href="{{ url_for('review_list') }}" class="button button--highlight home-actions__action">All reviews</a>

@@ -21,8 +21,8 @@
 {%- endmacro %}
 
 
-{% macro post_list_item(title, subtitle='', description='', category='', image='', url='') -%}
-    <li class="post-list__item">
+{% macro post_list_item(title, subtitle='', description='', category='', image='', url='', class='') -%}
+    <li class="post-list__item {{ class }}">
         <a href="{{ url }}" class="post-list__anchor">
             {% if category %}
                 <span class="post-list__label">{{ category }}</span>
