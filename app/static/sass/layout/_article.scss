@@ -37,30 +37,10 @@ p.article-reference {  // specificity over p:last-child rule
 }
 
 
-// get article images out of the way due to messy media queries
-@media #{$max-s} {
+@media #{$max-m} {
     .article-image {
-        max-height: 50vh;
-        overflow: hidden;
-    }
-}
-@media #{$min-s} and #{$max-l} {
-    .article-image {
-        max-width: 40%;
-        float: left;
-        margin: $line*2 $line $line/2 $line*2;
-    }
-}
-@media #{$min-s} and #{$max-m} {
-    .article-image {
-        margin-left: $line;
-        margin-top: $line;
-    }
-}
-@media #{$max-l} {
-    .article-image {
-        &__positioner {
-            transform: none !important;
+        &:not(.is-active) {
+            display: none;
         }
     }
 }
@@ -96,6 +76,22 @@ p.article-reference {  // specificity over p:last-child rule
             left: -6px;
             margin-bottom: 5px;
             transform: scaleX(0.7);
+        }
+    }
+}
+
+
+@media #{$max-l} {
+    .article-image {
+        padding: 0 $line;
+        &__positioner {
+            transform: none !important;
+        }
+        &__image {
+            display: block;
+            max-height: $line*20;
+            max-height: 45vh;
+            margin: $line*2 auto 0;
         }
     }
 }
