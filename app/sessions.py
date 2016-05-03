@@ -19,10 +19,11 @@ def user_loader(id):
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['user'] == 'admin' and request.form['password'] == 'password':
+        if request.form['user'] and request.form['password']:
             u = User.query.filter_by(handle=request.form['user']).first()
-            login_user(u)
-            return redirect(url_for('admin_index'))
+            if u and u.check_password(request.form['password']):
+                login_user(u)
+                return redirect(url_for('admin_index'))
     return render_template('login.html')
 
 

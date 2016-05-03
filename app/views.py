@@ -562,11 +562,13 @@ def upload_file():
 ###########
 
 @app.route('/api/markdown/', methods=['POST'])
+@login_required
 def parse_markdown():
     return markdown(request.data.decode('utf-8'))
 
 
 @app.route('/api/files/', methods=['GET'])
+@login_required
 def get_file_list():
     result = {
         'path': app.config['UPLOAD_FOLDER'].replace('app', '')
