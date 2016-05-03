@@ -99,11 +99,17 @@ def review_list():
         adjectives += 1
         last_adjective = 'proof'
 
-    price = request.args.get('price', '')
-    if price:
-        price_min = constants.PRICE_RANGES[price]['price_min']
-        price_max = constants.PRICE_RANGES[price]['price_max']
-        reviews = reviews.filter(and_(Review.price_low >= price_min, Review.price_low < price_max))
+    price_low = request.args.get('price_low', '')
+    price_high = request.args.get('price_high', '')
+    if price_high == 200:
+        price_high = 10000  # assume max on slider means infinite
+    if price_low and price_high:
+        reviews = reviews.filter(and_(Review.price_low >= price_low, Review.price_low < price_high))
+    elif price_low:
+        reviews = reviews.filter(Review.price_low >= price_low)
+    elif price_high:
+        reviews = reviews.filter(Review.price_low <= price_high)
+    if price_low or price_high:
         adjectives += 1
         last_adjective = 'price'
 
@@ -118,8 +124,6 @@ def review_list():
                            this_origin=this_origin,
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES,
-                           proof_ranges=constants.PROOF_RANGES,
-                           price_ranges=constants.PRICE_RANGES,
                            no_reviews_message=random.choice(constants.NO_REVIEWS_MESSAGES))
 
 

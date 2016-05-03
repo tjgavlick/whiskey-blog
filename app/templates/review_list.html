@@ -105,13 +105,34 @@
                             </a>{% if adjectives > 2 and last_adjective != 'proof' %},{% endif %}
                         {% endif %}
 
-                        {% if request.args['price'] %}
-                            {% if adjectives > 1 and last_adjective == 'price' %}
-                                and
-                            {% endif %}
-                            sold for
-                            <a href="{{ modify_query(price=None) }}" class="search-current-filters__close">{{ price_ranges[request.args['price']].filter_name }}</a>
+                        {% if adjectives > 1 and last_adjective == 'price' %}
+                            and
                         {% endif %}
+                        {% if request.args['price_low'] %}
+                            {% if request.args['price_high'] %}
+                                priced between
+                            {% else %}
+                                sold for at least
+                            {% endif %}
+                            <a href="{{ modify_query(price_low=None) }}" class="search-current-filters__close">
+                                ${{ request.args['price_low'] }}
+                            </a>
+                        {% endif %}
+                        {% if request.args['price_high'] %}
+                            {% if request.args['price_low'] %}
+                                and
+                            {% else %}
+                                sold for at most
+                            {% endif %}
+                            <a href="{{ modify_query(price_high=None) }}" class="search-current-filters__close">
+                                {% if request.args['price_high'] == '200' %}
+                                    all the money
+                                {% else %}
+                                    ${{ request.args['price_high'] }}
+                                {% endif %}
+                            </a>
+                        {% endif %}
+
                         <span class="search-current-filters__nudge">.</span>
 
                         {% if request.args['sort'] %}
@@ -223,19 +244,16 @@
                         </div>
                         <div class="search-refine__facet grid__unit grid__unit--1-2-s grid__unit--1-3-m grid__unit--1-1-l">
                             <h3 class="search-refine__facet__title">Price (MSRP)</h3>
-                            <ul class="search-refine__facet__list">
-                                {% for key, vals in price_ranges.items()|sort(attribute='1.price_min') %}
-                                    {% if request.args['price'] == key %}
-                                        <li class="search-refine__facet__item is-current">
-                                            {{ vals['name'] }}
-                                        </li>
-                                    {% else %}
-                                        <li class="search-refine__facet__item">
-                                            <a href="{{ modify_query(price=key) }}">{{ vals['name'] }}</a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                            <form action="{{ request.path }}" method="GET">
+                                <label class="form-label">
+                                    <span class="form-label__text">Minimum: $<span data-from-input="price-low"></span></span>
+                                    <input type="range" name="price_low" id="price-low" min="0" max="200" step="5" value="{{ request.args['price_low']|default(0) }}" data-constrain-high="price-high" />
+                                </label>
+                                <label class="form-label">
+                                    <span class="form-label__text">Maximum: $<span data-from-input="price-high"></span></span>
+                                    <input type="range" name="price_high" id="price-high" min="0" max="200" step="5" value="{{ request.args['price_high']|default(200) }}" data-max-description="yes" data-constrain-low="price-low" />
+                                </label>
+                            </form>
                         </div>
                     </div>
                 </div>

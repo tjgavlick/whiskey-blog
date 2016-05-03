@@ -361,7 +361,10 @@ var WHISKIES = (function (window, document) {
                 Math.floor(startColor[2] + bStep * index) + ')';
         });
     }
-    forEach(document.getElementsByClassName('post-list'), colorizePostList);
+    function colorizeAllPostLists() {
+        forEach(document.getElementsByClassName('post-list'), colorizePostList);
+    }
+    colorizeAllPostLists();
 
 
     // add some html to post bodies that I can't do with markdown
@@ -513,6 +516,7 @@ var WHISKIES = (function (window, document) {
                 attachAllRangeLabels();
                 attachAllRangeConstraints();
                 attachAllRangeChanges();
+                colorizeAllPostLists();
             }
         };
         xhr.open('GET', url);
