@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re, random, os, time
 
 from flask import render_template, request, redirect, url_for, jsonify, abort
