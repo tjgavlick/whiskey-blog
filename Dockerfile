@@ -12,12 +12,7 @@ RUN rm /etc/nginx/sites-enabled/default
 ADD nginx.conf /etc/nginx/nginx.conf
 
 # Postgres
-#RUN apt-get install -y postgresql postgresql-client postgresql-contrib libpq-dev
-#USER postgres
-#RUN /etc/init.d/postgresql start &&\
-#    psql --command "CREATE USER tdw WITH CREATEDB PASSWORD 'tdw'" &&\
-#    createdb -E utf-8 -O tdw tdw -T template0
-#USER root
+RUN apt-get install -y libpq-dev
 
 # copy application
 ADD requirements.txt /whiskey-blog/requirements.txt
@@ -29,7 +24,7 @@ ADD /app /whiskey-blog/app
 RUN pip install -r /whiskey-blog/requirements.txt
 
 # link uploads folder for persistence
-#VOLUME uploads:/whiskey-blog/app/static/uploads
+#VOLUME /uploads:/whiskey-blog/app/static/uploads
 ADD /uploads /whiskey-blog/app/static/uploads
 
 EXPOSE 80
