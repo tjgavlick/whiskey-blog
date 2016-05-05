@@ -8,9 +8,9 @@ setup.txt
 _static-build/
 app/static/assets/
 app/static/style/*.css*
-app/static/uploads/*.png
-app/static/uploads/*.jpg
-app/static/uploads/*.jpeg
+uploads/*.png
+uploads/*.jpg
+uploads/*.jpeg
 
 # python #
 __pycache__/
