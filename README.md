@@ -19,5 +19,13 @@ Right now it has a front-facing UI and an admin area. It can save and list revie
 
 ---
 
+Manual tasks upon deployment:
+
+- specify relevant Config in app/__init__py
+- change db user/pass in both the db Dockerfile and the app config
+- change secret key in the app config
+
+---
+
 MIT license. Please let me know if you use some part of this, as well as give credit on the work itself. It's a nice thing to do!
 

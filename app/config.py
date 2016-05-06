@@ -4,7 +4,8 @@ class Config(object):
     DEBUG = False
     SECRET_KEY = 'changemeplz'
     # db
-    SQLALCHEMY_DATABASE_URI = 'postgresql://user:pass@localhost/dbname'
+    # 'db' hostname defined by docker-compose
+    SQLALCHEMY_DATABASE_URI = 'postgresql://user:pass@db:5432/dbname'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # file upload
@@ -14,4 +15,4 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
     # SQLALCHEMY_DATABASE_URI = 'postgresql://tdw:tdw@localhost/tdw'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
