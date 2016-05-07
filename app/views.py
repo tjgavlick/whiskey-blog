@@ -186,7 +186,7 @@ def colophon():
 #######
 
 @app.route('/admin/')
-#@login_required
+@login_required
 def admin_index():
     reviews = Review.query.order_by(Review.date_posted.desc()).limit(5)
     articles = Article.query.order_by(Article.date_posted.desc()).limit(5)
@@ -198,7 +198,7 @@ def admin_index():
 ####################
 
 @app.route('/admin/review/')
-#@login_required
+@login_required
 def admin_list_reviews():
     if request.args.get('order', '') == 'alpha':
         reviews = Review.query.order_by(Review.title)
@@ -208,7 +208,7 @@ def admin_list_reviews():
 
 
 @app.route('/admin/review/new/')
-#@login_required
+@login_required
 def admin_new_review():
     origins = Origin.query.order_by(Origin.name)
     distillers = Distiller.query.order_by(Distiller.name)
@@ -219,7 +219,7 @@ def admin_new_review():
 
 
 @app.route('/admin/review/<int:review_id>')
-#@login_required
+@login_required
 def admin_edit_review(review_id):
     review = Review.query.get_or_404(review_id)
     origins = Origin.query.order_by(Origin.name)
@@ -233,7 +233,7 @@ def admin_edit_review(review_id):
 
 
 @app.route('/admin/review/save/', methods=['POST'])
-#@login_required
+@login_required
 def admin_save_review():
     review_id = int(request.form['id'])
 
@@ -327,7 +327,7 @@ def admin_save_review():
 
 
 @app.route('/admin/review/remove/<int:review_id>')
-#@login_required
+@login_required
 def admin_remove_review(review_id):
     review = Review.query.get_or_404(review_id)
     if not review is None:
@@ -341,7 +341,7 @@ def admin_remove_review(review_id):
 ##################
 
 @app.route('/admin/article/')
-#@login_required
+@login_required
 def admin_list_articles():
     if request.args.get('order', '') == 'alpha':
         articles = Article.query.order_by(Article.title)
@@ -351,20 +351,20 @@ def admin_list_articles():
 
 
 @app.route('/admin/article/new/')
-#@login_required
+@login_required
 def admin_new_article():
     return render_template('admin_edit_article.html', article=None)
 
 
 @app.route('/admin/article/<int:article_id>')
-#@login_required
+@login_required
 def admin_edit_article(article_id):
     article = Article.query.get_or_404(article_id)
     return render_template('admin_edit_article.html', article=article)
 
 
 @app.route('/admin/article/save/', methods=['POST'])
-#@login_required
+@login_required
 def admin_save_article():
     article_id = int(request.form['id'])
 
@@ -408,7 +408,7 @@ def admin_save_article():
 
 
 @app.route('/admin/article/remove/<int:article_id>')
-#@login_required
+@login_required
 def admin_remove_article(article_id):
     article = Article.query.get_or_404(article_id)
     if not article is None:
@@ -422,21 +422,21 @@ def admin_remove_article(article_id):
 ####################
 
 @app.route('/admin/distiller/')
-#@login_required
+@login_required
 def admin_list_distillers():
     distillers = Distiller.query.order_by(Distiller.name)
     return render_template('admin_list_distillers.html', distillers=distillers)
 
 
 @app.route('/admin/distiller/new/')
-#@login_required
+@login_required
 def admin_new_distiller():
     origins = Origin.query.order_by(Origin.name)
     return render_template('admin_edit_distiller.html', distiller=None, origins=origins)
 
 
 @app.route('/admin/distiller/<int:distiller_id>')
-#@login_required
+@login_required
 def admin_edit_distiller(distiller_id):
     distiller = Distiller.query.get_or_404(distiller_id)
     origins = Origin.query.order_by(Origin.name)
@@ -444,7 +444,7 @@ def admin_edit_distiller(distiller_id):
 
 
 @app.route('/admin/distiller/save/', methods=['POST'])
-#@login_required
+@login_required
 def admin_save_distiller():
     distiller_id = int(request.form['id'])
     distiller_name = request.form['name']
@@ -465,7 +465,7 @@ def admin_save_distiller():
 
 
 @app.route('/admin/distiller/remove/<int:distiller_id>')
-#@login_required
+@login_required
 def admin_remove_distiller(distiller_id):
     distiller = Distiller.query.get_or_404(distiller_id)
     if not distiller is None:
@@ -479,27 +479,27 @@ def admin_remove_distiller(distiller_id):
 #################
 
 @app.route('/admin/origin/')
-#@login_required
+@login_required
 def admin_list_origins():
     origins = Origin.query.order_by(Origin.name)
     return render_template('admin_list_origins.html', origins=origins)
 
 
 @app.route('/admin/origin/new/')
-#@login_required
+@login_required
 def admin_new_origin():
     return render_template('admin_edit_origin.html', origin=None)
 
 
 @app.route('/admin/origin/<int:origin_id>')
-#@login_required
+@login_required
 def admin_edit_origin(origin_id):
     origin = Origin.query.get_or_404(origin_id)
     return render_template('admin_edit_origin.html', origin=origin)
 
 
 @app.route('/admin/origin/save/', methods=['POST'])
-#@login_required
+@login_required
 def admin_save_origin():
     origin_id = int(request.form['id'])
     origin_name = request.form['name']
@@ -520,7 +520,7 @@ def admin_save_origin():
 
 
 @app.route('/admin/origin/remove/<int:origin_id>')
-#@login_required
+@login_required
 def admin_remove_origin(origin_id):
     origin = Origin.query.get_or_404(origin_id)
     if not origin is None:
@@ -543,7 +543,7 @@ def get_uploads(directory):
 
 
 @app.route('/admin/files/')
-#@login_required
+@login_required
 def admin_list_files():
     upload_folder = app.config['UPLOAD_FOLDER']
     files = get_uploads(upload_folder)
@@ -558,13 +558,13 @@ def admin_list_files():
 
 
 @app.route('/admin/files/new/')
-#@login_required
+@login_required
 def admin_new_file():
     return render_template('admin_new_file.html')
 
 
 @app.route('/admin/files/remove/<file>')
-#@login_required
+@login_required
 def admin_delete_file(file):
     path = os.path.join(app.config['UPLOAD_FOLDER'], file)
     if file and os.path.isfile(path):
@@ -574,7 +574,7 @@ def admin_delete_file(file):
 
 
 @app.route('/admin/files/upload/', methods=['POST'])
-#@login_required
+@login_required
 def upload_file():
     files = request.files.getlist('files[]')
     for file in files:
@@ -589,13 +589,13 @@ def upload_file():
 ###########
 
 @app.route('/api/markdown/', methods=['POST'])
-#@login_required
+@login_required
 def parse_markdown():
     return markdown(request.data.decode('utf-8'))
 
 
 @app.route('/api/files/', methods=['GET'])
-#@login_required
+@login_required
 def get_file_list():
     result = {
         'path': app.config['UPLOAD_FOLDER'].replace('app', '')

@@ -13,6 +13,9 @@ RUN /etc/init.d/postgresql start &&\
     psql --command "CREATE USER tdw WITH CREATEDB PASSWORD 'tdw'" &&\
     createdb -E utf-8 -O tdw tdw -T template0
 
+VOLUME ./db/var/lib/postgresql:/var/lib/postgresql
+VOLUME ./db/var/log/postgresql:/var/log/postgresql
+
 EXPOSE 5432
 
 CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]

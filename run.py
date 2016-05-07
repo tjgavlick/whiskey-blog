@@ -2,11 +2,11 @@
 
 import time
 
-from app import app, db
-from app.models import User
-
 # wait for postgres server to be up. ugly, revise
 time.sleep(10)
+
+from app import app, db
+from app.models import User
 
 db.create_all()
 

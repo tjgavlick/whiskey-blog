@@ -2,15 +2,11 @@ version: '2'
 services:
     web:
         build: .
+        restart: always
         ports:
          - '80:80'
-        volumes:
-         - ./uploads:/whiskey-blog/app/static/uploads
         depends_on:
          - db
     db:
         build: ./db
-        volumes:
-         - ./db/etc/postgresql:/etc/postgresql
-         - ./db/var/log/postgresql:/var/log/postgresql
-         - ./db/var/lib/postgresql:/var/lib/postgresql
+        restart: always

@@ -24,9 +24,7 @@ ADD /app /whiskey-blog/app
 # get application dependencies
 RUN pip install -r /whiskey-blog/requirements.txt
 
-# link uploads folder for persistence
-#VOLUME /uploads:/whiskey-blog/app/static/uploads
-ADD /uploads /whiskey-blog/app/static/uploads
+VOLUME ./uploads:/whiskey-blog/app/static/uploads
 
 EXPOSE 80
 
