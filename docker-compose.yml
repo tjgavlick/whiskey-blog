@@ -5,8 +5,13 @@ services:
         restart: always
         ports:
          - '80:80'
+        volumes:
+         - ./uploads:/whiskey-blog/app/static/uploads
         depends_on:
          - db
     db:
         build: ./db
         restart: always
+        volumes:
+         - ./db/var/lib/postgresql:/var/lib/postgresql
+         - ./db/var/log/postgresql:/var/log/postgresql

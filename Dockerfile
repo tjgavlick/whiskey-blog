@@ -24,8 +24,6 @@ ADD /app /whiskey-blog/app
 # get application dependencies
 RUN pip install -r /whiskey-blog/requirements.txt
 
-VOLUME /whiskey-blog/app/static/uploads
-
 EXPOSE 80
 
 WORKDIR /whiskey-blog
