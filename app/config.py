@@ -5,7 +5,7 @@ class Config(object):
     SECRET_KEY = 'changemeplz'
     # db
     # 'db' hostname defined by docker-compose
-    SQLALCHEMY_DATABASE_URI = 'postgresql://user:pass@db:5432/dbname'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://tdw:tdw@db:5432/tdw'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # file upload

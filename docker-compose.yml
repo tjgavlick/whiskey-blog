@@ -10,3 +10,7 @@ services:
          - db
     db:
         build: ./db
+        volumes:
+         - ./db/etc/postgresql:/etc/postgresql
+         - ./db/var/log/postgresql:/var/log/postgresql
+         - ./db/var/lib/postgresql:/var/lib/postgresql

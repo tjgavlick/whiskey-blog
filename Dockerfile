@@ -19,7 +19,6 @@ RUN apt-get install -y libpq-dev
 ADD requirements.txt /whiskey-blog/requirements.txt
 ADD run.py /whiskey-blog/run.py
 ADD uwsgi.ini /whiskey-blog/uwsgi.ini
-ADD wait.sh /whiskey-blog/wait.sh
 ADD /app /whiskey-blog/app
 
 # get application dependencies
@@ -32,4 +31,4 @@ ADD /uploads /whiskey-blog/app/static/uploads
 EXPOSE 80
 
 WORKDIR /whiskey-blog
-CMD service nginx start && ./wait.sh && uwsgi --ini uwsgi.ini
+CMD service nginx start && uwsgi --ini uwsgi.ini

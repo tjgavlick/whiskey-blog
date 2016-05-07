@@ -1,7 +1,12 @@
 #! ./ve/bin/python
 
+import time
+
 from app import app, db
 from app.models import User
+
+# wait for postgres server to be up. ugly, revise
+time.sleep(10)
 
 db.create_all()
 
