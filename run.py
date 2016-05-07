@@ -6,7 +6,6 @@ import time
 time.sleep(10)
 
 from app import app, db
-from app.models import User
 
 db.create_all()
 

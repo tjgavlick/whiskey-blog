@@ -14,14 +14,15 @@ Right now it has a front-facing UI and an admin area. It can save and list revie
 - [x] Add image upload
 - [x] Add an asset browser/selector
 - [ ] Implement keyword search
-- [ ] Serve it with nginx and set up a local Vagrant or Docker environment for development
+- [x] Serve it with nginx and set up a local Vagrant or Docker environment for development
 - [ ] Launch the damn thing
 
 ---
 
 Manual tasks upon deployment:
 
-- specify production Config in run.py and app/__init__py
+- compile sass
+- specify production config in app/__init__py
 - change db user/pass in both the db Dockerfile and the app config
 - change secret key in the app config
 

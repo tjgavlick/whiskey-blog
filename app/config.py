@@ -11,5 +11,4 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    # SQLALCHEMY_DATABASE_URI = 'postgresql://tdw:tdw@localhost/tdw'
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
