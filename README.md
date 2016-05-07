@@ -22,6 +22,7 @@ Right now it has a front-facing UI and an admin area. It can save and list revie
 Manual tasks upon deployment:
 
 - compile sass
+- minify js
 - specify production config in app/__init__py
 - change db user/pass in both the db Dockerfile and the app config
 - change secret key in the app config

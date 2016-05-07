@@ -147,7 +147,7 @@ class Article(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    handle = db.Column(db.String)
+    handle = db.Column(db.String, unique=True)
     password = db.Column(db.String)
     authenticated = db.Column(db.Boolean, default=False)
 
