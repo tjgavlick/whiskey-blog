@@ -7,13 +7,6 @@ setup.txt
 # static cruft #
 _static-build/
 app/static/assets/
-app/static/style/*.css*
-uploads/*.png
-uploads/*.jpg
-uploads/*.jpeg
-app/static/uploads/*.png
-app/static/uploads/*.jpg
-app/static/uploads/*.jpeg
 
 # python #
 __pycache__/
