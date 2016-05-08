@@ -6,7 +6,6 @@ services:
         ports:
          - '80:80'
         volumes:
-         - ./uploads:/whiskey-blog/app/static/uploads
          - ./app:/whiskey-blog/app
         depends_on:
          - db
