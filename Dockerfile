@@ -19,7 +19,7 @@ RUN apt-get install -y libpq-dev
 ADD requirements.txt /whiskey-blog/requirements.txt
 ADD run.py /whiskey-blog/run.py
 ADD uwsgi.ini /whiskey-blog/uwsgi.ini
-ADD /app /whiskey-blog/app
+# ADD /app /whiskey-blog/app
 
 # get application dependencies
 RUN pip install -r /whiskey-blog/requirements.txt
