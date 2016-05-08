@@ -12,6 +12,3 @@ services:
     db:
         build: ./db
         restart: always
-        volumes:
-         - ./db/var/lib/postgresql:/var/lib/postgresql
-         - ./db/var/log/postgresql:/var/log/postgresql
