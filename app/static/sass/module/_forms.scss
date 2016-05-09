@@ -55,75 +55,53 @@ input[type="range"]:focus {
   outline: none;
 }
 
+// these styles need to be declared separately, else the browser rejects the entire declaration
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
+  width: $line;
+  height: $line/2;
   border: none;
-  height: $line*3/4;
-  width: $line/3;
   border-radius: 0;
-  background: $primary-dark;
+  background: $gray-mid;
   cursor: pointer;
-  margin-top: -14px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+  margin-top: -$line/4;
+}
+input[type="range"]:focus::-webkit-slider-thumb {
+  background: $primary;
 }
 input[type="range"]::-moz-range-thumb {
+  width: $line;
+  height: $line/2;
   border: none;
-  height: $line*3/4;
-  width: $line/3;
   border-radius: 0;
-  background: $primary-dark;
+  background: $gray-mid;
   cursor: pointer;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.3);
 }
-input[type="range"]::-ms-thumb {
-  border: none;
-  height: $line*3/4;
-  width: $line/3;
-  border-radius: 0;
-  background: $primary-dark;
-  cursor: pointer;
+input[type="range"]:focus::-moz-range-thumb {
+  background: $primary;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: $bg;
-  border-radius: 1.3px;
-  border: 0.2px solid $gray-light;
+  background: darken($bg, 10%);
+  border: none;
+  box-shadow: 0 -1px 0 rgba(0,0,0,0.2);
 }
 input[type="range"]:focus::-webkit-slider-runnable-track {
-    background: $primary;
+  background: $primary;
 }
 input[type="range"]::-moz-range-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: $bg;
-  border-radius: 1.3px;
-  border: 0.2px solid $gray-light;
+  background: darken($bg, 10%);
+  border: none;
+  box-shadow: 0 -1px 0 rgba(0,0,0,0.2);
 }
 input[type="range"]:focus::-moz-range-track {
-    background: $primary;
-}
-input[type="range"]::-ms-track {
-  width: 100%;
-  height: 2px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  border-width: 16px 0;
-  color: transparent;
-}
-input[type="range"]::-ms-fill-lower {
-  background: $bg;
-  border: 0.2px solid $gray-light;
-}
-input[type="range"]:focus::-ms-fill-lower {
-  background: $primary;
-}
-input[type="range"]::-ms-fill-upper {
-  background: $bg;
-  border: 0.2px solid $gray-light;
-}
-input[type="range"]:focus::-ms-fill-upper {
   background: $primary;
 }
