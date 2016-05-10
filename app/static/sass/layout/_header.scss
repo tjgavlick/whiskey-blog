@@ -160,7 +160,7 @@ The global page header
 
     .page-nav {
         text-align: right;
-        margin-right: -$line;
+        margin-right: -$line/2;
         position: relative;
         &:before {
             content: '';
@@ -178,7 +178,7 @@ The global page header
         &__item {
             display: inline-block;
             vertical-align: baseline;
-            padding: $line;
+            padding: $line $line/2;
             font-size: $kilo - 1px;
             color: $gray-light;
             opacity: 0.8;
@@ -225,6 +225,12 @@ The global page header
             .page-bound {
                 margin: 0;
             }
+        }
+    }
+    .page-nav {
+        margin-right: -$line;
+        &__item {
+            padding: $line;
         }
     }
 }
