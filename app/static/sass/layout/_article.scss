@@ -36,9 +36,26 @@ p.article-reference {  // specificity over p:last-child rule
     margin-right: 1em;
 }
 
+.article-color {
+    .color-bar__marker:before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border: 8px solid transparent;
+        border-top-color: transparentize($bg, 0.3);
+        border-bottom-width: 0;
+        position: absolute;
+        bottom: 100%;
+        left: -6px;
+        margin-bottom: 5px;
+        transform: scaleX(0.7);
+    }
+}
+
 
 @media #{$max-m} {
-    .article-image {
+    .article-image, .article-color {
         &:not(.is-active) {
             display: none;
         }
@@ -62,22 +79,6 @@ p.article-reference {  // specificity over p:last-child rule
         margin-right: 2em;
     }
 
-    .article-color {
-        .color-bar__marker:before {
-            content: '';
-            display: block;
-            width: 0;
-            height: 0;
-            border: 8px solid transparent;
-            border-top-color: transparentize($bg, 0.3);
-            border-bottom-width: 0;
-            position: absolute;
-            bottom: 100%;
-            left: -6px;
-            margin-bottom: 5px;
-            transform: scaleX(0.7);
-        }
-    }
 }
 
 
