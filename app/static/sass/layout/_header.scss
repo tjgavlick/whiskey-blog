@@ -254,15 +254,16 @@ The global page header
             transition: all 0.15s ease-out;
         }
         .page-header--home & {
+            bottom: $line*4.75;
             .header-search__input:not(:focus) {
                 background: transparent;
                 color: #fff;
                 border-color: #fff;
-                opacity: 0.3;
+                opacity: 0.2;
                 + .header-search__submit {
                     border-left-color: #fff;
                     color: #fff;
-                    opacity: 0.3;
+                    opacity: 0.2;
                 }
             }
         }
@@ -298,6 +299,11 @@ The global page header
     .page-header {
         &--home {
             padding-top: $line*7;
+        }
+    }
+    .header-search {
+        .page-header--home & {
+            bottom: $line*7.75;
         }
     }
 }
