@@ -323,6 +323,9 @@ def admin_save_review():
     db.session.add(review)
     db.session.commit()
 
+    db.session.execute("REFRESH MATERIALIZED VIEW search_index;")
+    db.session.commit()
+
     return redirect(url_for('admin_list_reviews'))
 
 
@@ -333,6 +336,10 @@ def admin_remove_review(review_id):
     if not review is None:
         db.session.delete(review)
         db.session.commit()
+
+        db.session.execute("REFRESH MATERIALIZED VIEW search_index;")
+        db.session.commit()
+
     return redirect(url_for('admin_list_reviews'))
 
 
@@ -404,6 +411,9 @@ def admin_save_article():
     db.session.add(article)
     db.session.commit()
 
+    db.session.execute("REFRESH MATERIALIZED VIEW search_index;")
+    db.session.commit()
+
     return redirect(url_for('admin_list_articles'))
 
 
@@ -414,6 +424,10 @@ def admin_remove_article(article_id):
     if not article is None:
         db.session.delete(article)
         db.session.commit()
+
+        db.session.execute("REFRESH MATERIALIZED VIEW search_index;")
+        db.session.commit()
+
     return redirect(url_for('admin_list_articles'))
 
 
