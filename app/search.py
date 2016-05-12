@@ -7,15 +7,15 @@ from flask import render_template, request, redirect, url_for
 from app import app, db
 
 # hoo boy. compile reviews and articles into full-text 'documents' and search on them
-db.session.execute("SET LOCAL maintenance_work_mem = '1GB';")
-db.session.execute("SET LOCAL work_mem = '100MB';")
 db.session.execute("CREATE MATERIALIZED VIEW IF NOT EXISTS search_index AS \
-                    SELECT p_id, p_title, p_subtitle, p_url, p_image, document FROM ( \
+                    SELECT p_id, p_title, p_subtitle, p_url, p_image, p_abstract, p_type, document FROM ( \
                         SELECT review.id AS p_id, \
                                review.title AS p_title, \
                                review.subtitle AS p_subtitle, \
                                review.url AS p_url, \
                                review.image_list AS p_image, \
+                               review.abstract AS p_abstract, \
+                               'review' AS p_type, \
                                setweight(to_tsvector(review.title), 'A') || \
                                setweight(to_tsvector(review.subtitle), 'A') || \
                                setweight(to_tsvector(distiller.name), 'C') || \
@@ -32,6 +32,8 @@ db.session.execute("CREATE MATERIALIZED VIEW IF NOT EXISTS search_index AS \
                                article.subtitle AS p_subtitle, \
                                article.url AS p_url, \
                                article.image_list AS p_image, \
+                               article.abstract AS p_abstract, \
+                               'article' AS p_type, \
                                setweight(to_tsvector(article.title), 'A') || \
                                setweight(to_tsvector(article.subtitle), 'A') || \
                                setweight(to_tsvector(article.body), 'B') \
@@ -45,15 +47,22 @@ db.session.commit()
 
 @app.route('/search/')
 def search():
-    tmp = db.session.execute("SELECT p_id, p_title, p_subtitle, p_url, p_image \
-                              FROM search_index \
-                              WHERE document @@ to_tsquery('alcohol') \
-                              ORDER BY ts_rank(document, to_tsquery('alcohol')) DESC;")
-    for row in tmp:
-        print(row)
+    bad_stuff = re.compile(r'[^a-zA-Z0-9_\-]')
+    whitespace = re.compile(r'\s+')
+    post_keys = ('id', 'title', 'subtitle', 'url', 'image_list', 'abstract', 'type')
 
-    r = re.compile(r'[^a-zA-Z0-9_\-]')
-    keywords = re.sub(r, ' ', request.args.get('q', ''))
+    posts = []
+    keywords = re.sub(bad_stuff, ' ', request.args.get('q', ''))
+    keywords = re.sub(whitespace, ' ', keywords).strip()
+
     if keywords:
-        return keywords
-    return ''
+        # just OR queries for now
+        search_query = ' | '.join(filter(len, map(lambda x: x.strip(), keywords.split(' '))))
+        results = db.session.execute("SELECT p_id, p_title, p_subtitle, p_url, p_image, p_abstract, p_type \
+                                      FROM search_index \
+                                      WHERE document @@ to_tsquery('" + search_query + "') \
+                                      ORDER BY ts_rank(document, to_tsquery('" + search_query + "')) DESC;")
+        for row in results:
+            posts.append(dict(zip(post_keys, row)))
+
+    return render_template('search.html', posts=posts, keywords=keywords)

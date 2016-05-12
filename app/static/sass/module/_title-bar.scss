@@ -75,6 +75,31 @@ Title Bars
             }
         }
     }
+    &__search {
+        max-width: $line*20;
+        margin-top: $line/2;
+        position: relative;
+        // nest for specificity on padding value
+        .title-bar__search__input {
+            color: $copy;
+            padding-right: $line*3.5;
+            font-size: $milli;
+            line-height: $line;
+        }
+        &__submit {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            padding: ($line/4) $line/2;
+            border: none;
+            border-left: 1px solid rgba(0,0,0,0.2);
+            font-size: $milli;
+            font-style: italic;
+            line-height: $line;
+            background: transparent;
+            color: $primary;
+        }
+    }
 }
 
 
@@ -212,6 +237,12 @@ Title Bars
                 max-width: $page-width + $line*3;
                 padding: $line/2 $line 0 $line*2;
             }
+        }
+        &__search {
+            margin-left: auto;
+            margin-right: auto;
+            align-self: center;
+            margin-top: $line;
         }
     }
 }

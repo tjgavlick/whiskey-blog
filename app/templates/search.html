@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Search // {% endblock %}
+
+{% block body %}
+    <section role="main">
+
+        <header class="title-bar title-bar--main">
+            <h1 class="title-bar__title">Search</h1>
+            <form action="{{ url_for('search') }}" method="GET" class="title-bar__search">
+                <input type="text" name="q" class="title-bar__search__input" placeholder="Keywords" value="{{ keywords }}" tabindex="1" />
+                <button type="submit" class="title-bar__search__submit">Search</button>
+            </form>
+        </header>
+
+        <div class="content">
+            <div class="page-bound">
+                {% if posts %}
+                    <ul class="post-list margin-large">
+                        {% for post in posts %}
+                            {{ includes.post_list_item(post.title,
+                                  subtitle=post.subtitle,
+                                  description=post.abstract,
+                                  category='Review' if post.type == 'review' else 'Article',
+                                  image=post.image_list,
+                                  url=url_for('view_review', review_name=post.url) if post.type == 'review' else url_for('view_article', article_name=post.url)) }}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <h2 class="align-center">Nothing here!</h2>
+                    <p class="post-list-empty">Try searching for distillers, drinks, or common topics. I'm sure you'll find something soon!</p>
+                {% endif %}
+
+                <div class="home-actions grid">
+                    <div class="home-actions__item grid__unit grid__unit--1-2-s">
+                        <a href="{{ url_for('review_list') }}" class="button button--highlight home-actions__action">All reviews</a>
+                    </div>
+                    <div class="home-actions__item grid__unit grid__unit--1-2-s">
+                        <a href="{{ url_for('article_list') }}" class="button home-actions__action">All articles</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
