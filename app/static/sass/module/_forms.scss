@@ -36,6 +36,7 @@ input[type="text"], input[type="password"], input[type="number"], select, textar
     border: 1px solid $gray-light;
     &:focus {
         border-color: $primary;
+        box-shadow: 0 0 0 1px $primary;
     }
 }
 

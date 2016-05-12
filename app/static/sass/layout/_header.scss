@@ -41,6 +41,31 @@ The global page header
     }
 }
 
+.header-search {
+    @extend .copy;
+    position: relative;
+    width: 80%;
+    margin: $line/2 auto 0;
+    .header-search__input {
+        color: $copy;
+        padding-right: $line*2.5;
+        font-size: $milli;
+        line-height: $line;
+    }
+    &__submit {
+        position: absolute;
+        right: 1px;
+        top: 1px;
+        padding: $line/4 $line/2;
+        border: none;
+        border-left: 1px solid rgba(0,0,0,0.2);
+        font-size: $milli;
+        font-style: italic;
+        line-height: $line;
+        background: transparent;
+        color: $primary;
+    }
+}
 
 
 @media #{$max-m} {
@@ -136,7 +161,7 @@ The global page header
     }
 
     .page-header {
-        padding: $line $line*2 0;
+        padding: $line*1.5 $line*2 0;
         &--home {
             padding: $line*4 $line*2 0;
         }
@@ -151,7 +176,11 @@ The global page header
         }
         &__type {
             font-size: $kilo;
-            .page-header--home &, .page-header--home .header-logo:hover & {
+            .page-header--home & {
+                color: rgba(255,255,255,0.6);
+                text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            }
+            .page-header--home .header-logo:hover & {
                 color: #fff;
                 text-shadow: 0 1px 2px rgba(0,0,0,0.3);
             }
@@ -193,13 +222,13 @@ The global page header
                 }
             }
             .page-header--home & {
-                color: #fff;
+                color: rgba(255,255,255,0.6);
                 text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-                span {
-                    box-shadow: 0 4px 0 rgba(255,255,255,0.3);
-                }
-                &:hover span {
-                    box-shadow: 0 4px 0 #fff;
+                &:hover {
+                    color: #fff;
+                    span {
+                        box-shadow: 0 4px 0 #fff;
+                    }
                 }
             }
         }
@@ -207,6 +236,34 @@ The global page header
             margin-right: -$line/2;
             &__item {
                 padding: $line $line/2;
+            }
+        }
+    }
+
+    .header-search {
+        width: $line*9.75;
+        margin: 0;
+        position: absolute;
+        right: $line/2;
+        bottom: $line*2.5;
+        .header-search__input {
+            border-color: transparentize($gray-dark, 0.8);
+            transition: all 0.15s ease-out;
+        }
+        &__submit {
+            transition: all 0.15s ease-out;
+        }
+        .page-header--home & {
+            .header-search__input:not(:focus) {
+                background: transparent;
+                color: #fff;
+                border-color: #fff;
+                opacity: 0.3;
+                + .header-search__submit {
+                    border-left-color: #fff;
+                    color: #fff;
+                    opacity: 0.3;
+                }
             }
         }
     }
@@ -229,6 +286,10 @@ The global page header
     }
     .page-nav {
         margin-right: -$line;
+    }
+
+    .header-search {
+        bottom: $line*3.75;
     }
 }
 
