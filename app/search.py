@@ -15,16 +15,18 @@ def search():
                                   SELECT review.id AS r_id, \
                                          review.title AS r_title, \
                                          review.subtitle AS r_subtitle, \
-                                         to_tsvector(review.title) || \
-                                         to_tsvector(review.subtitle) || \
-                                         to_tsvector(distiller.name) || \
-                                         to_tsvector(review.body) \
+                                         setweight(to_tsvector(review.title), 'A') || \
+                                         setweight(to_tsvector(review.subtitle), 'A') || \
+                                         setweight(to_tsvector(distiller.name), 'C') || \
+                                         setweight(to_tsvector(review.body), 'B') || \
+                                         setweight(to_tsvector(review.drink_type), 'D') \
                                          AS document \
                                   FROM review \
                                   LEFT JOIN distiller ON distiller.id = review.distiller_id \
                                   WHERE review.is_published \
                                   GROUP BY review.id, distiller.id) article_search \
-                              WHERE article_search.document @@ to_tsquery('craig');")
+                              WHERE article_search.document @@ to_tsquery('craig') \
+                              ORDER BY ts_rank(article_search.document, to_tsquery('craig')) DESC;")
     for row in tmp:
         print(row)
 
