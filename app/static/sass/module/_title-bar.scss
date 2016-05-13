@@ -81,7 +81,9 @@ Title Bars
         position: relative;
         // nest for specificity on padding value
         .title-bar__search__input {
-            color: $copy;
+            color: $bg;
+            background: transparent;
+            border-color: rgba(255,255,255,0.3);
             padding-right: $line*3.5;
             font-size: $milli;
             line-height: $line;
@@ -92,12 +94,12 @@ Title Bars
             top: 1px;
             padding: ($line/4) $line/2;
             border: none;
-            border-left: 1px solid rgba(0,0,0,0.2);
+            border-left: 1px solid rgba(255,255,255,0.3);
             font-size: $milli;
             font-style: italic;
             line-height: $line;
             background: transparent;
-            color: $primary;
+            color: $primary-light;
         }
     }
 }
