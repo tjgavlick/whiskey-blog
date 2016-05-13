@@ -70,7 +70,7 @@ Title Bars
             &:last-child {
                 margin-right: 0;
             }
-            &:hover {
+            &:hover, &:focus {
                 opacity: 1;
             }
         }
@@ -100,8 +100,15 @@ Title Bars
             line-height: $line;
             background: transparent;
             color: $primary-light;
+            &:hover, &:focus {
+                color: #fff;
+                background: $primary;
+            }
         }
     }
+}
+a.title-bar:hover, a.title-bar:focus {
+    background-color: lighten($gray-dark, 5%);
 }
 
 

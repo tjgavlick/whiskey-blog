@@ -64,6 +64,10 @@ The global page header
         line-height: $line;
         background: transparent;
         color: $primary;
+        &:hover, &:focus {
+            color: #fff;
+            background: $primary;
+        }
     }
 }
 
@@ -176,13 +180,19 @@ The global page header
         }
         &__type {
             font-size: $kilo;
+            transition: all 0.15s ease-out;
+            .header-logo:focus & {
+                color: $primary;
+                box-shadow: 0 4px 0 $primary;
+            }
             .page-header--home & {
                 color: rgba(255,255,255,0.8);
                 text-shadow: 0 1px 2px rgba(0,0,0,0.3);
             }
-            .page-header--home .header-logo:hover & {
+            .page-header--home .header-logo:hover &, .page-header--home .header-logo:focus & {
                 color: #fff;
                 text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+                box-shadow: 0 4px 0 #fff;
             }
         }
     }
@@ -214,7 +224,7 @@ The global page header
             span {
                 transition: all 0.2s ease-out;
             }
-            &:hover {
+            &:hover, &:focus {
                 color: $primary;
                 opacity: 1;
                 span {
@@ -224,7 +234,7 @@ The global page header
             .page-header--home & {
                 color: rgba(255,255,255,0.8);
                 text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-                &:hover {
+                &:hover, &:focus {
                     color: #fff;
                     span {
                         box-shadow: 0 4px 0 #fff;

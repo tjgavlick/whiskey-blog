@@ -22,7 +22,7 @@ Admin
         margin-bottom: 0;
         a {
             display: block;
-            &:hover {
+            &:hover, &:focus {
                 color: $accent;
             }
         }

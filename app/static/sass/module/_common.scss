@@ -76,6 +76,9 @@ figure {
   &:hover, &:focus {
     background-color: lighten($accent-dark, 8%);
   }
+  &:focus {
+    box-shadow: 0 0 0 2px #000;
+  }
 }
 
 .margin {
@@ -99,6 +102,9 @@ figure {
   }
   &__title {
     @extend .title;
+    &:hover, &:focus {
+      color: $accent;
+    }
   }
 }
 

@@ -8,7 +8,7 @@
         <header class="title-bar title-bar--main">
             <h1 class="title-bar__title">Search</h1>
             <form action="{{ url_for('search') }}" method="GET" class="title-bar__search">
-                <input type="text" name="q" class="title-bar__search__input" placeholder="Keywords" value="{{ keywords }}" tabindex="1" />
+                <input type="text" name="q" class="title-bar__search__input" placeholder="Keywords" value="{{ keywords }}" />
                 <button type="submit" class="title-bar__search__submit">Search</button>
             </form>
         </header>

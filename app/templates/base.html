@@ -62,7 +62,7 @@
                 <a href="{{ url_for('colophon') }}" class="page-nav__item page-nav__item--small"><span>Colophon</span></a>
                 <form action="{{ url_for('search') }}" method="GET" class="header-search">
                     <input type="text" name="q" class="header-search__input" placeholder="Search" value="{{ keywords }}" tabindex="1" />
-                    <button type="submit" class="header-search__submit">Go</button>
+                    <button type="submit" class="header-search__submit" tabindex="1">Go</button>
                 </form>
             </nav>
         </div>

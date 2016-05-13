@@ -19,6 +19,10 @@ Post Lists
         color: $bg;
         position: relative;
         overflow: hidden;
+        &:focus {
+            opacity: 0.9;
+            box-shadow: 0 0 0 2px #000;
+        }
     }
     &__label, &__title, &__subtitle, &__description {
         position: relative;
