@@ -398,7 +398,7 @@ var WHISKIES = (function (window, document) {
             links = [];
         if (fragments.length > 0) {
             forEach(post.querySelectorAll('.fragment'), function (fragment) {
-                links.push('<a href="#' + fragment.id + '">' + fragment.innerHTML + '</a>');
+                links.push('<a href="#' + fragment.id + '">' + fragment.innerHTML.toLowerCase() + '</a>');
             });
             toc.className = 'article-contents';
             toc.innerHTML = '<span class="article-contents__label">Contents:</span> ' +
