@@ -392,6 +392,19 @@ var WHISKIES = (function (window, document) {
                 p.parentNode.removeChild(p);
             }
         });
+        // create table of contents based on fragments
+        var toc = document.createElement('div'),
+            fragments = post.querySelectorAll('.fragment'),
+            links = [];
+        if (fragments.length > 0) {
+            forEach(post.querySelectorAll('.fragment'), function (fragment) {
+                links.push('<a href="#' + fragment.id + '">' + fragment.innerHTML.toLowerCase() + '</a>');
+            });
+            toc.className = 'article-contents';
+            toc.innerHTML = '<span class="article-contents__label">Contents:</span> ' +
+                links.join(',&nbsp; ');
+            post.insertBefore(toc, post.children[0]);
+        }
     }
     forEach(document.getElementsByClassName('article-body'), beautifyPost);
 

@@ -21,13 +21,12 @@
         <section class="article-body content">
             {{ markdown(article.body)|safe }}
 
-            <!-- <aside class="article-related">
+            <aside class="article-related">
                 <p>
-                    Related articles:
-                    <a href="#0">Rittenhouse 21-year Rye</a>,
-                    <a href="#0">Rittenhouse Bottled-in-Bond Rye</a>
+                    <img src="/static/images/arrow-left.png" alt="" class="article-related__back" />
+                    <a href="{{ url_for('article_list') }}">Back to all articles</a>
                 </p>
-            </aside> -->
+            </aside>
 
         </section>
 

@@ -6,7 +6,7 @@ Article
 */
 
 
-.article-related {
+.article-related, .article-contents {
     margin: 0 (-$line) $line;
     padding: $line;
     font-style: italic;
@@ -20,11 +20,19 @@ Article
         @extend .title;
         font-style: normal;
     }
+}
+.article-related {
     &__back {
         display: inline-block;
         vertical-align: middle;
         width: 9px;
         margin-right: 10px;
+    }
+}
+.article-contents {
+    &__label {
+        display: inline-block;
+        margin-right: 0.4em;
     }
 }
 
@@ -64,15 +72,20 @@ p.article-reference {  // specificity over p:last-child rule
 
 
 @media #{$min-m} {
-    .article-related {
+    .article-related, .article-contents {
         margin: $line*2 (-$line*2) $line;
         padding: $line $line*2;
+    }
+    .article-related {
         p + p {
             margin-top: -$line/2;
         }
         &__back {
             margin-left: -22px;
         }
+    }
+    .article-contents {
+        margin-top: 0;
     }
 
     .article-reference a {
