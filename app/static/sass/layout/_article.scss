@@ -86,7 +86,7 @@ p.article-reference {  // specificity over p:last-child rule
         }
     }
     .article-contents {
-        margin-top: 0;
+        margin-top: -$line;
         margin-bottom: $line*1.5;
     }
 
