@@ -22,6 +22,7 @@ Article
     }
 }
 .article-related {
+    margin-top: $line*2;
     &__back {
         display: inline-block;
         vertical-align: middle;
@@ -86,6 +87,7 @@ p.article-reference {  // specificity over p:last-child rule
     }
     .article-contents {
         margin-top: 0;
+        margin-bottom: $line*1.5;
     }
 
     .article-reference a {
