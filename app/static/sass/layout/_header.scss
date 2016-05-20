@@ -46,28 +46,14 @@ The global page header
     position: relative;
     width: 80%;
     margin: $line/2 auto 0;
+    &__text {
+        @extend .title;
+    }
     .header-search__input {
         color: $copy;
         padding-right: $line*2.5;
         font-size: $milli;
         line-height: $line;
-    }
-    &__submit {
-        position: absolute;
-        right: 1px;
-        top: 1px;
-        padding: $line/4 $line/2;
-        border: none;
-        border-left: 1px solid rgba(0,0,0,0.2);
-        font-size: $milli;
-        font-style: italic;
-        line-height: $line;
-        background: transparent;
-        color: $primary;
-        &:hover, &:focus {
-            color: #fff;
-            background: $primary;
-        }
     }
 }
 
@@ -156,6 +142,11 @@ The global page header
             }
         }
     }
+    .header-search {
+        &__text {
+            display: none;
+        }
+    }
 }
 
 
@@ -214,34 +205,6 @@ The global page header
             top: 0;
             font-size: $milli;
         }
-        &__item {
-            display: inline-block;
-            vertical-align: baseline;
-            padding: $line $line/2;
-            font-size: $kilo - 1px;
-            color: $gray-light;
-            opacity: 0.8;
-            span {
-                transition: all 0.2s ease-out;
-            }
-            &:hover, &:focus {
-                color: $primary;
-                opacity: 1;
-                span {
-                    box-shadow: 0 2px 0 $bg, 0 6px 0 $primary;
-                }
-            }
-            .page-header--home & {
-                color: rgba(255,255,255,0.8);
-                text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-                &:hover, &:focus {
-                    color: #fff;
-                    span {
-                        box-shadow: 0 4px 0 #fff;
-                    }
-                }
-            }
-        }
         .page-header--admin & {
             margin-right: -$line/2;
             &__item {
@@ -249,18 +212,44 @@ The global page header
             }
         }
     }
+    .page-nav__item, .header-search__text {
+        display: inline-block;
+        vertical-align: baseline;
+        padding: $line $line/2;
+        font-size: $kilo - 1px;
+        color: $gray-light;
+        opacity: 0.8;
+        cursor: pointer;
+        span {
+            transition: all 0.2s ease-out;
+        }
+        &:hover, &:focus {
+            color: $primary;
+            opacity: 1;
+            span {
+                box-shadow: 0 2px 0 $bg, 0 6px 0 $primary;
+            }
+        }
+        .page-header--home & {
+            color: rgba(255,255,255,0.8);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            &:hover, &:focus {
+                color: #fff;
+                span {
+                    box-shadow: 0 4px 0 #fff;
+                }
+            }
+        }
+    }
 
     .header-search {
-        width: $line*9.75;
-        margin: 0;
-        position: absolute;
-        right: $line/2;
-        bottom: $line*2.5;
+        display: inline-block;
+        vertical-align: middle;
+        &__text {
+            display: block;
+        }
         .header-search__input {
             border-color: transparentize($gray-dark, 0.8);
-            transition: all 0.15s ease-out;
-        }
-        &__submit {
             transition: all 0.15s ease-out;
         }
         .page-header--home & {
@@ -269,19 +258,11 @@ The global page header
             width: 100%;
             right: 0;
             padding-right: $line/2;
-            .header-search__submit {
-                right: $line/2 + 1px;
-            }
             .header-search__input:not(:focus) {
                 background: transparent;
                 color: #fff;
                 border-color: #fff;
                 opacity: 0.3;
-                + .header-search__submit {
-                    border-left-color: #fff;
-                    color: #fff;
-                    opacity: 0.3;
-                }
             }
         }
     }
