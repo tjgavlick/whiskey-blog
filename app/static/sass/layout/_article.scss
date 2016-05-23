@@ -62,6 +62,13 @@ p.article-reference {  // specificity over p:last-child rule
     }
 }
 
+.article-date {
+    margin-bottom: $line/2;
+    font-size: $milli;
+    font-style: italic;
+    opacity: 0.7;
+}
+
 
 @media #{$max-m} {
     .article-image, .article-color {

@@ -45,6 +45,10 @@ def format_proof(proof):
     return proof
 
 
+def format_date(t):
+    return t.strftime('%B %d, %Y')
+
+
 def format_datetime(t):
     return t.strftime('%B %d, %Y at %H:%M')
 

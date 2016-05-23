@@ -113,6 +113,8 @@
 
         <section class="article-body content">
 
+            <p class="article-date">Written {{ review.date_posted|date }}</p>
+
             {{ markdown(review.body)|safe }}
 
             <aside class="article-related">
