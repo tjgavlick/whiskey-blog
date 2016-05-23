@@ -19,6 +19,7 @@ class Review(db.Model):
     url = db.Column(db.String(255), unique=True)
     is_published = db.Column(db.Boolean)
     date_posted = db.Column(db.DateTime)
+    date_updated = db.Column(db.DateTime)
     title = db.Column(db.String(200))
     subtitle = db.Column(db.String(200))
     image_main = db.Column(db.String(255))
@@ -50,19 +51,22 @@ class Review(db.Model):
 
 
     def __init__(self, url=None, is_published=False, date_posted=None,
-                 title=None, subtitle=None, image_main=None, image_list=None,
-                 image_home=None, distiller_id=None, age_low=None, age_high=None,
-                 proof_low=None, proof_high=None, price_low=None, price_high=None,
-                 drink_type=None, mashbill=None, mashbill_description=None,
-                 rarity=None, color=None, body=None, abstract=None,
-                 rating_low=None, rating_high=None):
+                 date_updated=None, title=None, subtitle=None, image_main=None,
+                 image_list=None, image_home=None, distiller_id=None, age_low=None,
+                 age_high=None, proof_low=None, proof_high=None, price_low=None,
+                 price_high=None, drink_type=None, mashbill=None,
+                 mashbill_description=None, rarity=None, color=None, body=None,
+                 abstract=None, rating_low=None, rating_high=None):
 
         if date_posted is None:
             date_posted = datetime.utcnow()
+        if date_updated is None:
+            date_updated = datetime.utcnow()
 
         self.url = url
         self.is_published = is_published
         self.date_posted = date_posted
+        self.date_updated = date_updated
         self.title = title
         self.subtitle = subtitle
         self.image_main = image_main
@@ -115,6 +119,7 @@ class Article(db.Model):
     url = db.Column(db.String(255), unique=True)
     is_published = db.Column(db.Boolean)
     date_posted = db.Column(db.DateTime)
+    date_updated = db.Column(db.DateTime)
     title = db.Column(db.String(255))
     subtitle = db.Column(db.String(255))
     image_main = db.Column(db.String(255))
@@ -124,15 +129,19 @@ class Article(db.Model):
     abstract = db.Column(db.Text)
 
     def __init__(self, url=None, is_published=False, date_posted=None,
-                 title=None, subtitle=None, image_main=None, image_list=None,
-                 image_home=None, body=None, abstract=None):
+                 date_updated=None, title=None, subtitle=None,
+                 image_main=None, image_list=None, image_home=None,
+                 body=None, abstract=None):
 
         if date_posted is None:
             date_posted = datetime.utcnow()
+        if date_updated is None:
+            date_updated = datetime.utcnow()
 
         self.url = url
         self.is_published = is_published
         self.date_posted = date_posted
+        self.date_updated = date_updated
         self.title = title
         self.subtitle = subtitle
         self.image_main = image_main

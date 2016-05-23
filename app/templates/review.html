@@ -113,7 +113,11 @@
 
         <section class="article-body content">
 
-            <p class="article-date">Written {{ review.date_posted|date }}</p>
+            {% if updated %}
+                <p class="article-date">Written {{ review.date_posted|date }}; last updated {{ review.date_updated|date }}</p>
+            {% else %}
+                <p class="article-date">Written {{ review.date_posted|date }}</p>
+            {% endif %}
 
             {{ markdown(review.body)|safe }}
 

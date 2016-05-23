@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re, random, os, time
+from datetime import datetime
 
 from flask import render_template, request, redirect, url_for, jsonify, abort
 from flask.ext.login import login_required
@@ -41,7 +42,12 @@ def index():
 @app.route('/review/<review_name>')
 def view_review(review_name):
     review = Review.query.filter_by(url=review_name).first_or_404()
-    return render_template('review.html', review=review,
+    updated = False
+    if review.date_posted and review.date_updated:
+        diff = review.date_updated - review.date_posted
+        if (diff.days > 0):
+            updated = True
+    return render_template('review.html', review=review, updated=updated,
                            drink_types=constants.DRINK_TYPES,
                            rarities=constants.RARITIES)
 
@@ -258,6 +264,7 @@ def admin_save_review():
         review = Review.query.get(review_id)
         review.url = tmp_url
         review.is_published = tmp_is_published
+        review.date_updated = datetime.utcnow()
         review.title = request.form['title']
         review.subtitle = request.form['subtitle']
         review.image_main = request.form['image_main']
@@ -386,6 +393,7 @@ def admin_save_article():
         article = Article.query.get(article_id)
         article.url = tmp_url
         article.is_published = tmp_is_published
+        article.date_updated = datetime.utcnow()
         article.title = request.form['title']
         article.subtitle = request.form['subtitle']
         article.image_main = request.form['image_main']
