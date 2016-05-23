@@ -63,10 +63,10 @@ p.article-reference {  // specificity over p:last-child rule
 }
 
 .article-date {
-    margin-bottom: $line/2;
+    margin-bottom: $line*3/4;
     font-size: $milli;
     font-style: italic;
-    opacity: 0.7;
+    opacity: 0.55;
 }
 
 
