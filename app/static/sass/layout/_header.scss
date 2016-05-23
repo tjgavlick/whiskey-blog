@@ -54,6 +54,7 @@ The global page header
         padding-right: $line*2.5;
         font-size: $milli;
         line-height: $line;
+        transition: all 0.15s ease-out;
     }
 }
 
@@ -145,6 +146,12 @@ The global page header
     .header-search {
         &__text {
             display: none;
+        }
+        .header-search__input:not(:focus) {
+            border-color: #fff;
+            color: #fff;
+            background: transparent;
+            opacity: 0.5;
         }
     }
 }
@@ -244,25 +251,24 @@ The global page header
 
     .header-search {
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: baseline;
+        width: auto;
+        margin: 0;
         &__text {
             display: block;
         }
         .header-search__input {
+            width: 0;
             border-color: transparentize($gray-dark, 0.8);
-            transition: all 0.15s ease-out;
-        }
-        .page-header--home & {
-            bottom: auto;
-            top: 188px + $line*5.25;
-            width: 100%;
+            position: absolute;
             right: 0;
-            padding-right: $line/2;
-            .header-search__input:not(:focus) {
-                background: transparent;
-                color: #fff;
-                border-color: #fff;
-                opacity: 0.3;
+            top: $line*3/4;
+            opacity: 0;
+            z-index: -1;
+            &:focus {
+                width: $line*13.5;
+                opacity: 1;
+                z-index: 3;
             }
         }
     }
@@ -286,10 +292,6 @@ The global page header
     .page-nav {
         margin-right: -$line;
     }
-
-    .header-search {
-        bottom: $line*3.5;
-    }
 }
 
 
@@ -297,11 +299,6 @@ The global page header
     .page-header {
         &--home {
             padding-top: $line*7;
-        }
-    }
-    .header-search {
-        .page-header--home & {
-            bottom: $line*7.75;
         }
     }
 }
