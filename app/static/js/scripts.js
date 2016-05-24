@@ -2,7 +2,7 @@
 if (!Modernizr.csstransforms) {
     var message = document.createElement('p');
     message.className = 'browser-message';
-    message.innerHTML = 'Hey there. This site looks kind of a mess, huh? Unfortunately I\'m not going to be spending the time to support outdated browsers like this one, so please <a href="//outdatedbrowser.com/">upgrade</a>. I promise it\'ll make the web a better place.';
+    message.innerHTML = 'Hey there. This site looks kind of a mess, huh? Unfortunately I\'m not going to be spending the time to support outdated browsers like this one, so please <a href="http://outdatedbrowser.com/">upgrade</a>. I promise it\'ll make the web a better place.';
     document.body.insertBefore(message, document.body.firstChild);
     throw new Error('Outdated browser. Stopping');
 }
