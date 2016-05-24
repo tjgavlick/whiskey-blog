@@ -261,9 +261,9 @@
 
                     <div class="page-bound">
                         {% if reviews %}
-                            <ul class="post-list">
+                            <ul class="post-list" itemscope itemtype="https://schema.org/ItemList">
                                 {% for review in reviews %}
-                                    {{ includes.post_list_item(review.title,
+                                    {{ includes.review_list_item(review.title,
                                             subtitle=review.subtitle,
                                             description=review.abstract,
                                             image=review.image_list,

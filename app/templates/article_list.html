@@ -9,7 +9,7 @@
 
         <div class="content">
             <div class="page-bound">
-                <ul class="post-list margin-large">
+                <ul class="post-list margin-large" itemscope itemtype="https://schema.org/ItemList">
                     {% for article in articles %}
                         {{ includes.post_list_item(article.title,
                                 subtitle=article.subtitle,

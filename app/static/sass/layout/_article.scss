@@ -69,6 +69,11 @@ p.article-reference {  // specificity over p:last-child rule
     opacity: 0.55;
 }
 
+.article-rating {
+    height: 0;
+    overflow: hidden;
+}
+
 
 @media #{$max-m} {
     .article-image, .article-color {

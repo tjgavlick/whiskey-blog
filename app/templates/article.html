@@ -5,21 +5,26 @@
 {% block headermodifier %}page-header--article{% endblock %}
 
 {% block body %}
-    <article role="main">
+    <article role="main" itemscope itemtype="http://schema.org/BlogPosting">
 
-        {{ includes.title_bar(article.title,
-                subtitle=article.subtitle,
-                modifier='article') }}
+        <header class="title-bar title-bar--article">
+            <h1 class="title-bar__title" itemprop="name">{{ article.title }}</h1>
+            {% if article.subtitle %}
+                <h2 class="title-bar__subtitle" itemprop="headline">{{ article.subtitle }}</h2>
+            {% endif %}
+        </header>
 
         <div class="article-image">
             <div class="article-image__positioner">
-                <img src="{{ article.image_main }}" alt="" class="article-image__image" />
+                <img src="{{ article.image_main }}" alt="" class="article-image__image" itemprop="image" />
             </div>
         </div>
 
 
         <section class="article-body content">
-            {{ markdown(article.body)|safe }}
+            <div itemprop="articleBody">
+                {{ markdown(article.body)|safe }}
+            </div>
 
             <aside class="article-related">
                 <p>

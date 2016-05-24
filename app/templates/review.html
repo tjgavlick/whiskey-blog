@@ -5,12 +5,12 @@
 {% block headermodifier %}page-header--article{% endblock %}
 
 {% block body %}
-    <article role="main">
+    <article role="main" itemscope itemtype="http://schema.org/Review">
 
-        <header class="title-bar title-bar--review">
-            <h1 class="title-bar__title">{{ review.title }}</h1>
+        <header class="title-bar title-bar--review" itemprop="itemReviewed" itemscope itemtype="http://schema.org/Product">
+            <h1 class="title-bar__title" itemprop="name">{{ review.title }}</h1>
             {% if review.subtitle %}
-                <h2 class="title-bar__subtitle">{{ review.subtitle }}</h2>
+                <h2 class="title-bar__subtitle" itemprop="alternateName">{{ review.subtitle }}</h2>
             {% endif %}
 
             <button type="button" class="title-bar__data__toggle" data-toggle-target=".title-bar__data, .article-image, .article-color">
@@ -39,12 +39,12 @@
                         <span class="title-bar__datum__prop">Unknown proof</span>
                     {% endif %}
                 </li>
-                <li class="title-bar__datum grid__unit grid__unit--1-2-s grid__unit--1-3-m">
+                <li class="title-bar__datum grid__unit grid__unit--1-2-s grid__unit--1-3-m" itemscope itemtype="PriceSpecification">
                     {% if review.price_low %}
                         {% if review.price_high %}
-                            <span class="title-bar__datum__value">{{ format_price(review.price_low) }} &ndash; {{ format_price(review.price_high) }}</span>
+                            <span class="title-bar__datum__value"><span itemprop="minPrice">{{ format_price(review.price_low) }}</span> &ndash; <span itemprop="maxPrice">{{ format_price(review.price_high) }}</span></span>
                         {% else %}
-                            <span class="title-bar__datum__value">{{ format_price(review.price_low) }}</span>
+                            <span class="title-bar__datum__value" itemprop="price">{{ format_price(review.price_low) }}</span>
                         {% endif %}
                         <span class="title-bar__datum__prop">retail price</span>
                     {% else %}
@@ -107,26 +107,30 @@
 
         <div class="article-image">
             <div class="article-image__positioner">
-                <img src="{{ review.image_main }}" alt="" class="article-image__image" />
+                <img src="{{ review.image_main }}" alt="" class="article-image__image" itemprop="image" />
             </div>
         </div>
 
         <section class="article-body content">
 
             {% if updated %}
-                <p class="article-date">Written {{ review.date_posted|date }}; last updated {{ review.date_updated|date }}</p>
+                <p class="article-date">Written <span itemprop="dateCreated">{{ review.date_posted|date }}</span>; last updated <span itemprop="dateModified">{{ review.date_updated|date }}</span></p>
             {% else %}
-                <p class="article-date">Written {{ review.date_posted|date }}</p>
+                <p class="article-date">Written <span itemprop="dateCreated">{{ review.date_posted|date }}</span></p>
             {% endif %}
 
-            {{ markdown(review.body)|safe }}
+            <div itemprop="reviewBody">
+                {{ markdown(review.body)|safe }}
+            </div>
+
+            <div class="article-rating" itemprop="reviewRating">{{ review.rating_low }}</div>
 
             <aside class="article-related">
                 {% if review.related_reviews.all() %}
                     <p>
                         Related reviews:
                         {% for rel in review.related_reviews %}
-                            <a href="{{ url_for('view_review', review_name=rel.url) }}">{{ rel.title }} {{ rel.subtitle }}</a>{% if not loop.last %},{% endif %}
+                            <a href="{{ url_for('view_review', review_name=rel.url) }}" itemscope itemtype="http://schema.org/Review">{{ rel.title }} {{ rel.subtitle }}</a>{% if not loop.last %},{% endif %}
                         {% endfor %}
                     </p>
                 {% endif %}
