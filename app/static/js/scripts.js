@@ -1,6 +1,9 @@
 // browser test
-if (!'classList' in document.createElement('a')) {
-    document.write('<p class="browser-message">Sorry to have to bring this up, but your browser is outdated. Some site features might be broken. Please update or try <a href="https://www.getfirefox.com">Firefox</a> or <a href="https://www.google.com/chrome/">Chrome</a></p>');
+if (!Modernizr.csstransforms) {
+    var message = document.createElement('p');
+    message.className = 'browser-message';
+    message.innerHTML = 'Hey there. This site looks kind of a mess, huh? Unfortunately I\'m not going to be spending the time to support outdated browsers like this one, so please <a href="//outdatedbrowser.com/">upgrade</a>. I promise it\'ll make the web a better place.';
+    document.body.insertBefore(message, document.body.firstChild);
     throw new Error('Outdated browser. Stopping');
 }
 

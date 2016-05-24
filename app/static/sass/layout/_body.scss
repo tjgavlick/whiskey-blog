@@ -23,15 +23,13 @@ body {
 }
 
 .browser-message {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
     padding: $line/2 $line;
+    margin: 0;
     text-align: center;
-    z-index: 50;
     background: $bg;
     border-bottom: 2px solid $primary;
+    position: relative;
+    z-index: 50;
 }
 
 
