@@ -74,6 +74,13 @@ p.article-reference {  // specificity over p:last-child rule
     overflow: hidden;
 }
 
+// avoid jumbled look to lists
+.article-body, .admin-write__preview {
+    li:not(:last-child) {
+        margin-bottom: $line/2;
+    }
+}
+
 
 @media #{$max-m} {
     .article-image, .article-color {
