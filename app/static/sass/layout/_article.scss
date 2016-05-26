@@ -124,7 +124,7 @@ Article
 
 @media #{$max-l} {
     .article-image {
-        padding: 0 $line;
+        padding: 0 $line $line;
         &__positioner {
             transform: none !important;
         }
@@ -133,6 +133,18 @@ Article
             max-height: $line*20;
             max-height: 45vh;
             margin: $line*2 auto 0;
+        }
+    }
+}
+
+
+@media #{$min-m} and #{$max-l} {
+    .article-image {
+        padding: 0 $line*2;
+        max-width: 46%;
+        float: left;
+        &__image {
+            max-height: 75vh;
         }
     }
 }
