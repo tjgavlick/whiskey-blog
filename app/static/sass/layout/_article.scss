@@ -23,6 +23,9 @@ Article
 }
 .article-related {
     margin-top: $line*2;
+    &:last-child {
+        margin-bottom: 0;
+    }
     &__back {
         display: inline-block;
         vertical-align: middle;
@@ -92,6 +95,9 @@ p.article-reference {  // specificity over p:last-child rule
 
 
 @media #{$min-m} {
+    .article-body, .admin-write__preview {
+        line-height: $line*1.25;
+    }
     .article-related, .article-contents {
         margin: $line*2 (-$line*2) $line;
         padding: $line $line*2;
@@ -112,7 +118,6 @@ p.article-reference {  // specificity over p:last-child rule
     .article-reference a {
         margin-right: 2em;
     }
-
 }
 
 
