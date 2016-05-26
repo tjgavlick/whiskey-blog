@@ -40,12 +40,10 @@ Article
     }
 }
 
-p.article-reference {  // specificity over p:last-child rule
-    margin-bottom: $line;
-}
 .article-reference a {
     display: inline-block;
     margin-right: 1em;
+    line-height: $line;
 }
 
 .article-color {
@@ -90,6 +88,9 @@ p.article-reference {  // specificity over p:last-child rule
         &:not(.is-active) {
             display: none;
         }
+    }
+    p.article-reference {
+        margin-bottom: $line/4;  // visual center
     }
 }
 
