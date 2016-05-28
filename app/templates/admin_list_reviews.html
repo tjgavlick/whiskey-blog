@@ -23,10 +23,9 @@
                     {% for review in reviews %}
                         <li class="admin-list__item">
                             <h4 class="admin-list__title">
-                                <a href="{{ url_for('admin_edit_review', review_id=review.id) }}">{{ review.title }} {{ review.subtitle }}</a>
+                                <a href="{{ url_for('admin_edit_review', review_id=review.id) }}">{{ review.title }} {{ review.subtitle }} (review {{ review.id }})</a>
                             </h4>
-                            ID: <strong>{{ review.id }}</strong>
-                            /
+                            <strong>{{ review.rating_low }}</strong> /
                             {% if review.is_published %}
                                 <span class="admin-list__published">Published</span>
                             {% else %}
