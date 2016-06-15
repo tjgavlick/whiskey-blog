@@ -100,7 +100,7 @@ Article
 
 @media #{$min-m} {
     .article-body, .admin-write__preview {
-        line-height: $line*1.25;
+        line-height: $line*1.125;
     }
     .article-related, .article-contents {
         margin: $line*2 (-$line*2) $line;
