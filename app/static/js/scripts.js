@@ -405,7 +405,7 @@ var WHISKIES = (function (window, document) {
             });
             toc.className = 'article-contents';
             toc.innerHTML = '<span class="article-contents__label">Contents:</span> ' +
-                links.join(',&nbsp; ');
+                links.join(' &nbsp;<span class="article-contents__divider">/</span>&nbsp; ');
             post.insertBefore(toc, post.children[0]);
         }
     }

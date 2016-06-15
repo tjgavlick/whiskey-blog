@@ -38,6 +38,9 @@ Article
         display: inline-block;
         margin-right: 0.4em;
     }
+    &__divider {
+        opacity: 0.4;
+    }
 }
 
 .article-reference a {
