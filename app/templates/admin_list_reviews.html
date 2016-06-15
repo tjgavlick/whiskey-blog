@@ -8,10 +8,14 @@
 
             <div class="title-bar__related">
                 <a href="{{ url_for('admin_new_review') }}" class="title-bar__related__item">New review</a>
-                {% if request.args['order'] == 'alpha' %}
-                    <a href="{{ modify_query(order='written') }}" class="title-bar__related__item">Sort by date</a>
-                {% else %}
+                {% if request.args['order'] != 'alpha' %}
                     <a href="{{ modify_query(order='alpha') }}" class="title-bar__related__item">Sort by name</a>
+                {% endif %}
+                {% if request.args['order'] != 'rating' %}
+                    <a href="{{ modify_query(order='rating') }}" class="title-bar__related__item">Sort by rating</a>
+                {% endif %}
+                {% if not request.args['order'] or request.args['order'] != 'written' %}
+                    <a href="{{ modify_query(order='written') }}" class="title-bar__related__item">Sort by date</a>
                 {% endif %}
             </div>
         </header>

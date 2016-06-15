@@ -206,8 +206,11 @@ def admin_index():
 @app.route('/admin/review/')
 # @login_required
 def admin_list_reviews():
-    if request.args.get('order', '') == 'alpha':
+    order = request.args.get('order', '')
+    if order == 'alpha':
         reviews = Review.query.order_by(Review.title)
+    elif order == 'rating':
+        reviews = Review.query.order_by(Review.rating_low.desc())
     else:
         reviews = Review.query.order_by(Review.date_posted.desc())
     return render_template('admin_list_reviews.html', reviews=reviews)
