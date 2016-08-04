@@ -13,6 +13,9 @@ app/static/assets/
 __pycache__/
 ve/
 
+# certs #
+certbot-auto
+
 # os crud #
 .DS_Store
 .DS_Store?
